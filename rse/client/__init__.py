@@ -94,7 +94,9 @@ def get_parser():
 
     # List tasks and print to terminal
     ls = subparsers.add_parser("ls", help="List software")
-    ls.add_argument("path", help="Path to derive listing from", nargs="*")
+    ls.add_argument(
+        "parser", help="list one or more parsers or specific software.", nargs="*"
+    )
 
     # Start the queueMe dashboard
     search = subparsers.add_parser(
