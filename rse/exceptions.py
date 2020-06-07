@@ -87,7 +87,7 @@ class MultipleReposExistError(RepoError):
 
 
 class RepoNotFoundError(RepoError):
-    """Thrown if a repo does not exist.
+    """Thrown if a repo does not exist (for a remote)
     """
 
     def __init__(self, uid, *args, **kwargs):

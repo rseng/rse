@@ -19,7 +19,7 @@ import tempfile
 def get_latest_modified(base, pattern="*.json"):
     """Given a folder, get the latest modified file
     """
-    files = recursive_find(base, pattern)
+    files = list(recursive_find(base, pattern))
     if not files:
         return None
     return max(files, key=os.path.getctime)

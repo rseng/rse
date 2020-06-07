@@ -131,7 +131,7 @@ def get_parser():
 
     # Print complete metadata for a specific piece of software
     get = subparsers.add_parser("get", help="Show metadata for software")
-    get.add_argument("software id", help="uri within software namespace.", nargs="?")
+    add = subparsers.add_parser("add", help="Add a repository to the database.")
 
     for command in [exists, config]:
         command.add_argument(
@@ -142,7 +142,7 @@ def get_parser():
             help="database backend to use, to override configuration.",
         )
 
-    for command in [update, exists]:
+    for command in [update, exists, get, add]:
         command.add_argument("uid", help="uri within software namespace.", nargs="?")
 
     return parser
@@ -182,6 +182,8 @@ def main():
         sys.exit(0)
 
     # Does the user want a shell?
+    if args.command == "add":
+        from .add import main
     if args.command == "config":
         from .config import main
     if args.command == "exists":
