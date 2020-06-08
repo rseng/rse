@@ -42,12 +42,16 @@ def getenv(variable_key, default=None, required=False, silent=True):
 RSE_NPROC = multiprocessing.cpu_count()
 RSE_WORKERS = int(getenv("RSE_WORKERS", RSE_NPROC * 2 + 1))
 RSE_SHELL = getenv("RSE_SHELL", "ipython")
+RSE_CONFIG_FILE = getenv("RSE_CONFIG_FILE", "rse.ini")
 
 # Default database is filesystem
 RSE_DATABASE = getenv("RSE_DATABASE")
 
 # Database folder for filesystem or sqlite database
 RSE_DATABASE_STRING = os.environ.get("RSE_DATABASE")
+
+# Parsers installed
+RSE_PARSERS = ["github"]
 
 # Dashboard settings
 RSE_SOCKET_UPDATE_SECONDS = int(getenv("RSE_SOCKET_UPDATE_SECONDS", 5))

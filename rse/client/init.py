@@ -20,6 +20,7 @@ def main(args, extra):
     bot = logging.getLogger("rse.client")
 
     # present working directory
+    path = args.path
     if args.path == ".":
         path = os.getcwd()
 
@@ -29,4 +30,4 @@ def main(args, extra):
     config_file = os.path.join(path, args.config_file)
 
     # generate the software repository in the base
-    base = Encyclopedia(config_file=config_file, generate=True, database=args.database)
+    enc = Encyclopedia(config_file=config_file, generate=True, database=args.database)

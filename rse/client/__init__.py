@@ -11,6 +11,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 from rse.logger import RSE_LOG_LEVEL, RSE_LOG_LEVELS
+from rse.defaults import RSE_CONFIG_FILE
 import rse
 import argparse
 import sys
@@ -42,7 +43,7 @@ def get_parser():
     parser.add_argument(
         "--config_file",
         dest="config_file",
-        default="rse.ini",
+        default=RSE_CONFIG_FILE,
         help="Path to rse.ini configuration file.",
     )
 
@@ -71,6 +72,17 @@ def get_parser():
     # Config
     config = subparsers.add_parser(
         "config", help="Update an rse.ini configuration file."
+    )
+
+    # Clear
+    clear = subparsers.add_parser("clear", help="Remove software from the database.")
+    clear.add_argument("target", nargs="?")
+    clear.add_argument(
+        "--force",
+        dest="force",
+        help="Don't ask for confirmation for delete (for headless).",
+        default=False,
+        action="store_true",
     )
 
     # Exists
@@ -135,7 +147,7 @@ def get_parser():
     get = subparsers.add_parser("get", help="Show metadata for software")
     add = subparsers.add_parser("add", help="Add a repository to the database.")
 
-    for command in [exists, config]:
+    for command in [exists, config, init]:
         command.add_argument(
             "--database",
             dest="database",
@@ -186,6 +198,8 @@ def main():
     # Does the user want a shell?
     if args.command == "add":
         from .add import main
+    if args.command == "clear":
+        from .clear import main
     if args.command == "config":
         from .config import main
     if args.command == "exists":

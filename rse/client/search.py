@@ -15,13 +15,10 @@ import logging
 
 def main(args, extra):
 
-    # Create a queue object, run the command to match to an executor
     enc = Encyclopedia(config_file=args.config_file)
-
-    # Case 1: empty list indicates listing all
-    if not args.parser:
-        bot.table(enc.list())
-    else:
-        # Each in the list can be a full executor or a task id
-        for parser in args.parser:
-            bot.table(enc.list(parser))
+    query = " ".join(args.query).strip()
+    if not query:
+        sys.exit("Please provide a query to search for.")
+    results = enc.search(query)
+    if results:
+        bot.table(results)
