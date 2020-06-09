@@ -8,8 +8,6 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.file import mkdir_p
-
 import configparser
 import logging
 import os

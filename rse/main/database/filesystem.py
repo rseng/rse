@@ -73,7 +73,7 @@ class FileSystemDatabase(Database):
         """Determine if a repo exists.
         """
         try:
-            repo = self.get(uid, exact=True)
+            self.get(uid, exact=True)
             return True
         except:
             return False
@@ -88,7 +88,7 @@ class FileSystemDatabase(Database):
                 bot.info(f"{uid} was added to the the database.")
                 return SoftwareRepository(parser, data_base=self.data_base)
         else:
-            bot.error(f"Please define a unique identifier to add.")
+            bot.error("Please define a unique identifier to add.")
 
     def get_or_create(self, uid):
         """Determine if a repo exists.

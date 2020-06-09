@@ -9,6 +9,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 from rse.main import Encyclopedia
+import logging
+
+bot = logging.getLogger("rse.client")
 
 
 def main(args, extra):

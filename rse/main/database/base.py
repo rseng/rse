@@ -20,11 +20,6 @@ class Database:
         """
         raise NotImplementedError
 
-    def add(self):
-        """add a software repository to the database.
-        """
-        raise NotImplementedError
-
     def get(self):
         """get a software repository from the database.
         """
@@ -42,11 +37,6 @@ class Database:
 
     def update(self, uid):
         """update a software repository.
-        """
-        raise NotImplementedError
-
-    def exists(self, uid):
-        """Determine if a repo exists.
         """
         raise NotImplementedError
 

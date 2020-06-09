@@ -9,8 +9,6 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 from rse.main import Encyclopedia
-from rse.exceptions import RepoNotFoundError
-import json
 import logging
 
 bot = logging.getLogger("rse.client")
@@ -25,4 +23,4 @@ def main(args, extra):
     if not args.uid:
         bot.error("Please provide a software identifier to add.")
     else:
-        repo = enc.add(args.uid)
+        enc.add(args.uid)

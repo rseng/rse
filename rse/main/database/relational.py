@@ -15,7 +15,7 @@ from rse.exceptions import (
     RepoNotFoundError,
 )
 from rse.main.database.base import Database
-from rse.main.parsers import get_named_parser, get_parser
+from rse.main.parsers import get_parser
 
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import scoped_session, sessionmaker

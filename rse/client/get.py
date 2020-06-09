@@ -24,9 +24,9 @@ def main(args, extra):
     try:
         repo = enc.get(args.uid)
         print(json.dumps(repo.load(), indent=4))
-    except NoReposError as exc:
+    except NoReposError:
         bot.error(
-            f"There are no software repositories in the database! Use rse add to add some."
+            "There are no software repositories in the database! Use rse add to add some."
         )
-    except RepoNotFoundError as exc:
+    except RepoNotFoundError:
         bot.error(f"{args.uid} does not exist in the database. Use rse add to add it.")

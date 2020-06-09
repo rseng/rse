@@ -1,0 +1,28 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  docker-deploy:
+    runs-on: ubuntu-latest
+    env:
+      CONTAINER: quay.io/vanessa/rse
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker Image
+        run: docker build -t "${CONTAINER}" .
+      - name: Log In to Quay.io
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login quay.io -u ${{ secrets.DOCKER_USER }} --password-stdin
+      - name: Tag and Push images
+        run: |
+          DOCKER_TAG=$(docker run "${CONTAINER}:latest" --version)
+          echo "Docker tag is: ${DOCKER_TAG}"
+          docker tag "${CONTAINER}:latest" "${CONTAINER}:${DOCKER_TAG}"
+          docker push "${CONTAINER}:latest"
+          docker push "${CONTAINER}:${DOCKER_TAG}"

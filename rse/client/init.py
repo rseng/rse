@@ -11,13 +11,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from rse.main import Encyclopedia
 from rse.exceptions import DirectoryNotFoundError
 import os
-import sys
-import logging
 
 
 def main(args, extra):
-
-    bot = logging.getLogger("rse.client")
 
     # present working directory
     path = args.path
@@ -30,4 +26,4 @@ def main(args, extra):
     config_file = os.path.join(path, args.config_file)
 
     # generate the software repository in the base
-    enc = Encyclopedia(config_file=config_file, generate=True, database=args.database)
+    Encyclopedia(config_file=config_file, generate=True, database=args.database)

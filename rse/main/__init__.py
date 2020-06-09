@@ -34,7 +34,7 @@ class Encyclopedia:
            sit at the root of the repository, and then parse the subfolders
            accordingly.
         """
-        self.config = Config(config_file, generate=generate)
+        self.config = Config(config_file or RSE_CONFIG_FILE, generate=generate)
         self.config_dir = os.path.dirname(self.config.configfile)
         self.initdb(database)
 
@@ -128,7 +128,7 @@ class Encyclopedia:
                 return self.db.delete_repo(target)
 
         else:
-            raise UnrecognizedTargetError(target, "to clear")
+            raise RuntimeError(f"Unrecognized {target} to clear")
 
     def update(self, uid):
         """Update an existing software repository.
@@ -138,7 +138,7 @@ class Encyclopedia:
             self.db.update(repo)
             bot.info(f"{repo.uid} has been updated.")
             return repo
-        except RepoNotFoundError as exc:
+        except RepoNotFoundError:
             bot.error(f"{uid} does not exist.")
 
     def search(self, query):
