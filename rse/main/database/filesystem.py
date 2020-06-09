@@ -131,7 +131,7 @@ class FileSystemDatabase(Database):
         """
         results = []
         for repo in self.list_repos():
-            if re.search(query, repo[0]):
+            if re.search(query, repo[0], re.IGNORECASE):
                 results.append(repo)
         return results
 

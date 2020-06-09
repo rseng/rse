@@ -9,9 +9,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 from rse.main import Encyclopedia
-import logging
-
-bot = logging.getLogger("rse.client")
+import sys
 
 
 def main(args, extra):
@@ -20,7 +18,11 @@ def main(args, extra):
     enc = Encyclopedia(config_file=args.config_file)
 
     # A uid is required here
-    if not args.uid:
-        bot.error("Please provide a software identifier to add.")
+    if not args.uid and not args.file:
+        sys.exit("Please provide a software identifier or file to add.")
+
+    # If a file is provided, add in bulk (skips over those already present)
+    if args.file:
+        enc.bulk_add(args.file)
     else:
         enc.add(args.uid)

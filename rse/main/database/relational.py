@@ -69,16 +69,24 @@ class RelationalDatabase(Database):
         """
         from rse.main.database.models import SoftwareRepository
 
-        repo = SoftwareRepository.query.filter(SoftwareRepository.uid == uid).first()
+        parser = get_parser(uid, config=self.config)
+        repo = SoftwareRepository.query.filter(
+            SoftwareRepository.uid == parser.uid
+        ).first()
         return repo is not None
 
     def get_or_create(self, uid):
         """Determine if a repo exists.
         """
-        print("get or create")
-        import IPython
+        from rse.main.database.models import SoftwareRepository
 
-        IPython.embed()
+        parser = get_parser(uid, config=self.config)
+        repo = SoftwareRepository.query.filter(
+            SoftwareRepository.uid == parser.uid
+        ).first()
+        if not repo:
+            repo = self.add(uid)
+        return repo
 
     def clear(self):
         """clear (delete) all repos. This could be improved to cascade instead.
@@ -105,6 +113,7 @@ class RelationalDatabase(Database):
                 )
                 self.session.add(repo)
                 self.session.commit()
+                bot.info(f"{parser.uid} was added to the the database.")
                 repo.parser = parser
                 return repo
 

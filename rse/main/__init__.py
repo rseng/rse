@@ -14,6 +14,8 @@ from rse.defaults import RSE_DATABASE, RSE_PARSERS, RSE_CONFIG_FILE
 from rse.exceptions import RepoNotFoundError
 from rse.main.database import init_db
 from rse.utils.prompt import confirm
+from rse.utils.file import read_file
+from rse.main.parsers import get_parser
 
 import logging
 import os
@@ -76,22 +78,47 @@ class Encyclopedia:
         """based on a parser type and unique identifier, determine if software
            exists in the database
         """
-        return self.db.exists(uid)
+        parser = get_parser(uid, config=self.config)
+        return self.db.exists(parser.uid)
 
-    def list(self, parser=None):
+    def list(self, name=None):
         """A wrapper to the database list_repos function. Optionally take
            a whole parser name (e.g., github) or just a specific uid. No
            parser indicates that we list everything.
         """
-        return self.db.list_repos(parser)
+        return self.db.list_repos(name)
 
-    def add(self, uid):
+    def bulk_add(self, filename):
+        """Given a filename with a single list of repos, add each
+        """
+        repos = []
+        if os.path.exists(filename):
+            for name in read_file(filename):
+                uid = name.strip()
+                repos += [self.add(uid, quiet=True)] or []
+        return repos
+
+    def bulk_update(self, filename):
+        """Given a filename with a single list of repos, add each
+        """
+        repos = []
+        if os.path.exists(filename):
+            for name in read_file(filename):
+                uid = name.strip()
+                try:
+                    repos += [self.update(uid)]
+                except RepoNotFoundError:
+                    pass
+        return repos
+
+    def add(self, uid, quiet=False):
         """A wrapper to add a repository to the software database.
         """
         if not self.exists(uid):
             repo = self.db.add(uid)
             return repo
-        bot.error(f"{uid} already exists in the database.")
+        if not quiet:
+            bot.error(f"{uid} already exists in the database.")
 
     def get(self, uid=None):
         """A wrapper to get a repo id from the database. If an id is not provided,
