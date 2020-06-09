@@ -21,7 +21,7 @@ LICENSE = "LICENSE"
 # Global requirements
 
 
-INSTALL_REQUIRES = ()
+INSTALL_REQUIRES = (("requests", {"min_version": "2.23.0"}),)
 
 APP_REQUIRES = (
     ("Flask", {"min_version": "1.0.2"}),
