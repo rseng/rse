@@ -14,7 +14,6 @@ from datetime import datetime
 import os
 import tempfile
 import subprocess
-import uuid
 
 
 class Capturing:

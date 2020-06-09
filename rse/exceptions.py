@@ -79,7 +79,7 @@ class MultipleReposExistError(RepoError):
     """Thrown if multiple repos exist.
     """
 
-    def __init__(self, uidid, *args, **kwargs):
+    def __init__(self, uid, *args, **kwargs):
         reason = "More than one repository found for"
         super(MultipleReposExistError, self).__init__(
             uid=uid, reason=reason, *args, **kwargs

@@ -8,14 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-import locale
 import logging
-import shutil
 import requests
-import json
-import urllib
 import sys
-import re
 
 from .base import ParserBase
 
