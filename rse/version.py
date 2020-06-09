@@ -8,11 +8,11 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-__version__ = "0.0.0"
+__version__ = "0.0.1"
 AUTHOR = "Vanessa Sochat"
 AUTHOR_EMAIL = "vsochat@stanford.edu"
 NAME = "rse"
-PACKAGE_URL = "http://www.github.com/rse/rse"
+PACKAGE_URL = "https://github.com/rseng/rse"
 KEYWORDS = "rse,software,research software,database,taxonomy"
 DESCRIPTION = "tools for assessment and categorization of research software"
 LICENSE = "LICENSE"

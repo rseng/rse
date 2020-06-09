@@ -14,7 +14,8 @@ import sys
 import pytest
 
 
-def test_parsers_filesystem(tmp_path):
+@pytest.mark.parametrize("database", ["filesystem", "sqlite"])
+def test_parsers_filesystem(tmp_path, database):
     """test each parser with the filesystem database.
     """
     from rse.main import Encyclopedia
@@ -23,7 +24,7 @@ def test_parsers_filesystem(tmp_path):
     os.mkdir(config_dir)
     config_file = os.path.join(config_dir, "rse.ini")
 
-    enc = Encyclopedia(config_file=config_file, generate=True, database="filesystem")
+    enc = Encyclopedia(config_file=config_file, generate=True, database="database")
 
     # Each uid should map to a parser
     uids = [["github", "github.com/singularityhub/sregistry"]]
@@ -49,7 +50,8 @@ def test_parsers_filesystem(tmp_path):
         assert "timestamp" in data
 
 
-def test_filesystem(tmp_path):
+@pytest.mark.parametrize("database", ["filesystem", "sqlite"])
+def test_filesystem(tmp_path, database):
     """Test loading and using a queue with the filesystem database.
     """
     from rse.main import Encyclopedia
@@ -62,15 +64,16 @@ def test_filesystem(tmp_path):
     with pytest.raises(SystemExit):
         enc = Encyclopedia(config_file=config_file)
 
-    enc = Encyclopedia(config_file=config_file, generate=True, database="filesystem")
+    enc = Encyclopedia(config_file=config_file, generate=True, database=database)
     assert enc.config.configfile == config_file
 
     assert os.path.exists(config_dir)
     assert enc.config_dir == config_dir
     assert enc.config.configfile == os.path.join(enc.config_dir, "rse.ini")
-    assert enc.database == "filesystem"
-    assert enc.db.database == "filesystem"
-    assert enc.db.data_base == os.path.join(config_dir, "database")
+    assert enc.database == database
+    assert enc.db.database == database
+    if database == "filesystem":
+        assert enc.db.data_base == os.path.join(config_dir, "database")
 
     # Test list, empty without anything
     assert not enc.list()

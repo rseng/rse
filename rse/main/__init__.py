@@ -135,8 +135,7 @@ class Encyclopedia:
         """
         try:
             repo = self.get(uid)
-            repo.parser.get_metadata()
-            repo.save()
+            self.db.update(repo)
             bot.info(f"{repo.uid} has been updated.")
             return repo
         except RepoNotFoundError as exc:

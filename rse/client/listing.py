@@ -22,6 +22,6 @@ def main(args, extra):
     if not args.parser:
         bot.table(enc.list())
     else:
-        # Each in the list can be a full executor or a task id
+        # Each in the list can be a full executor or a uid
         for parser in args.parser:
             bot.table(enc.list(parser))

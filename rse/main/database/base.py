@@ -40,7 +40,7 @@ class Database:
         """
         raise NotImplementedError
 
-    def update(self, executor, updates=None):
+    def update(self, uid):
         """update a software repository.
         """
         raise NotImplementedError

@@ -118,6 +118,14 @@ class FileSystemDatabase(Database):
         parser = get_parser(uid, config=self.config)
         return SoftwareRepository(parser, exists=True, data_base=self.data_base)
 
+    def update(self, repo):
+        """Update a repository by retrieving metadata, and then calling update 
+           on the software repository to save it.
+        """
+        data = repo.parser.get_metadata()
+        if data:
+            repo.update()
+
     def search(self, query):
         """A filesystem search can only support returning results with filenames
         """
@@ -215,9 +223,8 @@ class SoftwareRepository:
         """Update a data file. This means reading, updating, and writing.
         """
         updates = updates or {}
-        if updates:
-            self.data.update(updates)
-            self.save()
+        self.data.update(updates)
+        self.save()
 
     def create(self, should_exist=False):
         """create the filename if it doesn't exist, otherwise if it should (and

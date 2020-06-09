@@ -104,7 +104,7 @@ def get_parser():
         help="Path to single folder or set of folders to update.",
     )
 
-    # List tasks and print to terminal
+    # List repos and print to terminal
     ls = subparsers.add_parser("ls", help="List software")
     ls.add_argument(
         "parser", help="list one or more parsers or specific software.", nargs="*"

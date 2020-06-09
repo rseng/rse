@@ -9,6 +9,8 @@ here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 . $here/helpers.sh
 
+unset RSE_CONFIG_FILE || true
+
 # Make sure it's installed
 if which rse >/dev/null; then
     printf "rse is installed\n"
@@ -22,7 +24,7 @@ tmpdir=$(mktemp -d)
 output=$(mktemp ${tmpdir:-/tmp}/rse_test.XXXXXX)
 config=$tmpdir/software
 mkdir -p $config
-printf "Created temporary directory to work in. ${output}\n"
+printf "Created temporary directory to work in. ${config}\n"
 
 echo
 echo "#### Testing rse init"
@@ -33,20 +35,37 @@ echo "#### Testing rse generate-key"
 runTest 0 $output rse generate-key
 
 echo
-echo "#### Testing rse get with no repos"
+echo "#### Testing [filesystem] rse get with no repos"
 runTest 0 $output rse --config_file $config/rse.ini get
 
 echo
-echo "#### Testing rse add for a repo"
+echo "#### Testing [filesystem] rse add for a repo"
 runTest 0 $output rse --config_file $config/rse.ini add github.com/singularityhub/sregistry
 runTest 0 $output ls $config/database/github/singularityhub/sregistry/metadata.json 
 
 echo
-echo "#### Testing rse ls"""
+echo "#### Testing [filesystem] rse ls"""
 runTest 0 $output rse --config_file $config/rse.ini ls
 
 echo 
-echo "#### Testing rse clear"
+echo "#### Testing [filesystem] rse clear"
 runTest 0 $output rse --config_file $config/rse.ini clear --force
+
+echo
+echo "#### Testing [sqlite] rse config to use sqlite"
+runTest 0 $output rse --config_file $config/rse.ini config --database sqlite
+
+echo
+echo "#### Testing [sqlite] rse add for a repo"
+runTest 0 $output rse --config_file $config/rse.ini add github.com/singularityhub/sregistry
+
+echo
+echo "#### Testing [sqlite] rse ls"""
+runTest 0 $output rse --config_file $config/rse.ini ls
+
+echo 
+echo "#### Testing [sqlite] rse clear"
+runTest 0 $output rse --config_file $config/rse.ini clear --force
+
 
 rm -rf ${tmpdir}

@@ -69,7 +69,7 @@ class RepoError(RuntimeError):
     def __init__(self, uid=None, reason=None, *args, **kwargs):
         super(RepoError, self).__init__(*args, **kwargs)
         self.uid = uid or ""
-        self.reason = reason or "There was a problem with task"
+        self.reason = reason or "There was a problem with repository"
 
     def __str__(self):
         return "{} {}".format(self.reason, self.uid)
@@ -80,7 +80,7 @@ class MultipleReposExistError(RepoError):
     """
 
     def __init__(self, uidid, *args, **kwargs):
-        reason = "More than one task found for"
+        reason = "More than one repository found for"
         super(MultipleReposExistError, self).__init__(
             uid=uid, reason=reason, *args, **kwargs
         )
