@@ -47,9 +47,22 @@ echo
 echo "#### Testing [filesystem] rse ls"""
 runTest 0 $output rse --config_file $config/rse.ini ls
 
+echo
+echo "#### Testing [filesystem] rse export"""
+runTest 0 $output rse --config_file $config/rse.ini export $tmpdir/filesystem-repos.txt
+runTest 0 $output ls $tmpdir/filesystem-repos.txt
+
 echo 
 echo "#### Testing [filesystem] rse clear"
 runTest 0 $output rse --config_file $config/rse.ini clear --force
+
+echo
+echo "#### Testing [filesystem] rse add (bulk)"""
+runTest 0 $output rse --config_file $config/rse.ini add --file $tmpdir/filesystem-repos.txt
+
+echo
+echo "#### Testing [filesystem] rse update (bulk)"""
+runTest 0 $output rse --config_file $config/rse.ini update --file $tmpdir/filesystem-repos.txt
 
 echo
 echo "#### Testing [sqlite] rse config to use sqlite"
@@ -62,6 +75,19 @@ runTest 0 $output rse --config_file $config/rse.ini add github.com/singularityhu
 echo
 echo "#### Testing [sqlite] rse ls"""
 runTest 0 $output rse --config_file $config/rse.ini ls
+
+echo
+echo "#### Testing [sqlite] rse add (bulk)"""
+runTest 0 $output rse --config_file $config/rse.ini add --file $tmpdir/filesystem-repos.txt
+
+echo
+echo "#### Testing [sqlite] rse update (bulk)"""
+runTest 0 $output rse --config_file $config/rse.ini update --file $tmpdir/filesystem-repos.txt
+
+echo
+echo "#### Testing [sqlite] rse export"""
+runTest 0 $output rse --config_file $config/rse.ini export $tmpdir/repos.txt
+runTest 0 $output ls $tmpdir/repos.txt
 
 echo 
 echo "#### Testing [sqlite] rse clear"

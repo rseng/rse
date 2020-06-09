@@ -90,6 +90,23 @@ def get_parser():
         "exists", help="Determine if an entry exists in the database."
     )
 
+    # Exists
+    export = subparsers.add_parser(
+        "export", help="Export repository names, metadata, or static files."
+    )
+    export.add_argument(
+        "--force",
+        dest="force",
+        help="Don't ask for confirmation to overwrite existing file(s).",
+        default=False,
+        action="store_true",
+    )
+    export.add_argument(
+        "path",
+        help="Fileame to export repos to (default repos.txt)",
+        default="repos.txt",
+    )
+
     # Update
     update = subparsers.add_parser(
         "update", help="Update one or more software entries."
@@ -102,6 +119,13 @@ def get_parser():
         dest="path",
         default=None,
         help="Path to single folder or set of folders to update.",
+    )
+    update.add_argument(
+        "--force",
+        dest="force",
+        help="If a repository is not present, add it.",
+        default=False,
+        action="store_true",
     )
 
     # List repos and print to terminal
@@ -156,8 +180,17 @@ def get_parser():
             help="database backend to use, to override configuration.",
         )
 
-    for command in [update, exists, get, add]:
+    for command in [exists, get]:
         command.add_argument("uid", help="uri within software namespace.", nargs="?")
+
+    for command in [update, add]:
+        command.add_argument("uid", help="uri within software namespace.", nargs="?")
+        command.add_argument(
+            "--file",
+            dest="file",
+            default=None,
+            help="single line delimited file of repositories.",
+        )
 
     return parser
 
@@ -204,6 +237,8 @@ def main():
         from .config import main
     if args.command == "exists":
         from .exists import main
+    if args.command == "export":
+        from .export import main
     if args.command == "generate-key":
         from .generate import main
     if args.command == "update":

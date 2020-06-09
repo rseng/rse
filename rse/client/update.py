@@ -15,4 +15,9 @@ def main(args, extra):
 
     # Create a queue object, run the command to match to an executor
     enc = Encyclopedia(config_file=args.config_file)
-    enc.update(args.uid)
+
+    # If a file is provided:
+    if args.file:
+        enc.bulk_update(args.file)
+    else:
+        enc.update(args.uid)

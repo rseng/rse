@@ -29,7 +29,7 @@ class GitHubParser(ParserBase):
         """Given some kind of GitHub url, parse the uid
         """
         uid = uid.replace(":", "/")
-        owner, repo = uid.strip(".git").split("/")[-2:]
+        owner, repo = uid.replace(".git", "").split("/")[-2:]
         return "{}/{}".format(owner, repo)
 
     def load_secrets(self):

@@ -54,6 +54,13 @@ def read_file(filename, readlines=True):
     return content
 
 
+def write_file(filename, content):
+    """Write some text content to a file
+    """
+    with open(filename, "w") as fd:
+        fd.write(content)
+
+
 def write_json(json_obj, filename, pretty=True):
     """write_json will write a json object to file, pretty printed
 
