@@ -15,11 +15,11 @@ def init_db(database, config_dir=None, database_string="", config=None):
        client has it's own init to check for a connection (or filesystem 
        path existence) and then functions to interact with entities.
     """
-    # Case 1: Filesystem database saves to $HOME/.rse/database
+    # Case 1: Filesystem database saves to ./database
     if database == "filesystem":
         from .filesystem import FileSystemDatabase as Database
 
-    # Case 2: Sqlite database saves to $HOME/.rse/rse.db
+    # Case 2: Sqlite database saves to rse.db
     elif database.startswith("sqlite"):
         from .sqlite import SqliteDatabase as Database
 
