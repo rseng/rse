@@ -15,7 +15,6 @@ control) or queried from a repository that serves one of these datasets.
 The research software database, along with a taxonomy and criteria, can then
 be queried in an interactive way to generate a research software encyclopedia.
 
-
 **under development**
 
 ## License
