@@ -134,11 +134,16 @@ def get_parser():
         "parser", help="list one or more parsers or specific software.", nargs="*"
     )
 
-    # Start the queueMe dashboard
+    # Search for software
     search = subparsers.add_parser(
         "search", help="Search for a piece of research software",
     )
     search.add_argument("query", nargs="*")
+
+    # Shell
+    subparsers.add_parser(
+        "shell", help="start an interactive shell for an encyclopedia"
+    )
 
     # Start the rse dashboard
     start = subparsers.add_parser(
@@ -251,6 +256,8 @@ def main():
         from .listing import main
     if args.command == "search":
         from .search import main
+    if args.command == "shell":
+        from .shell import main
     if args.command == "start":
         from .start import main
 

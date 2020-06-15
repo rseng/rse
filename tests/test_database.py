@@ -91,3 +91,7 @@ def test_filesystem(tmp_path, database):
     assert len(enc.list()) == 0
     enc.clear(noprompt=True)
     assert not enc.list()
+
+    # Get the taxonomy or criteria
+    enc.list_taxonomy()
+    enc.list_criteria()

@@ -16,9 +16,10 @@ your software database.
  - [List](#list) all software or software specific to a parser
 
  - [Remote](#remote): query the rseng/software remote database
- - [Clear](#clear) a single task, all tasks for an executor, or all tasks.
- - [Search](#search) across your tasks to find a particular one.
- - [Start](#start) an interactive dashboard to see and manage tasks.
+ - [Clear](#clear) a software repository, all under a parser, or the entire database.
+ - [Search](#search) across your software to find a particular one.
+ - [Shell](#shell) into a Python shell to interact with an encyclopedia client.
+ - [Start](#start) an interactive dashboard to see software and annotate crtieria and taxonomy membership.
 
 
 <a id="exists">
@@ -233,6 +234,34 @@ $ rse search singularity
 INFO:rse.main:Database: filesystem
 1  github/singularityhub/sregistry
 ```
+
+<a id="shell">
+## Shell
+
+The shell is a quick way to open up an interactive environment with an encyclopedia
+client. For example, let's say we are sitting at the root of a database, such as the
+repository rseng/software:
+
+```bash
+git clone git@github.com:rseng/software.git
+cd software
+```
+
+This means that we have an rse.ini file, and can then start a shell to interact
+with the software there:
+
+```
+$ rse shell
+INFO:rse.main:Database: sqlite
+Python 3.7.4 (default, Aug 13 2019, 20:35:49) 
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.13.0 -- An enhanced Interactive Python. Type '?' for help.
+
+client                                                                                                              
+Out[1]: <rse.main.Encyclopedia at 0x7f2135346690>
+```
+
+From that point on, you'd be interacting with the Encyclopedia client.
 
 <a id="start">
 ## Start
