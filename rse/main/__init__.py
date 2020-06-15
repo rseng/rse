@@ -16,6 +16,8 @@ from rse.main.database import init_db
 from rse.utils.prompt import confirm
 from rse.utils.file import read_file
 from rse.main.parsers import get_parser
+from rse.main.criteria import get_criteria
+from rse.main.taxonomy import get_taxonomy
 
 import logging
 import os
@@ -87,6 +89,20 @@ class Encyclopedia:
            parser indicates that we list everything.
         """
         return self.db.list_repos(name)
+
+    def list_criteria(self):
+        """Get a listing of criteria from the rse API
+        """
+        if not hasattr(self, "criteria"):
+            self.criteria = get_criteria()
+        return self.criteria
+
+    def list_taxonomy(self):
+        """Get a listing of a flattened taxonomy from the rse API
+        """
+        if not hasattr(self, "taxonomy"):
+            self.taxonomy = get_taxonomy()
+        return self.taxonomy
 
     def bulk_add(self, filename):
         """Given a filename with a single list of repos, add each

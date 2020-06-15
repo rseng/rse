@@ -22,7 +22,13 @@ needing to specify `--config_file`.
 the number of multiprocessing workers to use. This value is set to be 2*2nproc + 1 if not set.
 
 ### RSE_SHELL
-the default shell for an interactive manager (defaults to ipython, then checks python, and bpython)
+The default shell for an interactive client (defaults to ipython, then checks python, and bpython)
+
+The default endpoint to retrieve criteria and taxonomy information. Defaults to `https://rseng.github.io/rseng/api`
+to provide each of:
+
+ - https://rseng.github.io/rseng/api/taxonomy/
+ - https://rseng.github.io/rseng/api/criteria
 
 ### RSE_DATABASE
 
