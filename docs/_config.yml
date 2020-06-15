@@ -1,0 +1,88 @@
+#----
+# Site
+
+title: rse
+url: "https://vsoch.github.io/rse"
+baseurl: "/rse"
+show_full_navigation: false
+
+logo: assets/img/logo.png
+description: Documentation for Research Software Encyclopedia
+author:
+  name:
+  email: vsochat@stanford.edu
+  twitter: vsoch
+social:
+  name: vsoch
+  links:
+    - https://github.com/vsoch
+
+# The current hosting location of the docs
+repo: rseng/rse
+reponame: rse
+
+# The current Docker container
+docker: quay.io/vanessa/rse
+
+# colors
+yellow: "#ffd43b"
+blue: "#306998"
+
+# -----
+# Build
+
+timezone: Etc/UTC
+
+permalink: pretty
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-feed
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENSE
+
+collections:
+  docs:
+    title: Documentation
+    permalink: /:path/
+    output: true
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: default
+  -
+    scope:
+      path: ""
+      type: "docs"
+    values:
+      seo:
+        type: Article
+      _comments:
+        category: Group navigation links with this field
+        order: Used to sort links in the navigation
+      _options:
+        content:
+          width: 800
+          height: 2000
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      _comments:
+        type: Marks the impact of this release
+
+# ---------
+# ChangeLog
+
+types:
+  - minor
+  - major

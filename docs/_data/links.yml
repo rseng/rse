@@ -1,0 +1,16 @@
+footer:
+- name: ChangeLog
+  url: changelog
+- name: Python API
+  url: api
+- name: GitHub
+  external_url: https://www.github.com/vsoch/rse
+navigation:
+- name: Installation
+  url: install/
+- name: Getting Started
+  url: getting-started/
+- name: Tutorials
+  url: tutorials
+- name: Contributing
+  url: contributing/
