@@ -1,0 +1,399 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>rse.main package &mdash; The Research Software Encyclopedia 11 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../assets/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../assets/documentation_options.js"></script>
+        <script src="../assets/jquery.js"></script>
+        <script src="../assets/underscore.js"></script>
+        <script src="../assets/doctools.js"></script>
+        <script src="../assets/language_data.js"></script>
+    
+    <script type="text/javascript" src="../assets/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../assets/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../assets/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="rse.main.config package" href="rse.main.config.html" />
+    <link rel="prev" title="rse.logger package" href="rse.logger.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> The Research Software Encyclopedia
+          
+
+          
+            
+            <img src="../assets/logo-transparent.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="rse.html">rse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="rse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="rse.app.html">rse.app package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rse.client.html">rse.client package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rse.logger.html">rse.logger package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">rse.main package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-rse.main.criteria">rse.main.criteria module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-rse.main.taxonomy">rse.main.taxonomy module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-rse.main">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="rse.utils.html">rse.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rse.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.html#module-rse.defaults">rse.defaults module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.html#module-rse.exceptions">rse.exceptions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.html#module-rse.version">rse.version module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.html#module-rse">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">The Research Software Encyclopedia</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="rse.html">rse package</a> &raquo;</li>
+        
+      <li>rse.main package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/rse.main.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="rse-main-package">
+<h1>rse.main package<a class="headerlink" href="#rse-main-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rse.main.config.html">rse.main.config package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rse.main.config.html#module-rse.main.config">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rse.main.database.html">rse.main.database package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rse.main.database.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.main.database.html#module-rse.main.database.base">rse.main.database.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.main.database.html#module-rse.main.database.filesystem">rse.main.database.filesystem module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.main.database.html#module-rse.main.database.models">rse.main.database.models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.main.database.html#module-rse.main.database.relational">rse.main.database.relational module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.main.database.html#module-rse.main.database.sqlite">rse.main.database.sqlite module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.main.database.html#module-rse.main.database">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rse.main.parsers.html">rse.main.parsers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rse.main.parsers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.main.parsers.html#module-rse.main.parsers.base">rse.main.parsers.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.main.parsers.html#module-rse.main.parsers.github">rse.main.parsers.github module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.main.parsers.html#module-rse.main.parsers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-rse.main.criteria">
+<span id="rse-main-criteria-module"></span><h2>rse.main.criteria module<a class="headerlink" href="#module-rse.main.criteria" title="Permalink to this headline">¶</a></h2>
+<p>Copyright (C) 2020 Vanessa Sochat.</p>
+<p>This Source Code Form is subject to the terms of the
+Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
+with this file, You can obtain one at <a class="reference external" href="http://mozilla.org/MPL/2.0/">http://mozilla.org/MPL/2.0/</a>.</p>
+<dl class="py function">
+<dt id="rse.main.criteria.get_criteria">
+<code class="sig-prename descclassname">rse.main.criteria.</code><code class="sig-name descname">get_criteria</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main/criteria.html#get_criteria"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.criteria.get_criteria" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get criteria from the default endpoint.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-rse.main.taxonomy">
+<span id="rse-main-taxonomy-module"></span><h2>rse.main.taxonomy module<a class="headerlink" href="#module-rse.main.taxonomy" title="Permalink to this headline">¶</a></h2>
+<p>Copyright (C) 2020 Vanessa Sochat.</p>
+<p>This Source Code Form is subject to the terms of the
+Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
+with this file, You can obtain one at <a class="reference external" href="http://mozilla.org/MPL/2.0/">http://mozilla.org/MPL/2.0/</a>.</p>
+<dl class="py function">
+<dt id="rse.main.taxonomy.get_taxonomy">
+<code class="sig-prename descclassname">rse.main.taxonomy.</code><code class="sig-name descname">get_taxonomy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main/taxonomy.html#get_taxonomy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.taxonomy.get_taxonomy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get taxonomy from the default endpoint.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-rse.main">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-rse.main" title="Permalink to this headline">¶</a></h2>
+<p>Copyright (C) 2020 Vanessa Sochat.</p>
+<p>This Source Code Form is subject to the terms of the
+Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
+with this file, You can obtain one at <a class="reference external" href="http://mozilla.org/MPL/2.0/">http://mozilla.org/MPL/2.0/</a>.</p>
+<dl class="py class">
+<dt id="rse.main.Encyclopedia">
+<em class="property">class </em><code class="sig-prename descclassname">rse.main.</code><code class="sig-name descname">Encyclopedia</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config_file</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">database</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">generate</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>An encyclopedia is one or more namespaces to store research
+software. By default, we create a structure on the filesystem,
+however an sqlite database (or other) can be used.</p>
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.add">
+<code class="sig-name descname">add</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uid</span></em>, <em class="sig-param"><span class="n">quiet</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper to add a repository to the software database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.bulk_add">
+<code class="sig-name descname">bulk_add</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.bulk_add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.bulk_add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a filename with a single list of repos, add each</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.bulk_update">
+<code class="sig-name descname">bulk_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.bulk_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.bulk_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a filename with a single list of repos, add each</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.clear">
+<code class="sig-name descname">clear</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">noprompt</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>clear takes a target, and that can be a uid, parser, or none
+We ask the user for confirmation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.exists">
+<code class="sig-name descname">exists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>based on a parser type and unique identifier, determine if software
+exists in the database</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uid</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper to get a repo id from the database. If an id is not provided,
+will return the last updated repo based on timestamp of file or database.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.get_or_create">
+<code class="sig-name descname">get_or_create</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.get_or_create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.get_or_create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.initdb">
+<code class="sig-name descname">initdb</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">database</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.initdb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.initdb" title="Permalink to this definition">¶</a></dt>
+<dd><p>setup the rse home (where the config directory is stored) and the
+database specification. If a database string is required (and not
+provided) alert the user and exit on error).</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><ul class="simple">
+<li><p>config_dir (str) : the configuration directory (home for rse)</p></li>
+<li><p>database (str) : a string to specify the database setup</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.list">
+<code class="sig-name descname">list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper to the database list_repos function. Optionally take
+a whole parser name (e.g., github) or just a specific uid. No
+parser indicates that we list everything.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.list_criteria">
+<code class="sig-name descname">list_criteria</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.list_criteria"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.list_criteria" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a listing of criteria from the rse API</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.list_taxonomy">
+<code class="sig-name descname">list_taxonomy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.list_taxonomy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.list_taxonomy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a listing of a flattened taxonomy from the rse API</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search across commands and general metadata for a string of interest.
+We use regular expressions (re.search) so they are supported.
+Search is only available for non-filesystem databases.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.main.Encyclopedia.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">uid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/main.html#Encyclopedia.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.main.Encyclopedia.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update an existing software repository.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rse.main.config.html" class="btn btn-neutral float-right" title="rse.main.config package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rse.logger.html" class="btn btn-neutral float-left" title="rse.logger package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Vanessa Sochat
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

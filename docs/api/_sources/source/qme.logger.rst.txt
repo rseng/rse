@@ -1,0 +1,46 @@
+rse.logger package
+==================
+
+Submodules
+----------
+
+rse.logger.message module
+-------------------------
+
+.. automodule:: rse.logger.message
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+rse.logger.namer module
+-----------------------
+
+.. automodule:: rse.logger.namer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+rse.logger.progress module
+--------------------------
+
+.. automodule:: rse.logger.progress
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+rse.logger.spinner module
+-------------------------
+
+.. automodule:: rse.logger.spinner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: rse.logger
+   :members:
+   :undoc-members:
+   :show-inheritance:

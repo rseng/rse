@@ -1,0 +1,440 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>rse.main.database.relational &mdash; The Research Software Encyclopedia 11 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../assets/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../assets/documentation_options.js"></script>
+        <script src="../../../../assets/jquery.js"></script>
+        <script src="../../../../assets/underscore.js"></script>
+        <script src="../../../../assets/doctools.js"></script>
+        <script src="../../../../assets/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../assets/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../assets/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../assets/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> The Research Software Encyclopedia
+          
+
+          
+            
+            <img src="../../../../assets/logo-transparent.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../source/rse.html">rse package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">The Research Software Encyclopedia</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../main.html">rse.main</a> &raquo;</li>
+        
+          <li><a href="../database.html">rse.main.database</a> &raquo;</li>
+        
+      <li>rse.main.database.relational</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for rse.main.database.relational</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">Copyright (C) 2020 Vanessa Sochat.</span>
+
+<span class="sd">This Source Code Form is subject to the terms of the</span>
+<span class="sd">Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed</span>
+<span class="sd">with this file, You can obtain one at http://mozilla.org/MPL/2.0/.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">rse.exceptions</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">MissingDatabaseString</span><span class="p">,</span>
+    <span class="n">NoReposError</span><span class="p">,</span>
+    <span class="n">MultipleReposExistError</span><span class="p">,</span>
+    <span class="n">RepoNotFoundError</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">rse.main.database.base</span> <span class="kn">import</span> <span class="n">Database</span>
+<span class="kn">from</span> <span class="nn">rse.main.parsers</span> <span class="kn">import</span> <span class="n">get_parser</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span><span class="p">,</span> <span class="n">desc</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">scoped_session</span><span class="p">,</span> <span class="n">sessionmaker</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">or_</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">bot</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;rse.main.database.relational&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="RelationalDatabase"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.relational.RelationalDatabase">[docs]</a><span class="k">class</span> <span class="nc">RelationalDatabase</span><span class="p">(</span><span class="n">Database</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A RelationalDatabase is a more robust relational datbase (to sqlite).</span>
+<span class="sd">       Since the global database property can be any of postgresql, mysql+pysq;,</span>
+<span class="sd">       it is defined on init. The sqlite database also uses this class, but defines</span>
+<span class="sd">       a custom init function to handle the rse.db file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dir</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;init for the filesystem ensures that the base folder (named </span>
+<span class="sd">           according to the studyid) exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;database&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="n">database_string</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;database_string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">database_string</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MissingDatabaseString</span>
+
+        <span class="c1"># The database url includes the type and string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">://</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">,</span> <span class="n">database_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_database</span><span class="p">()</span>
+
+<div class="viewcode-block" id="RelationalDatabase.create_database"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.relational.RelationalDatabase.create_database">[docs]</a>    <span class="k">def</span> <span class="nf">create_database</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;create the databsae based on the string, whether it&#39;s relational or</span>
+<span class="sd">           sqlite. self.db must be defined.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">rse.main.database.models</span> <span class="kn">import</span> <span class="n">Base</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span>
+            <span class="n">sessionmaker</span><span class="p">(</span><span class="n">autocommit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">autoflush</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">Base</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query_property</span><span class="p">()</span>
+        <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Base</span> <span class="o">=</span> <span class="n">Base</span></div>
+
+    <span class="c1"># Global</span>
+
+<div class="viewcode-block" id="RelationalDatabase.exists"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.relational.RelationalDatabase.exists">[docs]</a>    <span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determine if a repo exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">rse.main.database.models</span> <span class="kn">import</span> <span class="n">SoftwareRepository</span>
+
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">repo</span> <span class="o">=</span> <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">uid</span> <span class="o">==</span> <span class="n">parser</span><span class="o">.</span><span class="n">uid</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">repo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="RelationalDatabase.get_or_create"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.relational.RelationalDatabase.get_or_create">[docs]</a>    <span class="k">def</span> <span class="nf">get_or_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determine if a repo exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">rse.main.database.models</span> <span class="kn">import</span> <span class="n">SoftwareRepository</span>
+
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">repo</span> <span class="o">=</span> <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">uid</span> <span class="o">==</span> <span class="n">parser</span><span class="o">.</span><span class="n">uid</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">repo</span><span class="p">:</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">repo</span></div>
+
+<div class="viewcode-block" id="RelationalDatabase.clear"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.relational.RelationalDatabase.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;clear (delete) all repos. This could be improved to cascade instead.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">rse.main.database.models</span> <span class="kn">import</span> <span class="n">SoftwareRepository</span>
+
+        <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+    <span class="c1"># Add or Update requires executor</span>
+
+<div class="viewcode-block" id="RelationalDatabase.add"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.relational.RelationalDatabase.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new repo based on a uid that matches to a parser.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">rse.main.database.models</span> <span class="kn">import</span> <span class="n">SoftwareRepository</span>
+
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">repo</span> <span class="o">=</span> <span class="n">SoftwareRepository</span><span class="p">(</span>
+                    <span class="n">uid</span><span class="o">=</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">export</span><span class="p">())</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+                <span class="n">bot</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="si">}</span><span class="s2"> was added to the the database.&quot;</span><span class="p">)</span>
+                <span class="n">repo</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">parser</span>
+                <span class="k">return</span> <span class="n">repo</span></div>
+
+<div class="viewcode-block" id="RelationalDatabase.update"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.relational.RelationalDatabase.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;update a repo with a json dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Return of None indicates non-success</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">updates</span> <span class="o">=</span> <span class="n">updates</span> <span class="ow">or</span> <span class="p">{}</span>
+            <span class="n">updates</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">export</span><span class="p">())</span>
+
+            <span class="c1"># Load the previous data to update</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="n">repo</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">updates</span><span class="p">)</span>
+            <span class="n">repo</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">repo</span></div>
+
+    <span class="c1"># Get, delete, etc. only require uid</span>
+
+<div class="viewcode-block" id="RelationalDatabase.get"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.relational.RelationalDatabase.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get a repo based on a uid. Exits on error if doesn&#39;t exist. If</span>
+<span class="sd">           a uid is not provided, get the last updated repository.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">rse.main.database.models</span> <span class="kn">import</span> <span class="n">SoftwareRepository</span>
+
+        <span class="c1"># Retrieve either the last repo, or the one with a specific uid</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uid</span><span class="p">:</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SoftwareRepository</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">))</span>
+                <span class="o">.</span><span class="n">first</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">repo</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">NoReposError</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">uid</span> <span class="o">==</span> <span class="n">parser</span><span class="o">.</span><span class="n">uid</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+
+            <span class="c1"># If an exact match isn&#39;t there, look for partial match</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">repo</span><span class="p">:</span>
+                <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;%&quot;</span> <span class="o">+</span> <span class="n">parser</span><span class="o">.</span><span class="n">uid</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span>
+                <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SoftwareRepository</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                    <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">uid</span><span class="o">.</span><span class="n">ilike</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">MultipleReposExistError</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">RepoNotFoundError</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+
+        <span class="n">repo</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">parser</span>
+        <span class="k">return</span> <span class="n">repo</span></div>
+
+<div class="viewcode-block" id="RelationalDatabase.delete_repo"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.relational.RelationalDatabase.delete_repo">[docs]</a>    <span class="k">def</span> <span class="nf">delete_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;delete a repo based on a specific repo id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">rse.main.database.models</span> <span class="kn">import</span> <span class="n">SoftwareRepository</span>
+
+        <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">repo</span><span class="p">:</span>
+            <span class="n">bot</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s2"> does not exist in the database.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">uid</span> <span class="o">==</span> <span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s2"> has been removed.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="RelationalDatabase.delete_parser"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.relational.RelationalDatabase.delete_parser">[docs]</a>    <span class="k">def</span> <span class="nf">delete_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;delete all repos for a parser, based on parser&#39;s name (str).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">rse.main.database.models</span> <span class="kn">import</span> <span class="n">SoftwareRepository</span>
+
+        <span class="n">deleted_items</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">parser_name</span> <span class="o">==</span> <span class="n">name</span>
+        <span class="p">):</span>
+            <span class="n">deleted_items</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">deleted_items</span></div>
+
+<div class="viewcode-block" id="RelationalDatabase.list_repos"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.relational.RelationalDatabase.list_repos">[docs]</a>    <span class="k">def</span> <span class="nf">list_repos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;list repos, either under a particular parser name (if provided)</span>
+<span class="sd">           or just the parsers. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">rse.main.database.models</span> <span class="kn">import</span> <span class="n">SoftwareRepository</span>
+
+        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">repos</span> <span class="o">=</span> <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">parser_name</span> <span class="o">==</span> <span class="n">name</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">repos</span> <span class="o">=</span> <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="n">repos</span><span class="p">:</span>
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">rows</span></div>
+
+<div class="viewcode-block" id="RelationalDatabase.search"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.relational.RelationalDatabase.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Search across the database for a particular query.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">rse.main.database.models</span> <span class="kn">import</span> <span class="n">SoftwareRepository</span>
+
+        <span class="c1"># Ensure that query can be part of a larger string</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;%&quot;</span> <span class="o">+</span> <span class="n">query</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span>
+
+        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SoftwareRepository</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">or_</span><span class="p">(</span>
+                <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">ilike</span><span class="p">(</span><span class="n">query</span><span class="p">),</span>
+                <span class="n">SoftwareRepository</span><span class="o">.</span><span class="n">uid</span><span class="o">.</span><span class="n">ilike</span><span class="p">(</span><span class="n">query</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="c1"># list of tuples, (uid, datetime, executor]</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[[</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Vanessa Sochat
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,463 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>rse.logger package &mdash; The Research Software Encyclopedia 11 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../assets/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../assets/documentation_options.js"></script>
+        <script src="../assets/jquery.js"></script>
+        <script src="../assets/underscore.js"></script>
+        <script src="../assets/doctools.js"></script>
+        <script src="../assets/language_data.js"></script>
+    
+    <script type="text/javascript" src="../assets/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../assets/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../assets/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="rse.main package" href="rse.main.html" />
+    <link rel="prev" title="rse.client package" href="rse.client.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> The Research Software Encyclopedia
+          
+
+          
+            
+            <img src="../assets/logo-transparent.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="rse.html">rse package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="rse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="rse.app.html">rse.app package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rse.client.html">rse.client package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">rse.logger package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-rse.logger.message">rse.logger.message module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-rse.logger">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="rse.main.html">rse.main package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rse.utils.html">rse.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rse.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.html#module-rse.defaults">rse.defaults module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.html#module-rse.exceptions">rse.exceptions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.html#module-rse.version">rse.version module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rse.html#module-rse">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">The Research Software Encyclopedia</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="rse.html">rse package</a> &raquo;</li>
+        
+      <li>rse.logger package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/rse.logger.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="rse-logger-package">
+<h1>rse.logger package<a class="headerlink" href="#rse-logger-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-rse.logger.message">
+<span id="rse-logger-message-module"></span><h2>rse.logger.message module<a class="headerlink" href="#module-rse.logger.message" title="Permalink to this headline">¶</a></h2>
+<p>Copyright (C) 2020 Vanessa Sochat.</p>
+<p>This Source Code Form is subject to the terms of the
+Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
+with this file, You can obtain one at <a class="reference external" href="http://mozilla.org/MPL/2.0/">http://mozilla.org/MPL/2.0/</a>.</p>
+<dl class="py class">
+<dt id="rse.logger.message.RseMessage">
+<em class="property">class </em><code class="sig-prename descclassname">rse.logger.message.</code><code class="sig-name descname">RseMessage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">MESSAGELEVEL</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.abort">
+<code class="sig-name descname">abort</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.abort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.abort" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.addColor">
+<code class="sig-name descname">addColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">level</span></em>, <em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.addColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.addColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>addColor to the prompt (usually prefix) if terminal
+supports, and specified to do so</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.critical">
+<code class="sig-name descname">critical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.critical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.critical" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.custom">
+<code class="sig-name descname">custom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prefix</span></em>, <em class="sig-param"><span class="n">message</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">'\x1b[95m'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.custom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.custom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.debug">
+<code class="sig-name descname">debug</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.debug" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.emit">
+<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">level</span></em>, <em class="sig-param"><span class="n">message</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.emit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.emit" title="Permalink to this definition">¶</a></dt>
+<dd><p>emit is the main function to print the message
+optionally with a prefix</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><ul class="simple">
+<li><p>level (int) : the level of the message</p></li>
+<li><p>message (str) : the message to print</p></li>
+<li><p>prefix (str) : a prefix for the message</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.emitError">
+<code class="sig-name descname">emitError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">level</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.emitError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.emitError" title="Permalink to this definition">¶</a></dt>
+<dd><p>determine if a level should print to
+stderr, includes all levels but INFO and QUIET</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.emitOutput">
+<code class="sig-name descname">emitOutput</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">level</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.emitOutput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.emitOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>determine if a level should print to stdout
+only includes INFO</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.error">
+<code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.exit">
+<code class="sig-name descname">exit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em>, <em class="sig-param"><span class="n">return_code</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.exit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.exit_info">
+<code class="sig-name descname">exit_info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em>, <em class="sig-param"><span class="n">return_code</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.exit_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.exit_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.failure">
+<code class="sig-name descname">failure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.failure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.failure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a message string, print as a failure in red.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>message: the message to print in red (indicating failure).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.get_logs">
+<code class="sig-name descname">get_logs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">join_newline</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.get_logs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.get_logs" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘get_logs will return the complete history, joined by newline
+(default) or as is.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.info">
+<code class="sig-name descname">info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.isEnabledFor">
+<code class="sig-name descname">isEnabledFor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">messageLevel</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.isEnabledFor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.isEnabledFor" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if a messageLevel is enabled to emit a level</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.is_quiet">
+<code class="sig-name descname">is_quiet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.is_quiet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.is_quiet" title="Permalink to this definition">¶</a></dt>
+<dd><p>is_quiet returns true if the level is under 1</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.log">
+<code class="sig-name descname">log</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.newline">
+<code class="sig-name descname">newline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.newline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.newline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.show_progress">
+<code class="sig-name descname">show_progress</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">iteration</span></em>, <em class="sig-param"><span class="n">total</span></em>, <em class="sig-param"><span class="n">length</span><span class="o">=</span><span class="default_value">40</span></em>, <em class="sig-param"><span class="n">min_level</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">carriage_return</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">suffix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">symbol</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.show_progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.show_progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a terminal progress bar, default bar shows for verbose+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iteration</strong> (<em>current iteration (Int)</em>)</p></li>
+<li><p><strong>total</strong> (<em>total iterations (Int)</em>)</p></li>
+<li><p><strong>length</strong> (<em>character length of bar (Int)</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.success">
+<code class="sig-name descname">success</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.success"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.success" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a message string, print as a success in green.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><ul class="simple">
+<li><p>message: the message to print in green (indicating success).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.table">
+<code class="sig-name descname">table</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rows</span></em>, <em class="sig-param"><span class="n">col_width</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.table" title="Permalink to this definition">¶</a></dt>
+<dd><p>table will print a table of entries. If the rows is
+a dictionary, the keys are interpreted as column names. if
+not, a numbered list is used.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.useColor">
+<code class="sig-name descname">useColor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.useColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.useColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>useColor will determine if color should be added
+to a print. Will check if being run in a terminal, and
+if has support for asci</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.verbose">
+<code class="sig-name descname">verbose</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.verbose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.verbose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.verbose1">
+<code class="sig-name descname">verbose1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.verbose1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.verbose1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.verbose2">
+<code class="sig-name descname">verbose2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.verbose2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.verbose2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.verbose3">
+<code class="sig-name descname">verbose3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.verbose3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.verbose3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.warning">
+<code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.warning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.warning" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="rse.logger.message.RseMessage.write">
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stream</span></em>, <em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#RseMessage.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.RseMessage.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>write will write a message to a stream,
+first checking the encoding</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="rse.logger.message.convert2boolean">
+<code class="sig-prename descclassname">rse.logger.message.</code><code class="sig-name descname">convert2boolean</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#convert2boolean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.convert2boolean" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert2boolean is used for environmental variables that must be
+returned as boolean</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="rse.logger.message.get_logging_level">
+<code class="sig-prename descclassname">rse.logger.message.</code><code class="sig-name descname">get_logging_level</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#get_logging_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.get_logging_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>get_logging_level will configure a logging to standard out based on
+selected level, which should be in an environment variable called
+MESSAGELEVEL. if MESSAGELEVEL is not set, the maximum level
+(5) is assumed (all messages).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="rse.logger.message.get_user_color_preference">
+<code class="sig-prename descclassname">rse.logger.message.</code><code class="sig-name descname">get_user_color_preference</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../modules/rse/logger/message.html#get_user_color_preference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rse.logger.message.get_user_color_preference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-rse.logger">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-rse.logger" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rse.main.html" class="btn btn-neutral float-right" title="rse.main package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rse.client.html" class="btn btn-neutral float-left" title="rse.client package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Vanessa Sochat
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>rse.app.views.main &mdash; The Research Software Encyclopedia 11 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../assets/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../assets/documentation_options.js"></script>
+        <script src="../../../../assets/jquery.js"></script>
+        <script src="../../../../assets/underscore.js"></script>
+        <script src="../../../../assets/doctools.js"></script>
+        <script src="../../../../assets/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../assets/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../assets/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../assets/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> The Research Software Encyclopedia
+          
+
+          
+            
+            <img src="../../../../assets/logo-transparent.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../source/rse.html">rse package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">The Research Software Encyclopedia</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>rse.app.views.main</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for rse.app.views.main</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">Copyright (C) 2020 Vanessa Sochat.</span>
+
+<span class="sd">This Source Code Form is subject to the terms of the</span>
+<span class="sd">Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed</span>
+<span class="sd">with this file, You can obtain one at http://mozilla.org/MPL/2.0/.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span>
+
+<span class="c1"># from werkzeug import secure_filename</span>
+<span class="kn">from</span> <span class="nn">rse.app.server</span> <span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">socketio</span>
+<span class="kn">from</span> <span class="nn">rse.defaults</span> <span class="kn">import</span> <span class="n">RSE_SOCKET_UPDATE_SECONDS</span>
+
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span><span class="p">,</span> <span class="n">Event</span>
+
+<span class="c1"># thread for updates</span>
+<span class="n">thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">()</span>
+<span class="n">thread_stop_event</span> <span class="o">=</span> <span class="n">Event</span><span class="p">()</span>
+
+
+<span class="c1">## Main Index View</span>
+
+
+<div class="viewcode-block" id="index"><a class="viewcode-back" href="../../../../source/rse.app.views.html#rse.app.views.main.index">[docs]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span>
+        <span class="s2">&quot;home/filesystem-index.html&quot;</span><span class="p">,</span>
+        <span class="n">database</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">database</span><span class="p">,</span>
+        <span class="n">criteria</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">list_criteria</span><span class="p">(),</span>
+        <span class="n">entries</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">list_taxonomy</span><span class="p">(),</span>
+    <span class="p">)</span></div>
+
+
+<span class="c1">## Updating database rows</span>
+
+
+<div class="viewcode-block" id="update_database"><a class="viewcode-back" href="../../../../source/rse.app.views.html#rse.app.views.main.update_database">[docs]</a><span class="k">def</span> <span class="nf">update_database</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;A function to be run at some interval to update the rse database listing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">thread_stop_event</span><span class="o">.</span><span class="n">isSet</span><span class="p">():</span>
+
+        <span class="c1"># The data sent to the table depends on the database</span>
+        <span class="k">if</span> <span class="n">app</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">database</span> <span class="o">==</span> <span class="s2">&quot;filesystem&quot;</span><span class="p">:</span>
+
+            <span class="c1"># Break into parser types and uid</span>
+            <span class="n">socketio</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span>
+                <span class="s2">&quot;FSdatabase&quot;</span><span class="p">,</span>
+                <span class="p">{</span><span class="s2">&quot;rows&quot;</span><span class="p">:</span> <span class="n">app</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">list</span><span class="p">(),</span> <span class="s2">&quot;database&quot;</span><span class="p">:</span> <span class="n">app</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">database</span><span class="p">},</span>
+                <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;/update&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="c1"># sqlite or other relational</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">socketio</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span>
+                <span class="s2">&quot;RELdatabase&quot;</span><span class="p">,</span>
+                <span class="p">{</span><span class="s2">&quot;rows&quot;</span><span class="p">:</span> <span class="n">app</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">list</span><span class="p">(),</span> <span class="s2">&quot;database&quot;</span><span class="p">:</span> <span class="n">app</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">database</span><span class="p">},</span>
+                <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;/update&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">socketio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">RSE_SOCKET_UPDATE_SECONDS</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delete_row"><a class="viewcode-back" href="../../../../source/rse.app.views.html#rse.app.views.main.delete_row">[docs]</a><span class="nd">@socketio</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;deleterow&quot;</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;/table/action&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">delete_row</span><span class="p">(</span><span class="n">json</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;a request to delete a particular row&quot;&quot;&quot;</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Received deletion request for </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;taskid&quot;</span><span class="p">))</span>
+    <span class="n">taskid</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;taskid&quot;</span><span class="p">,</span> <span class="s2">&quot;doesnotexist&quot;</span><span class="p">)</span>
+    <span class="n">was_deleted</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">taskid</span><span class="p">,</span> <span class="n">noprompt</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">socketio</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span>
+        <span class="s2">&quot;deleterowcomplete&quot;</span><span class="p">,</span>
+        <span class="p">{</span><span class="s2">&quot;wasdeleted&quot;</span><span class="p">:</span> <span class="n">was_deleted</span><span class="p">,</span> <span class="s2">&quot;taskid&quot;</span><span class="p">:</span> <span class="n">taskid</span><span class="p">},</span>
+        <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;/table/action&quot;</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="rerun_row"><a class="viewcode-back" href="../../../../source/rse.app.views.html#rse.app.views.main.rerun_row">[docs]</a><span class="nd">@socketio</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;rerunrow&quot;</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;/table/action&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">rerun_row</span><span class="p">(</span><span class="n">json</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;a request to re-run a particular task.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Received re-run request for </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;taskid&quot;</span><span class="p">))</span>
+    <span class="n">taskid</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;taskid&quot;</span><span class="p">,</span> <span class="s2">&quot;doesnotexist&quot;</span><span class="p">)</span>
+    <span class="n">was_rerun</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">rerun</span><span class="p">(</span><span class="n">taskid</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="n">socketio</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span>
+        <span class="s2">&quot;reruncomplete&quot;</span><span class="p">,</span>
+        <span class="p">{</span><span class="s2">&quot;wasrerun&quot;</span><span class="p">:</span> <span class="n">was_rerun</span><span class="p">,</span> <span class="s2">&quot;taskid&quot;</span><span class="p">:</span> <span class="n">taskid</span><span class="p">},</span>
+        <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;/table/action&quot;</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="update_connect"><a class="viewcode-back" href="../../../../source/rse.app.views.html#rse.app.views.main.update_connect">[docs]</a><span class="nd">@socketio</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;connect&quot;</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;/update&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_connect</span><span class="p">():</span>
+    <span class="c1"># need visibility of the global thread object</span>
+    <span class="k">global</span> <span class="n">thread</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Client connected&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Start the process to update the table</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting Thread&quot;</span><span class="p">)</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">socketio</span><span class="o">.</span><span class="n">start_background_task</span><span class="p">(</span><span class="n">update_database</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="update_disconnect"><a class="viewcode-back" href="../../../../source/rse.app.views.html#rse.app.views.main.update_disconnect">[docs]</a><span class="nd">@socketio</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;disconnect&quot;</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;/update&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_disconnect</span><span class="p">():</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Client disconnected&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Vanessa Sochat
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
