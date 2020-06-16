@@ -1,0 +1,18 @@
+  <table class="table">
+    <thead>
+      <tr>
+        <th>
+          Id
+        </th>
+        <th>
+          Category
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in entries %}<tr>
+        <td>{{ entry.uid }}</td>
+        <td>{{ entry.name }}</td>
+      </tr>{% endfor %}
+    </tbody>
+  </table>

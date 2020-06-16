@@ -26,8 +26,9 @@ your software repository.
 
  - [Commands](commands/) including run, re-run, list (ls), get, and others.
  - [Parsers](parsers/) know how to parse some remote software repository
- - Dashboard: an annotation interface for criteria and taxonomy (under development)
+ - [Dashboard](dashboard/): an annotation interface for criteria and taxonomy (under development)
  - [Containers](containers/) for pre-built environments to use rse.
+ - [API](api/) application programming interface to expose software, criteria, and taxonomy
 
 <a id="#how-does-it-work">
 ### How does it work?
