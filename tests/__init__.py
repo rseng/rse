@@ -1,1 +1,1 @@
-"""Unit test package for qme."""
+"""Unit test package for rse."""

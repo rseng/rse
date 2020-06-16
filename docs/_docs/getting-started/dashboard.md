@@ -7,7 +7,7 @@ order: 5
 
 ## Dashboard
 
-The dashboard can be started with `qme start`
+The dashboard can be started with `rse start`
 
 ```bash
 $ rse start
