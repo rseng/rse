@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}The Research Software Encyclopedia{% endblock %}
+{% block content %}
+<div class='container-fluid'>
+  <div class='row'>
+    <div class='col-sm-3'>
+      <br>
+      <div class='form-horizontal'>
+        <div class='form-group has-feedback'>
+          <div class='col-sm-12'>
+            <input class='form-control table-sortable-search' placeholder="Search software..." type='search'>
+            <span class='glyphicon glyphicon-remove form-control-feedback search-cancel-button'></span>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class='panel panel-default'>
+        <div class='table-responsive' id="app">
+
+        <h1 style="margin-left:5px"><b>Software</b> ⭐️</h1>
+        <hr>
+  
+        <label>Rows per page</label>
+        <select v-model="pageSizeModel">
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="250">250</option>
+        </select>
+  
+        {% block table %}{% endblock %}
+
+       <div class="controls">
+         <button class="btn btn-sm" :disabled="!hasPage(-1)" @click="prevPage">←</button> 
+         <button class="btn btn-sm" :disabled="!hasPage(1)"  @click="nextPage">→</button>
+         <span style="float:right; margin-right:30px; margin-top:20px" class="badge badge-primary">database: {{ database }}</span><a href="/api"><span style="float:right; margin-right:30px; margin-top:20px" class="badge badge-primary">api</span></a>
+
+         <hr>
+         </div>
+      </div>
+    </div>
+  </div>
+  <div class='col-sm-4'>
+    <h1 style="margin-left:5px; padding-top:90px"><b>Criteria</b> ✔️</h1>
+        <hr>
+        {% include "tables/criteria-table.html" %}
+    <hr>
+  </div>
+  <div class='col-sm-4'>
+    <h1 style="margin-left:5px; padding-top:90px"><b>Categories</b> 🦉️</h1>
+         <hr>
+        {% include "tables/taxonomy-table.html" %}
+    <hr>
+  </div>
+</div>
+{% endblock %}
+{% block footer %}
+{{ super() }}
+<script src="static/js/home.js"></script>
+{% endblock %}

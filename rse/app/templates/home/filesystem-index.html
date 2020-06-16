@@ -1,0 +1,28 @@
+{% extends "home/index.html" %}
+{% block table %}
+  <table class="table table-sortable">
+    <thead>
+      <tr>
+        <th :class="{ sorted: sort === 'id' }" @click="sortBy('id')">
+          Id
+        </th>
+        <th :class="{ sorted: sort === 'name' }" @click="sortBy('name')">
+          Name
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="row in sortedRows">
+        <td>{% raw %}{{ row.id }}{% endraw %}</td>
+        <td>{% raw %}{{ row.name }}{% endraw %}</td>
+        <td data-id="{% raw %}{{ row.id }}{% endraw %}">
+          <div class='btn-group btn-group-xs'>
+            <button v-on:click="viewRow" class="btn btn-default" title="View">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}

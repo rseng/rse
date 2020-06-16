@@ -1,0 +1,20 @@
+  <table class="table">
+    <thead>
+      <tr>
+        <th>
+          Id
+        </th>
+        <th>
+          Question
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in criteria %}
+        <tr>
+           <td>{{ entry.uid }}</td>
+           <td>{{ entry.name }}</td>
+      </tr>
+     {% endfor %}
+    </tbody>
+  </table>

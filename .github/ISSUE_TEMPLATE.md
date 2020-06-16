@@ -1,4 +1,4 @@
-* QueueMe version:
+* Research Software Encyclopedia version:
 * Python version:
 * Operating System:
 

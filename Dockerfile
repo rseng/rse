@@ -14,3 +14,4 @@ ADD . /tmp/repo
 WORKDIR /tmp/repo
 RUN pip install .[all]
 ENTRYPOINT ["/opt/conda/bin/rse"]
+CMD ["start"]
