@@ -29,6 +29,7 @@ your software repository.
  - [Dashboard](dashboard/): an annotation interface for criteria and taxonomy (under development)
  - [Containers](containers/) for pre-built environments to use rse.
  - [API](api/) application programming interface to expose software, criteria, and taxonomy
+ - [Annotation](annotation/) of criteria and taxonomy items for research software
 
 <a id="#how-does-it-work">
 ### How does it work?
@@ -53,8 +54,8 @@ The interaction looks like the following:
                                   |       .                         +--> rse exists...
                                   |   +-------+                     |
                                   |   |       |                     +--> rse start...
-                                  +-->+ other |
-                                      |       |
+                                  +-->+ other |                     |
+                                      |       |                     +--> rse annotate...
                                       +-------+
 
 ```
@@ -82,6 +83,12 @@ metadata about the software. Minimally, a url is required to direct a user where
 
 Is a Flask application that comes with rse, exposed via `rse start`, that provides
 an table to manage and otherwise interact with tasks.
+
+**annotation**
+
+Is the process of answering questions about one or more repositories in a software
+encyclopedia, and also indicating category membership. This can be done interactively
+in a web interface (under development) or via the command line.
 
 **database**
 

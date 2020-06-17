@@ -13,15 +13,14 @@ from rse.main import Encyclopedia
 
 def main(args, extra):
 
-    # Clear a parser, uid, or target
+    # Create a research software encyclopedia
     enc = Encyclopedia(config_file=args.config_file)
 
-    # Pass the encyclopedia object to start a server
-    try:
-        from rse.app.server import start
-
-        start(port=args.port, client=enc, debug=args.debug, level=args.log_level)
-    except:
-        sys.exit(
-            "You must 'pip install rse[app]' 'pip install rse[all]' to use the dashboard."
-        )
+    # The type is either criteria or taxonomy
+    enc.annotate(
+        username=args.username,
+        atype=args.type[0],
+        unseen_only=not args.all_repos,
+        repo=args.repo,
+        save=True,
+    )

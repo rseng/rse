@@ -40,11 +40,18 @@ class GitHubParser(ParserBase):
         if not self.token:
             sys.exit("RSE_GITHUB_TOKEN is required")
 
-    def get_url(self):
+    def get_url(self, data=None):
         """a common function for a parser to return the html url for the
            upper level of metadata
         """
-        return self.data.get("html_url")
+        data = data or self.data
+        return data.get("html_url")
+
+    def get_description(self, data=None):
+        """a common function for a parser to return a description.
+        """
+        data = data or self.data
+        return data.get("description")
 
     def get_metadata(self, uri=None):
         """Retrieve repository metadata. The common metadata (timestamp) is

@@ -109,9 +109,14 @@ class ParserBase:
         """
         return {"timestamp": str(datetime.now())}
 
-    def get_url(self):
+    def get_url(self, data):
         """a common function for a parser to return the html url for the
            upper level of metadata
+        """
+        raise NotImplementedError
+
+    def get_description(self, data):
+        """a common function for a parser to return a description.
         """
         raise NotImplementedError
 

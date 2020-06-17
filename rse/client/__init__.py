@@ -55,6 +55,39 @@ def get_parser():
     # print version and exit
     subparsers.add_parser("version", help="show software version")
 
+    # Annotate criteria or taxonomy
+    annotate = subparsers.add_parser(
+        "annotate", help="Annotate a database with criteria or taxonomy"
+    )
+    annotate.add_argument(
+        "type",
+        help="Type to annotate (taxonomy or criteria)",
+        nargs=1,
+        choices=["taxonomy", "criteria"],
+    )
+    annotate.add_argument(
+        "-u",
+        "--username",
+        dest="username",
+        default=None,
+        help="GitHub username (must be provided if not available with git config)",
+    )
+    annotate.add_argument(
+        "-r",
+        "--repo",
+        dest="repo",
+        default=None,
+        help="Specify a particular repository name to annotate.",
+    )
+    annotate.add_argument(
+        "--all",
+        "-a",
+        dest="all_repos",
+        help="Annotate all repos, even those that have already been seen (defaults to show only those unseen).",
+        default=False,
+        action="store_true",
+    )
+
     # Generate a key for the interface
     generate = subparsers.add_parser(
         "generate-key",
@@ -234,6 +267,8 @@ def main():
         sys.exit(0)
 
     # Does the user want a shell?
+    if args.command == "annotate":
+        from .annotate import main
     if args.command == "add":
         from .add import main
     if args.command == "clear":
