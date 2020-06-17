@@ -276,19 +276,40 @@ class Encyclopedia:
 
                 # If we have a last repo, we need to save progress
                 if last is not None and save is True:
-                    last.save_criteria()
+                    if hasattr(last, "save_criteria"):
+                        last.save_criteria()
+                    else:
+                        self.db.update(last)
+
                 if last is not None:
                     annotations[last.uid] = last.criteria
 
                 message.info(f"\n{repo.url} [{repo.description}]:")
                 last = repo
 
-            response = confirm(criteria["name"])
+            response = choice_prompt(
+                criteria["name"],
+                choices=["y", "Y", "n", "N", "s", "S", "skip"],
+                choice_prefix="y/n or s to skip",
+            )
+
+            # The user can skip an answer if wanted
+            if response in ["s", "S", "skip"]:
+                continue
+
             repo.update_criteria(criteria["uid"], username, response)
 
         # Save the last repository
         if last is not None and save is True:
-            last.save_criteria()
+
+            # The filesystem database saves at the end
+            if hasattr(last, "save_criteria"):
+                last.save_criteria()
+
+            # Relational saves the database item
+            else:
+                self.db.update(last)
+
         if last is not None:
             annotations[last.uid] = last.criteria
         return annotations
@@ -303,8 +324,8 @@ class Encyclopedia:
 
         # Retrieve the full taxonomy
         items = self.list_taxonomy()
-        choices = [str(i) for i, _ in enumerate(items)]
-        prefix = "0:%s" % (len(items) - 1)
+        choices = [str(i) for i, _ in enumerate(items)] + ["s", "S", "skip"]
+        prefix = "0:%s or s to skip" % (len(items) - 1)
 
         for repo in self.yield_taxonomy_annotation_repos(username, unseen_only, repo):
 
@@ -325,14 +346,23 @@ class Encyclopedia:
                 multiple=True,
             )
 
+            if response in ["s", "S", "skip"]:
+                continue
+
             # Get the unique ids
             uids = [
                 items[int(x)]["uid"]
                 for x in set(response.split(" "))
                 if int(x) < len(items)
             ]
-            repo.taxonomy[username] = uids
-            repo.save_taxonomy()
+
+            # Filesystem database we write filename to repository folder
+            if hasattr(repo, "save_taxonomy"):
+                repo.taxonomy[username] = uids
+                repo.save_taxonomy()
+            else:
+                repo.update_taxonomy(username, uids)
+                self.db.update(repo)
             annotations[repo.uid] = repo.taxonomy
 
         return annotations

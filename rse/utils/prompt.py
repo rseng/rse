@@ -45,7 +45,7 @@ def choice_prompt(prompt, choices, choice_prefix=None, multiple=False):
 
     if not choice_prefix:
         choice_prefix = "/".join(choices)
-    message = "Please enter your choice [%s] : " % (choice_prefix)
+    message = "[%s] : " % (choice_prefix)
 
     while choice not in choices:
         choice = get_input(message).strip()

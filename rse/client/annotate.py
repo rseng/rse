@@ -9,6 +9,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 from rse.main import Encyclopedia
+from rse.exceptions import RepoNotFoundError
 
 
 def main(args, extra):
@@ -17,10 +18,13 @@ def main(args, extra):
     enc = Encyclopedia(config_file=args.config_file)
 
     # The type is either criteria or taxonomy
-    enc.annotate(
-        username=args.username,
-        atype=args.type[0],
-        unseen_only=not args.all_repos,
-        repo=args.repo,
-        save=True,
-    )
+    try:
+        enc.annotate(
+            username=args.username,
+            atype=args.type[0],
+            unseen_only=not args.all_repos,
+            repo=args.repo,
+            save=True,
+        )
+    except RepoNotFoundError as exc:
+        print(exc)
