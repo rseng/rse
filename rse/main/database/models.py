@@ -41,6 +41,16 @@ class SoftwareRepository(Base):
     def summary(self):
         return self.parser.summary()
 
+    @property
+    def url(self):
+        data = json.loads(self.data)
+        return self.parser.get_url(data)
+
+    @property
+    def description(self):
+        data = json.loads(self.data)
+        return self.parser.get_description(data)
+
     def load(self):
         """loading a software repository means exporting as json"""
         data = {"parser": self.parser_name, "uid": self.uid, "data": {}}
@@ -49,6 +59,26 @@ class SoftwareRepository(Base):
             data["data"] = json.loads(self.data)
 
         return data
+
+    def update_criteria(self, uid, username, response):
+        """Given a username and unique id update criteria"""
+        criteria = json.loads(self.criteria or "{}")
+
+        if uid not in criteria:
+            criteria[uid] = {}
+        if response:
+            criteria[uid][username] = "yes"
+        else:
+            criteria[uid][username] = "no"
+        self.criteria = json.dumps(criteria)
+
+    def update_taxonomy(self, username, uids):
+        """Given a username and unique id update taxonomy items"""
+        taxonomy = json.loads(self.taxonomy or "{}")
+
+        if username not in taxonomy:
+            taxonomy[username] = uids
+        self.taxonomy = json.dumps(taxonomy)
 
     def export(self):
         """Export removes the outer wrapper, and just returns the data"""
