@@ -27,3 +27,33 @@ def confirm(prompt, response=False):
             return True
         if answer == "n" or answer == "N":
             return False
+
+
+def choice_prompt(prompt, choices, choice_prefix=None, multiple=False):
+    """Ask the user for a prompt, and only return when one of the requested
+       options is provided.
+
+       Parameters
+       ==========
+       prompt: the prompt to ask the user
+       choices: a list of choices that are valid.   
+       multiple: allow multiple responses (separated by spaces)
+    """
+    choice = None
+    print(prompt)
+    get_input = getattr(__builtins__, "raw_input", input)
+
+    if not choice_prefix:
+        choice_prefix = "/".join(choices)
+    message = "Please enter your choice [%s] : " % (choice_prefix)
+
+    while choice not in choices:
+        choice = get_input(message).strip()
+
+        # If multiple allowed, add selection to choices if includes all vaid
+        if multiple is True:
+            contenders = choice.strip().split(" ")
+            if all([x in choices for x in contenders]):
+                choices.append(choice)
+        message = "Please enter a valid option in [%s]" % (choice_prefix)
+    return choice

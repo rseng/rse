@@ -30,6 +30,8 @@ class SoftwareRepository(Base):
     timestamp = Column(DateTime, default=func.now())
     parser_name = Column(String(50))
     data = Column(Text, nullable=True)
+    taxonomy = Column(Text, nullable=True)
+    criteria = Column(Text, nullable=True)
 
     def __init__(self, uid=None, parser=None, data={}):
         self.uid = uid
@@ -54,3 +56,14 @@ class SoftwareRepository(Base):
 
     def __repr__(self):
         return "<SoftwareRepository %r>" % self.uid
+
+    # Annotation
+
+    def has_criteria_annotation(self, uid, username):
+        """Determine if a repository has been annotated by a user.
+        """
+        if uid not in self.criteria:
+            return False
+        if username not in self.criteria[uid].get("users", []):
+            return False
+        return True

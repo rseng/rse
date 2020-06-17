@@ -17,6 +17,18 @@ import tempfile
 from .file import read_file
 
 
+def get_github_username():
+    """Get the github username of the user from git config.
+    """
+    command = Command("git config user.name")
+    username, _ = command.execute()
+    if command.returncode != 0:
+        raise FileNotFoundError(
+            "Problem running git config user.name. Please provide GitHub username as argument."
+        )
+    return username[0].replace("\n", "")
+
+
 class Capturing:
     """capture output from stdout and stderr into capture object.
        This is based off of github.com/vsoch/gridtest but modified
@@ -75,7 +87,7 @@ class Capturing:
                 os.remove(filename)
 
 
-class QueueMeCommand:
+class Command:
     """Class method to invoke shell commands and retrieve output and error.
        This class is inspired and derived from utils functions in
        https://github.com/vsoch/scif
@@ -140,8 +152,8 @@ class QueueMeCommand:
                 returncode = process.poll()
 
         # Get the remainder of lines, add return code
-        self.out += ["%s\n" % x for x in self.decode(capture.out).split("\n") if x]
-        self.err += ["%s\n" % x for x in self.decode(capture.err).split("\n") if x]
+        self.out += ["%s\n" % x for x in self.decode(capture.out) if x]
+        self.err += ["%s\n" % x for x in self.decode(capture.err) if x]
 
         # Cleanup capture files and save final return code
         capture.cleanup()

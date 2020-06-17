@@ -16,8 +16,10 @@ from rse.exceptions import (
 )
 from rse.utils.file import (
     write_json,
+    write_file,
     mkdir_p,
     read_json,
+    read_file,
     recursive_find,
     get_latest_modified,
 )
@@ -209,7 +211,17 @@ class SoftwareRepository:
         self.parser = parser
         self.data_base = data_base
         self.data = {}
+        self.criteria = {}
+        self.taxonomy = {}
         self.create(exists)
+
+    @property
+    def url(self):
+        return self.parser.get_url(self.data.get("data", ""))
+
+    @property
+    def description(self):
+        return self.parser.get_description(self.data.get("data", ""))
 
     @property
     def filename(self):
@@ -225,6 +237,18 @@ class SoftwareRepository:
         updates = updates or {}
         self.data.update(updates)
         self.save()
+
+    def update_criteria(self, uid, username, response):
+        """Update a criteria, meaning adding a True/False answer to the 
+           unique id for the user. We are currently assuming that criteria
+           have yes/no responses, and True == yes, False == no.
+        """
+        if uid not in self.criteria:
+            self.criteria[uid] = {}
+        if response:
+            self.criteria[uid][username] = "yes"
+        else:
+            self.criteria[uid][username] = "no"
 
     def create(self, should_exist=False):
         """create the filename if it doesn't exist, otherwise if it should (and
@@ -245,6 +269,8 @@ class SoftwareRepository:
                 else:
                     raise RepoNotFoundError(self.parser.uid)
             self.data = self.load()
+            self.taxonomy = self.load_taxonomy()
+            self.criteria = self.load_criteria()
 
         if not os.path.exists(self.parser_dir):
             mkdir_p(self.parser_dir)
@@ -277,3 +303,74 @@ class SoftwareRepository:
         """
         if os.path.exists(self.filename):
             return read_json(self.filename)
+
+    def load_criteria(self):
+        """Given a repository directory, load criteria files if they exist
+        """
+        criteria = {}
+        for filename in glob(f"{self.parser_dir}/criteria*.tsv"):
+            uid = (
+                os.path.basename(filename).replace("criteria-", "").replace(".tsv", "")
+            )
+            content = read_file(filename)
+            if uid not in criteria:
+                criteria[uid] = {}
+            for row in content:
+                username, response = row.split("\t")
+                criteria[uid][username] = response
+        return criteria
+
+    def save_criteria(self):
+        """Save criteria to file. Each file is named based on the criteria id,
+           and is a tab separated file that includes the username and response. 
+        """
+        for uid, responses in self.criteria.items():
+            filename = os.path.join(self.parser_dir, "criteria-%s.tsv" % uid)
+            # Sort based on username
+            rows = ["%s\t%s" % (k, v) for k, v in sorted(responses.items())]
+            write_file(filename, "\n".join(rows))
+            bot.debug(f"{uid} saved to {filename}")
+
+    def load_taxonomy(self):
+        """Given a repository directory, load taxonomy annotations if they exist
+           The taxonomy.tsv file should be a tab separated file with:
+           username	category-unique-id. This means that we keep a record of
+           who has categorized what, and load this information into the
+           taxonomy dictionary (organized by the category-unique-id which
+           then has a total count and list of users).
+        """
+        taxonomy = {}
+        taxonomy_file = os.path.join(self.parser_dir, "taxonomy.tsv")
+        if os.path.exists(taxonomy_file):
+            content = read_file(taxonomy_file)
+            for row in content:
+                username, uids = row.split("\t")
+                taxonomy[username] = uids.split(",")
+        return taxonomy
+
+    def save_taxonomy(self):
+        """Save taxonomy to file. Each file is named taxonomy.tsv,
+           and is a tab separated file that includes the username and response. 
+        """
+        filename = os.path.join(self.parser_dir, "taxonomy.tsv")
+        rows = ["%s\t%s" % (k, ",".join(v)) for k, v in sorted(self.taxonomy.items())]
+        write_file(filename, "\n".join(rows))
+        bot.debug(f"{self.uid} saved to {filename}")
+
+    # Annotation
+
+    def has_criteria_annotation(self, uid, username):
+        """Determine if a repository has been annotated by a user.
+        """
+        if uid not in self.criteria:
+            return False
+        if username not in self.criteria[uid]:
+            return False
+        return True
+
+    def has_taxonomy_annotation(self, username):
+        """Determine if a repository has been annotated by a user.
+        """
+        if username not in self.taxonomy:
+            return False
+        return True
