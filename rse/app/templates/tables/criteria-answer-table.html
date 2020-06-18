@@ -1,0 +1,45 @@
+<style>
+td {
+  font-size:17px;
+}
+</style>
+<div style="padding:20px">
+  <h3>What do you think about <strong><a target="_blank" href="{{ sets[0][0].url }}">{{ sets[0][0].uid }}</strong></a>
+  <a href="{{ sets[0][0].url }}" target="_blank"><img src="{{ sets[0][0].avatar }}" style="max-height:200px; float:right"></a> 
+</h3>
+  <p>{{ sets[0][0].description }}</p> 
+</div>
+  <br>
+
+  <form method="POST" action="/annotate-criteria?username={{ username }}">
+  <table class="table table-bordered">
+    <colgroup>
+      <col width="50%">
+      <col width="50%">
+    </colgroup>
+    <thead>
+    <th>Question</th>
+    <th>Your Response</th>
+    </thead>
+    <tbody>
+    {% for set in sets %}<tr>
+      <td>{{ set[1].name }}</td>
+      <td>
+        {% for option in set[1].options %}
+        <input type="hidden" name="repo_uid" value="{{ sets[0][0].uid }}">
+        <input type="hidden" name="username" value="{{ username }}">
+        <label class="radio-inline"><input type="radio" name="radio-{{ set[1].uid }}" id="inlineRadio1" value="{{ option }}"> {{ option }}</label>{% endfor %}        
+      </td>
+    </tr>{% endfor %}
+    </tbody>
+  </table>
+
+  <br>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <a href="/annotate"><button type="button" id="back-annotate" class="btn btn-primary">< Back to Annotation</button></a>
+      <button id="next-button" class="btn btn-primary" type="submit">Next ></button>
+    </div>
+  </div>
+  </form>

@@ -47,6 +47,12 @@ class GitHubParser(ParserBase):
         data = data or self.data
         return data.get("html_url")
 
+    def get_avatar(self, data=None):
+        """a common function for a parser to return an image.
+        """
+        data = data or self.data
+        return data.get("owner", {}).get("avatar_url", "")
+
     def get_description(self, data=None):
         """a common function for a parser to return a description.
         """

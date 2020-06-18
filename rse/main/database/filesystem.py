@@ -220,6 +220,10 @@ class SoftwareRepository:
         return self.parser.get_url(self.data.get("data", ""))
 
     @property
+    def avatar(self):
+        return self.parser.get_avatar(self.data.get("data", ""))
+
+    @property
     def description(self):
         return self.parser.get_description(self.data.get("data", ""))
 

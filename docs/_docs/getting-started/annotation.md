@@ -51,3 +51,38 @@ can specify it:
 $ rse annotate criteria -r github/singularityhub/sregistry
 $ rse annotate taxonomy -r github/singularityhub/sregistry
 ```
+
+## Interface Annotation
+
+When you start the Research Software Encyclopedia interface with `rse start`,
+akin to doing on the command line, you might want to export your `RSE_CONFIG_FILE`
+
+```bash
+export RSE_CONFIG_FILE=/path/to/rseng/software
+```
+
+and then start the interface!
+
+```bash
+$ rse start
+```
+
+then you can select an "annotate" button at the top in order to annotate taxonomy
+items or criteria:
+
+![../img/annotate/annotate-button.png](../img/annotate/annotate-button.png)
+
+You can then select to annotate either criteria or taxonomy items. You are
+required to put your GitHub username at the top, as the repository
+will be updated as you go, and you'll want to have your results saved
+with the correct username (new or updated results that don't match your
+username will not be accepted).
+
+![../img/annotate/annotate.png](../img/annotate/annotate.png)
+
+For each item you haven't annotated yet, you'll be presented with the current
+questions in the interface. You can answer as many as you like! Here is
+the view for criteria:
+
+![../img/annotate/annotate-repo.png](../img/annotate/annotate-repo.png)
+

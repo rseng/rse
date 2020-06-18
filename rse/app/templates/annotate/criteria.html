@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Annotate Criteria{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<style>
+.center {
+  margin: auto;
+  width: 50%;
+  padding-top: 130px !important;
+}
+
+.panel-default {
+  border-radius:20px;
+}
+</style>
+<div class='container'>
+  <div class='row'>
+    <div class='col-sm-12'>
+      <br>
+      <br>
+      <div class="panel panel-default">
+        <div>
+          <hr> 
+          <div class="row">
+            <div class="col-md-12">
+                 {% include "tables/criteria-answer-table.html" %}
+            </div>
+	</div>
+
+  <div class="controls">
+    <span style="float:right; margin-right:30px; margin-top:-5px" class="badge badge-primary">database: {{ database }}</span>
+  </div>
+  <hr>
+</div>
+{% endblock %}
+{% block footer %}
+{{ super() }}
+<script>
+$("form").submit(function(event) {
+  console.log($(this).serializeArray());
+});
+</script>
+{% endblock %}

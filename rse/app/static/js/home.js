@@ -163,21 +163,6 @@ const app = new Vue({
         })
       });
 
-      // Button events: delete, re-run
-      this.actionSocket = io.connect('http://' + document.domain + ':' + location.port + '/table/action');
-      this.actionSocket.on('deleterowcomplete', function(msg) {
-          if (msg.wasdeleted == true){
-            toastr.info(msg.taskid + ' has been deleted.').css("width","500px")
-          }
-      });
-      this.actionSocket.on('reruncomplete', function(msg) {
-          if (msg.wasrerun == true){
-            toastr.info(msg.taskid + ' has been submit to re-run.').css("width","600px");
-          } else {
-            toastr.error("There was a problem requesting re-run of " + msg.taskid).css("width","600px");
-          }
-      });
-
   },
   methods: {
 
