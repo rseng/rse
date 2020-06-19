@@ -64,6 +64,12 @@ function annotateCriteria() {
 }
 function annotateTaxonomy() {
     console.log("Annotate taxonomy.")
+    username = $("#username").val()
+    if ((username == "") || (username == undefined)){
+       $("#message").text("Please provide your GitHub username above to start the annotation session.")
+    } else {
+       document.location = "/annotate-taxonomy?username=" + username 
+    }
 }
 </script>
 {% endblock %}

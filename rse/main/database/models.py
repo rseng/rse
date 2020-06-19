@@ -105,3 +105,13 @@ class SoftwareRepository(Base):
         if username not in criteria[uid].get("users", []):
             return False
         return True
+
+    def has_taxonomy_annotation(self, username):
+        """Determine if a repository has been annotated by a user.
+        """
+        if not self.taxonomy:
+            return False
+        taxonomy = json.loads(self.taxonomy)
+        if username not in taxonomy:
+            return False
+        return True
