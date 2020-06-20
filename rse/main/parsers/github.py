@@ -35,8 +35,6 @@ class GitHubParser(ParserBase):
         """load secrets, namely the GitHub token
         """
         self.token = self.get_setting("TOKEN")
-        if not self.token:
-            bot.warning("export RSE_GITHUB_TOKEN to increase API limits")
 
     def get_url(self, data=None):
         """a common function for a parser to return the html url for the

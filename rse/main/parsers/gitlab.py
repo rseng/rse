@@ -36,8 +36,6 @@ class GitLabParser(ParserBase):
         """load secrets, namely the GitLab token
         """
         self.token = self.get_setting("TOKEN")
-        if not self.token:
-            bot.warning("Export RSE_GITLAB_TOKEN to increase API limits.")
 
     def get_url(self, data=None):
         """a common function for a parser to return the html url for the
