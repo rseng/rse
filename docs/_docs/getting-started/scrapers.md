@@ -89,7 +89,14 @@ results = scraper.latest()
 results = scraper.search("docker")
 ```
 
-And finally, if you want to create the repos that you have (the ones that 
+By default, the latest won't paginate (it would parse all of JoSS) but you
+can force it to:
+
+```python
+results = scraper.latest(paginate=True)
+```
+A query search does paginate by default, as the results are likely to be smaller.
+Finally, if you want to create the repos that you have (the ones that 
 don't exist in the research software encyclopedia yet) just run create.
 The results are returned above, but they are also saved to the client.
 

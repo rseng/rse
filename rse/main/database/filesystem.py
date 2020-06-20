@@ -131,7 +131,7 @@ class FileSystemDatabase(Database):
     def label(self, repo, key, value, force=False):
         """Update a repository with a specific key/value pair.
         """
-        if key in self.data and not force:
+        if key in repo.data and not force:
             raise RuntimeError(
                 f"{key} is already defined for {repo.uid}. Use --force to overwrite."
             )
