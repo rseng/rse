@@ -9,6 +9,8 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 from .github import GitHubParser
+from .gitlab import GitLabParser
+from .zenodo import ZenodoParser
 import re
 
 
@@ -17,7 +19,7 @@ def matches(Parser, uri):
        used for a parser (or not)
     """
     if not hasattr(Parser, "matchstring"):
-        raise NotImplementedError
+        raise NotImplementedError(f"{Parser.name} is missing a matchstring attribute.")
 
     return not re.search(Parser.matchstring, uri) == None
 
@@ -28,9 +30,11 @@ def get_parser(uri, config=None):
     parser = None
     if matches(GitHubParser, uri):
         parser = GitHubParser(uri)
+    if matches(GitLabParser, uri):
+        parser = GitLabParser(uri)
 
     if not parser:
-        raise NotImplementedError("There is no matching parser for {uri}")
+        raise NotImplementedError(f"There is no matching parser for {uri}")
     parser.config = config
     return parser
 
@@ -41,9 +45,13 @@ def get_named_parser(name, uri=None, config=None):
     parser = None
     if re.search("github", name):
         parser = GitHubParser(uri)
+    elif re.search("gitlab", name):
+        parser = GitLabParser(uri)
+    elif re.search("zenodo", name):
+        parser = ZenodoParser(uri)
 
     if not parser:
-        raise NotImplementedError("There is no matching parser for {name}")
+        raise NotImplementedError(f"There is no matching parser for {name}")
 
     parser.config = config
     return parser

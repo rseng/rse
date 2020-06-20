@@ -128,6 +128,16 @@ class FileSystemDatabase(Database):
         if data:
             repo.update()
 
+    def label(self, repo, key, value, force=False):
+        """Update a repository with a specific key/value pair.
+        """
+        if key in self.data and not force:
+            raise RuntimeError(
+                f"{key} is already defined for {repo.uid}. Use --force to overwrite."
+            )
+        bot.debug(f"Adding key {key}:{value}")
+        repo.update({key: value})
+
     def search(self, query):
         """A filesystem search can only support returning results with filenames
         """

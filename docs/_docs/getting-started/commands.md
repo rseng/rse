@@ -13,6 +13,7 @@ your software database.
  - [Add](#add): add a new software repository to your database
  - [Get](#get): retrieve current metadata for a piece of software, or all software
  - [Update](#update): update metadata for a single repository or all repositories
+ - [Label](#label) a software repository with custom metadata
  - [List](#list) all software or software specific to a parser
 
  - [Remote](#remote): query the rseng/software remote database
@@ -86,6 +87,12 @@ We would add in bulk as follows:
 $ rse add --file repos.txt
 ```
 
+And of course you can add urls for other version control systems that are supported.
+
+```bash
+$ rse add gitlab.com/singularityhub/gitlab-ci
+```
+
 By default, repos that are already added will be skipped over.
 
 <a id="get">
@@ -157,6 +164,49 @@ $ rse update --file repos.txt
 ```
 
 By default, repos that are not present will be skipped over.
+
+<a id="label">
+## Label
+
+Let's say that we know a DOI (digital object identifier) for a repository,
+and we want to label it. We can do that as follows:
+
+```bash
+$ rse label github/singularityhub/sregistry doi 10.5281/zenodo.1012531
+INFO:rse.main:Database: sqlite
+INFO:rse.main:github/singularityhub/sregistry has been updated.
+```
+
+The above command would say "Add the metadata value for "doi" to the Github
+repository for Singularity Registry server. You would then see the value in the
+metadata:
+
+```bash
+$ rse get
+INFO:rse.main:Database: sqlite
+{
+    "parser": "github",
+    "uid": "github/singularityhub/sregistry",
+    "data": {
+        "timestamp": "2020-06-19 16:26:07.115675",
+...
+        "subscribers_count": 10,
+        "doi": "10.5281/zenodo.1012531"
+    }
+}
+```
+
+If you try to add a value that 
+already exists, you'll get a warning and be asked to use `--force`.
+
+```bash
+INFO:rse.main:Database: sqlite
+doi is already defined for github/singularityhub/sregistry. Use --force to overwrite.
+```
+
+Although it's less likely for someone
+to do this on the command line, the function is used by scrapers when a link
+is found between a software respository and some external DOI.
 
 <a id="list">
 ## List

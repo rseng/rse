@@ -26,6 +26,7 @@ your software repository.
 
  - [Commands](commands/) including run, re-run, list (ls), get, and others.
  - [Parsers](parsers/) know how to parse some remote software repository
+ - [Scrapers](scrapers/) discover new software repositories via resource APIs.
  - [Dashboard](dashboard/): an annotation interface for criteria and taxonomy (under development)
  - [Containers](containers/) for pre-built environments to use rse.
  - [API](api/) application programming interface to expose software, criteria, and taxonomy
@@ -78,6 +79,14 @@ in the context of rse:
 
 A parser is a controller to handle taking a uri (unique resource identifier) and returning
 metadata about the software. Minimally, a url is required to direct a user where to inspect it.
+The Research Software Encyclopedia uses a set of base parsers (version
+control systems) as sources of truth, and also provides additional parsers for the
+user to interact with if desired (e.g., Zenodo).
+
+**scraper**
+
+A scraper is intended to run at some regular interface to update the research
+software encyclopedia with entries from some external resource.
 
 **dashboard**
 

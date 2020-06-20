@@ -22,9 +22,13 @@ categories:
 
 ![img/dashboard/prototype.png](../img/dashboard/prototype.png)
 
-and by clicking on a repository, you can see metadata for it.
+and by clicking on a repository, you can see metadata for it. Here is a GitHub repository:
 
 ![img/dashboard/github.png](../img/dashboard/github.png)
+
+and a GitLab repository:
+
+![img/dashboard/gitlab.png](../img/dashboard/gitlab.png)
 
 When the application starts, it will initialize the encyclopedia and database,
 so you should either be in the same directory as a `rse.ini` (the root of the

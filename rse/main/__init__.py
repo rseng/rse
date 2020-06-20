@@ -11,7 +11,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from rse.main.config import Config
 from rse.defaults import RSE_DATABASE, RSE_PARSERS, RSE_CONFIG_FILE
 
-from rse.exceptions import RepoNotFoundError
+from rse.exceptions import RepoNotFoundError, RepoMetadataExistError
 from rse.main.database import init_db
 from rse.utils.prompt import confirm, choice_prompt
 from rse.utils.file import read_file
@@ -183,6 +183,21 @@ class Encyclopedia:
             self.db.update(repo)
             bot.info(f"{repo.uid} has been updated.")
             return repo
+        except RepoNotFoundError:
+            bot.error(f"{uid} does not exist.")
+
+    def label(self, uid, key, value, force=False):
+        """Update an existing software repository with a specific label.
+        """
+        try:
+            repo = self.get(uid)
+            self.db.label(repo, key, value, force=force)
+            bot.info(f"{repo.uid} has been updated.")
+            return repo
+        except RepoMetadataExistError:
+            bot.error(
+                f"{repo.uid} already has value for {key}. Use --force to overwrite."
+            )
         except RepoNotFoundError:
             bot.error(f"{uid} does not exist.")
 

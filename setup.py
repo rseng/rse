@@ -12,14 +12,12 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
 from setuptools import setup, find_packages
-import codecs
 import os
 
 
 def get_lookup():
     """get version by way of version file, returns a 
-       lookup dictionary with several global variables without
-       needing to import singularity
+       lookup dictionary with several global variables
     """
     lookup = dict()
     version_file = os.path.join("rse", "version.py")

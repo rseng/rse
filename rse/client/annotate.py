@@ -15,7 +15,7 @@ from rse.exceptions import RepoNotFoundError
 def main(args, extra):
 
     # Create a research software encyclopedia
-    enc = Encyclopedia(config_file=args.config_file)
+    enc = Encyclopedia(config_file=args.config_file, database=args.database)
 
     # The type is either criteria or taxonomy
     try:

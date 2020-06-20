@@ -19,7 +19,7 @@ bot = logging.getLogger("rse.client")
 def main(args, extra):
 
     # Create a research software encyclopedia
-    enc = Encyclopedia(config_file=args.config_file)
+    enc = Encyclopedia(config_file=args.config_file, database=args.database)
 
     try:
         repo = enc.get(args.uid)

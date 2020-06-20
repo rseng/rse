@@ -18,7 +18,9 @@ import random
 @app.route("/repository/<path:uid>")
 def repository_view(uid):
 
+    # Obtain the repository and load the data.
     repo = app.client.get(uid)
+    repo.parser.load(repo.data)
 
     if repo.parser.name == "github":
         skips = ["owner", "organization", "node_id"]
@@ -27,6 +29,14 @@ def repository_view(uid):
             repo=repo.load(),
             database=app.client.database,
             skips=skips,
+        )
+    elif repo.parser.name == "gitlab":
+        avatar = repo.parser.get_avatar()
+        return render_template(
+            "parsers/gitlab.html",
+            repo=repo.load(),
+            database=app.client.database,
+            avatar=avatar,
         )
 
 

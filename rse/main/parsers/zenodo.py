@@ -10,52 +10,53 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import logging
 import requests
+import re
 
 from .base import ParserBase
 
-bot = logging.getLogger("rse.main.parsers.github")
+bot = logging.getLogger("rse.main.parsers.zenodo")
 
 
-class GitHubParser(ParserBase):
+class ZenodoParser(ParserBase):
 
-    name = "github"
-    matchstring = "github"
+    name = "zenodo"
+    matchstring = "^10[.][0-9]{4}/zenodo[.][0-9]{7}$"
 
     def __init__(self, uid=None, **kwargs):
         super().__init__(uid)
 
     def _set_uid(self, uid):
-        """Given some kind of GitHub url, parse the uid
+        """Given some kind of Zenodo uri, parse it
         """
-        uid = uid.replace(":", "/")
-        owner, repo = uid.replace(".git", "").split("/")[-2:]
-        return "{}/{}".format(owner, repo)
+        match = re.search(self.matchstring, uid)
+        if not match:
+            raise RuntimeError(f"{uid} does match a Zenodo DOI.")
+        return match.group()
 
     def load_secrets(self):
-        """load secrets, namely the GitHub token
+        """load secrets, namely the access token, check if required and
+           exit if not provided
         """
         self.token = self.get_setting("TOKEN")
-        if not self.token:
-            bot.warning("export RSE_GITHUB_TOKEN to increase API limits")
 
     def get_url(self, data=None):
         """a common function for a parser to return the html url for the
            upper level of metadata
         """
         data = data or self.data
-        return data.get("html_url")
+        return data.get("links", {}).get("html")
 
     def get_avatar(self, data=None):
         """a common function for a parser to return an image.
         """
         data = data or self.data
-        return data.get("owner", {}).get("avatar_url", "")
+        return data.get("links", {}).get("badge")
 
     def get_description(self, data=None):
         """a common function for a parser to return a description.
         """
         data = data or self.data
-        return data.get("description")
+        return data.get("metadata", {}).get("description")
 
     def get_metadata(self, uri=None):
         """Retrieve repository metadata. The common metadata (timestamp) is
@@ -68,15 +69,18 @@ class GitHubParser(ParserBase):
         if uri:
             self.set_uri(uri)
         self.load_secrets()
-        repo = "/".join(self.uid.split("/")[-2:])
-        url = "https://api.github.com/repos/%s" % (repo)
-        headers = {
-            "Accept": "application/vnd.github.symmetra-preview+json",
-        }
-        if self.token:
-            headers["Authorization"] = "token %s" % self.token
 
-        response = requests.get(url, headers=headers)
+        # Get the record number from the doi
+        record = self.uid.split("/")[-1].replace("zenodo.", "")
+
+        # Token isn't required for public entries
+        if self.token:
+            response = requests.get(
+                "https://zenodo.org/api/records/%s" % record,
+                json={"access_token": self.token},
+            )
+        else:
+            response = requests.get("https://zenodo.org/api/records/%s" % record)
 
         # Successful query!
         if response.status_code == 200:
@@ -84,13 +88,13 @@ class GitHubParser(ParserBase):
             return self.data
 
         elif response.status_code == 404:
-            bot.error(f"Cannot find repository {repo}.")
+            bot.error(f"Cannot find doi {self.uid}.")
 
         elif response.status_code in [400, 401, 403]:
-            bot.error(f"Permission denied to query {repo}")
+            bot.error(f"Permission denied to query {self.uid}")
 
         else:
             bot.error(
-                f"Cannot get repo {repo}: {response.status_code}, {response.reason}"
+                f"Cannot get doi {self.uid}: {response.status_code}, {response.reason}"
             )
         return None
