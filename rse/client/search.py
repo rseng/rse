@@ -15,7 +15,7 @@ import sys
 
 def main(args, extra):
 
-    enc = Encyclopedia(config_file=args.config_file)
+    enc = Encyclopedia(config_file=args.config_file, database=args.database)
     query = " ".join(args.query).strip()
     if not query:
         sys.exit("Please provide a query to search for.")

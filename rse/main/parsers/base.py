@@ -12,6 +12,7 @@ from rse.utils.file import read_file
 
 from datetime import datetime
 import os
+import json
 import tempfile
 import subprocess
 
@@ -103,6 +104,14 @@ class ParserBase:
         """
         raise NotImplementedError
 
+    def load(self, data):
+        """If a repository has already been instantiated, we might want to load
+           data into a parser to interact with it
+        """
+        if isinstance(data, str):
+            data = json.loads(data)
+        self.data = data
+
     def _export_common(self):
         """export common repo variables such as timestamp when it was updated. 
            This might include envars at some point, but we'd need to be careful.
@@ -182,6 +191,10 @@ class ParserBase:
 
         # Next preference to config setting
         parser = "parser.%s" % self.name
+
+        # Parsers instantiated separate from database won't have config
+        if not hasattr(self, "config"):
+            return default
         if parser not in self.config.config:
             return default
         if key in self.config.config[parser]:

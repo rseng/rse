@@ -50,23 +50,19 @@
 			      </tr>
 			      <tr>
 				<td>Repository</td>
-				<td><a href="{{ repo.data.html_url }}" target="_blank">{{ repo.data.html_url }}</a></td>
+				<td><a href="{{ repo.data.web_url }}" target="_blank">{{ repo.data.web_url }}</a></td>
 			      </tr>
-			      {% if repo.data.homepage %}<tr>
-				<td>Homepage</td>
-				<td><a href="{{ repo.data.homepage }}" target="_blank">{{ repo.data.homepage }}</a></td>
-			      </tr>{% endif %}
 			      {% if repo.data.doi %}<tr>
 				<td>DOI</td>
 				<td>{{ repo.data.doi }}</td>
 			      </tr>{% endif %}
 			      <tr>
 				<td>Stars</td>
-				<td>{{ repo.data.stargazers_count }} ⭐️</td>
+				<td>{{ repo.data.star_count }} ⭐️</td>
 			      </tr>
 			      <tr>
-				<td>Watchers</td>
-				<td>{{ repo.data.watchers_count }} 👀️</td>
+				<td>Forks</td>
+				<td>{{ repo.data.forks_count }} 🍴️</td>
 			      </tr>
 			      <tr>
 				<td>Entry Updated</td>
@@ -77,7 +73,7 @@
                   </div>
                 </section>
                 <section>
-                 <a href="https://github.com/{{ repo.data.owner.login }}/" target="_blank"><img src="{{ repo.data.owner.avatar_url }}" style="max-width:95%"></a><br>
+                 <a href="{{ repo.data.web_url }}" target="_blank"><img src="{{ avatar }}" style="max-width:95%"></a>
                  <a href="/"><button style="margin:10px" type="button" class="btn btn-primary">< Back</button></a>
                 </section>
               </div>

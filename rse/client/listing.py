@@ -15,7 +15,7 @@ from rse.logger import bot
 def main(args, extra):
 
     # Create a queue object, run the command to match to an executor
-    enc = Encyclopedia(config_file=args.config_file)
+    enc = Encyclopedia(config_file=args.config_file, database=args.database)
 
     # Case 1: empty list indicates listing all
     if not args.parser:

@@ -14,5 +14,5 @@ from rse.main import Encyclopedia
 def main(args, extra):
 
     # Clear a parser, uid, or target
-    enc = Encyclopedia(config_file=args.config_file)
+    enc = Encyclopedia(config_file=args.config_file, database=args.database)
     enc.clear(args.target, noprompt=args.force)

@@ -123,7 +123,7 @@ def get_parser():
         "exists", help="Determine if an entry exists in the database."
     )
 
-    # Exists
+    # Export
     export = subparsers.add_parser(
         "export", help="Export repository names, metadata, or static files."
     )
@@ -145,7 +145,6 @@ def get_parser():
         "update", help="Update one or more software entries."
     )
 
-    # Specify a database, if not sqlite must include a complete string
     update.add_argument(
         "-p",
         "--path",
@@ -205,11 +204,39 @@ def get_parser():
         action="store_true",
     )
 
+    # Label a repository with metadata, e.g., add a DOI.
+    label = subparsers.add_parser(
+        "label", help="Add a metadata value for an existing repository"
+    )
+    label.add_argument("values", nargs=3)
+    label.add_argument(
+        "--force",
+        dest="force",
+        help="Overwrite existing label, if it exists.",
+        default=False,
+        action="store_true",
+    )
+
     # Print complete metadata for a specific piece of software
     get = subparsers.add_parser("get", help="Show metadata for software")
     add = subparsers.add_parser("add", help="Add a repository to the database.")
 
-    for command in [exists, config, init]:
+    # Most commands allow specification of a database backend
+    for command in [
+        add,
+        annotate,
+        clear,
+        config,
+        exists,
+        export,
+        get,
+        init,
+        label,
+        ls,
+        search,
+        start,
+        update,
+    ]:
         command.add_argument(
             "--database",
             dest="database",
@@ -281,6 +308,8 @@ def main():
         from .export import main
     if args.command == "generate-key":
         from .generate import main
+    if args.command == "label":
+        from .label import main
     if args.command == "update":
         from .update import main
     if args.command == "get":

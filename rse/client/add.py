@@ -15,7 +15,7 @@ import sys
 def main(args, extra):
 
     # Create a research software encyclopedia
-    enc = Encyclopedia(config_file=args.config_file)
+    enc = Encyclopedia(config_file=args.config_file, database=args.database)
 
     # A uid is required here
     if not args.uid and not args.file:

@@ -9,20 +9,16 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 from rse.main import Encyclopedia
-import sys
 
 
 def main(args, extra):
 
-    # Clear a parser, uid, or target
     enc = Encyclopedia(config_file=args.config_file, database=args.database)
 
-    # Pass the encyclopedia object to start a server
-    try:
-        from rse.app.server import start
+    # Grab the repository uid, label key and value
+    uid, key, value = args.values
 
-        start(port=args.port, client=enc, debug=args.debug, level=args.log_level)
-    except:
-        sys.exit(
-            "You must 'pip install rse[app]' 'pip install rse[all]' to use the dashboard."
-        )
+    try:
+        enc.label(uid=uid, key=key, value=value, force=args.force)
+    except Exception as exc:
+        print(exc)

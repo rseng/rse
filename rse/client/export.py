@@ -18,7 +18,7 @@ bot = logging.getLogger("rse.client")
 
 def main(args, extra):
 
-    enc = Encyclopedia(config_file=args.config_file)
+    enc = Encyclopedia(config_file=args.config_file, database=args.database)
 
     # Case 1: empty list indicates listing all
     if os.path.exists(args.path) and not args.force:

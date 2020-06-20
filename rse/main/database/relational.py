@@ -136,6 +136,24 @@ class RelationalDatabase(Database):
             self.session.commit()
             return repo
 
+    def label(self, repo, key, value, force=False):
+        """Update a repository with a specific key/value pair.
+        """
+        data = {}
+        if repo.data:
+            data = json.loads(repo.data)
+
+        if key in data and not force:
+            raise RuntimeError(
+                f"{key} is already defined for {repo.uid}. Use --force to overwrite."
+            )
+        data.update({key: value})
+        bot.debug(f"Adding key {key}:{value}")
+        repo.data = json.dumps(data)
+        self.session.add(repo)
+        self.session.commit()
+        return repo
+
     # Get, delete, etc. only require uid
 
     def get(self, uid=None):

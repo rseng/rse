@@ -14,7 +14,7 @@ from rse.main import Encyclopedia
 def main(args, extra):
 
     # Create a queue object, run the command to match to an executor
-    enc = Encyclopedia(config_file=args.config_file)
+    enc = Encyclopedia(config_file=args.config_file, database=args.database)
 
     # If a file is provided:
     if args.file:

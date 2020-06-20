@@ -13,8 +13,24 @@ handler (meaning that the user has created a local database of software to inter
 the parsers can also be interacted with externally to this structure. This
 document will overview parsers, and provide examples for interacting with each.
 
+**Primary Parsers**
+
+Primary parsers are the core parsers to create records in the database, and generally
+this means version control systems where software is stored.
+
  - [Base Parser](#base)
  - [GitHub Parser](#github)
+ - [GitLab parser](#gitlab)
+
+**Secondary Parsers**
+
+A secondary parser is available as a tool to extract data from a resource, but
+isn't exposed via the `rse` command line client. You might want to use these
+parsers for your own analysis, although they aren't supported for the research
+software encyclopedia core database, which uses version control systems as the
+source of truth.
+
+ - [Zenodo Parser](#zenodo)
 
 ## The Parser Base
 
@@ -37,10 +53,10 @@ The only metadata shown on the table (front) page of the dashboard is these comm
 ### GitHub
 
 The "github" parser is intended to treat a GitHub url as a software repository,
-and uses the GitHub API to extract metadata for it.  A `RSE_GITHUB_TOKEN` is required
-to be exported to the environment. We define the following
-additional metadata.
+and uses the GitHub API to extract metadata for it.  A `RSE_GITHUB_TOKEN` is suggested
+to be exported to the environment to increase your API limits, but not required.
 
+#### Example Usage
 
 Example usage of the parser outside of the Encyclopedia might look like the following.
 If you want to instantiate an empty parser (not associated with a software repository)
@@ -77,26 +93,20 @@ from rse.main.parsers import get_parser
 parser = get_parser('github.com/singularityhub/sregistry')
 ```
 
-You can also get a named parser:
+You can also get a named parser, and then you can set a unique resource
+identifier after the fact:
 
 ```python
 from rse.main.parsers import get_named_parser
 parser = get_named_parser('github')
-```
-
-And then you can set a unique resource identifier after the fact:
-
-```python
-from rse.main.parsers import get_named_parser 
-parser = get_named_parser('github')
-
-parser.set_uri('github/singularityhub/sregistry')
+parser.set_uid('github/singularityhub/sregistry')
 parser.uid
 #'github/singularityhub/sregistry'
 ```
 
 Once the identifier is loaded, you can parse updated metadata for it.
-Note that this requires a `RSENG_GITHUB_TOKEN` to be set in the environment.
+Note that you can optionally export an `RSE_GITHUB_TOKEN` in the environment
+to increase your API limit for bulk operations (recommended).
 You can then get the repository-level metadata about the software repository:
 
 ```python
@@ -222,5 +232,235 @@ data = parser.get_metadata()
  'network_count': 32,
  'subscribers_count': 10}
 ```
+
+<a id="gitlab">
+### GitLab
+
+The "gitlab" parser is intended to treat a GitLab url as a software repository,
+and uses the GitLab API to extract metadata for it.  A `RSE_GITLAB_TOKEN` is suggested
+to be exported to the environment to increase your API limits, but not required. You
+can generate one at your profile [here](https://gitlab.com/profile/personal_access_tokens).
+
+#### Example Usage
+
+Example usage of the parser outside of the Encyclopedia might look like the following.
+If you want to instantiate an empty parser (not associated with a software repository)
+you can do that as follows:
+
+```python
+from rse.main.parsers import GitLabParser
+parser = GitLabParser()
+```
+
+However, it's more likely that you want to parse a specific repository. That works
+like any of the following:
+
+
+```python
+from rse.main.parsers import GitLabParser
+parser = GitLabParser('singularityhub/gitlab-ci')
+parser = GitLabParser('gitlab.com/singularityhub/gitlab-ci')
+parser = GitLabParser('git@gitlab.com:singularityhub/gitlab-ci')
+```
+In all three cases, the uri is parsed to be in the format `<parser>/<identifier>`,
+and for GitLab that means `gitlab/<owner>/<repository>` and we would see:
+
+```
+parser.uid
+# gitlab/singularityhub/gitlab-ci
+```
+
+Note that you can also use the get_parser function to retrieve the parser, but you
+are required to have "gitlab" somewhere in the string:
+
+```python
+from rse.main.parsers import get_parser
+parser = get_parser('gitlab.com/singularityhub/gitlab-ci')
+```
+
+You can also get a named parser, and then you can set a unique resource identifier after the fact:
+
+
+```python
+from rse.main.parsers import get_named_parser
+parser = get_named_parser('gitlab')
+parser.set_uid('singularityhub/gitlab-ci')
+parser.uid
+# gitlab/singularityhub/gitlab-ci
+```
+
+Once the identifier is loaded, you can parse updated metadata for it.
+Note that this requires a `RSE_GITHUB_TOKEN` to be set in the environment.
+You can then get the repository-level metadata about the software repository:
+
+```python
+data = parser.get_metadata()
+{'id': 9475157,
+ 'description': 'An example build and deployment using GitLab continuous Integration for Singularity containers',
+ 'name': 'GitLab-CI',
+ 'name_with_namespace': 'singularityhub / GitLab-CI',
+ 'path': 'gitlab-ci',
+ 'path_with_namespace': 'singularityhub/gitlab-ci',
+ 'created_at': '2018-11-18T18:26:17.066Z',
+ 'default_branch': 'master',
+ 'tag_list': [],
+ 'ssh_url_to_repo': 'git@gitlab.com:singularityhub/gitlab-ci.git',
+ 'http_url_to_repo': 'https://gitlab.com/singularityhub/gitlab-ci.git',
+ 'web_url': 'https://gitlab.com/singularityhub/gitlab-ci',
+ 'readme_url': 'https://gitlab.com/singularityhub/gitlab-ci/-/blob/master/README.md',
+ 'avatar_url': None,
+ 'star_count': 7,
+ 'forks_count': 11,
+ 'last_activity_at': '2020-06-19T15:04:38.987Z',
+ 'namespace': {'id': 2961613,
+  'name': 'singularityhub',
+  'path': 'singularityhub',
+  'kind': 'group',
+  'full_path': 'singularityhub',
+  'parent_id': None,
+  'avatar_url': '/uploads/-/system/group/avatar/2961613/robot-vision.png',
+  'web_url': 'https://gitlab.com/groups/singularityhub'}}
+```
+
+<a id="zenodo">
+### Zenodo
+
+The "zenodo" parser is intended to parse a Zenodo DOI or url into a software repository,
+and we use the [Zenodo API](https://developers.zenodo.org/) to handle this.
+Only entries that are classified as "software" are allowed. A `RSE_ZENODO_TOKEN` is required
+to be exported to the environment, and you can generate one under your [account application settings](https://zenodo.org/account/settings/applications/).
+
+```bash
+export RSE_ZENODO_TOKEN=123456.......
+```
+
+#### Example Usage
+Example usage of the parser outside of the Encyclopedia might look like the following.
+If you want to instantiate an empty parser (not associated with a software repository)
+you can do that as follows:
+
+```python
+from rse.main.parsers import ZenodoParser
+parser = ZenodoParser()
+```
+
+However, it's more likely that you want to parse a specific repository. Let's say
+that we want to parse the [Singularity Registry](https://zenodo.org/record/1012531#.Xu5OOZZME5k) 
+record on Zenodo. We need to provide the DOI to do this:
+
+
+```python
+from rse.main.parsers import ZenodoParser
+
+parser = ZenodoParser('10.5281/zenodo.1012531')
+```
+
+after, we can see the unique id is assigned:
+
+```python
+parser.uid
+# 'zenodo/10.5281/zenodo.1012531'
+```
+If you provide an incorrectly formatted it, it will raise an error:
+
+```python
+parser = ZenodoParser('10.5281/zenodo.xxxxx')   
+...
+RuntimeError: 10.5281/zenodo.xxxxx does match a Zenodo DOI.
+```
+
+Note that you can also get a named zenodo parser, and set a unique resource identifier after the fact:
+
+```python
+from rse.main.parsers import get_named_parser 
+parser = get_named_parser('zenodo')
+
+parser.set_uid('10.5281/zenodo.1012531')
+parser.uid
+# 'zenodo/10.5281/zenodo.1012531'
+```
+
+Once the identifier is loaded, you can parse updated metadata for it.
+Note that you can define an `RSE_ZENODO_TOKEN` to be set in the environment
+if you want to potentially increase your API limits.
+You can then get the metadata about the archive:
+
+```python
+data = parser.get_metadata()
+
+{'conceptdoi': '10.5281/zenodo.1012530',
+ 'conceptrecid': '1012530',
+ 'created': '2017-10-15T12:01:44.261541+00:00',
+ 'doi': '10.5281/zenodo.1012531',
+ 'files': [{'bucket': '66ebd044-2964-4051-8a92-c453da4709e0',
+   'checksum': 'md5:d5f196461893f65b7e0294dd8386a439',
+   'key': 'sregistry-1.0.1.tar.gz',
+   'links': {'self': 'https://zenodo.org/api/files/66ebd044-2964-4051-8a92-c453da4709e0/sregistry-1.0.1.tar.gz'},
+   'size': 7681819,
+   'type': 'gz'}],
+ 'id': 1012531,
+ 'links': {'badge': 'https://zenodo.org/badge/doi/10.5281/zenodo.1012531.svg',
+  'bucket': 'https://zenodo.org/api/files/66ebd044-2964-4051-8a92-c453da4709e0',
+  'conceptbadge': 'https://zenodo.org/badge/doi/10.5281/zenodo.1012530.svg',
+  'conceptdoi': 'https://doi.org/10.5281/zenodo.1012530',
+  'doi': 'https://doi.org/10.5281/zenodo.1012531',
+  'html': 'https://zenodo.org/record/1012531',
+  'latest': 'https://zenodo.org/api/records/1012531',
+  'latest_html': 'https://zenodo.org/record/1012531',
+  'self': 'https://zenodo.org/api/records/1012531'},
+ 'metadata': {'access_right': 'open',
+  'access_right_category': 'success',
+  'contributors': [{'name': 'Arfon Smith',
+    'orcid': '0000-0002-3957-2474',
+    'type': 'Editor'},
+   {'name': 'Pjotr Prins', 'orcid': '0000-0002-8021-9162', 'type': 'Editor'},
+   {'name': 'Steffen Möller',
+    'orcid': '0000-0002-7187-4683',
+    'type': 'Editor'}],
+  'creators': [{'affiliation': 'Stanford University',
+    'name': 'Vanessa Sochat',
+    'orcid': '0000-0002-4387-3819'}],
+  'description': '<p>Singularity Registry is a non-centralized free and Open Source infrastructure to facilitate management and sharing of institutional or personal containers.</p>',
+  'doi': '10.5281/zenodo.1012531',
+  'journal': {'title': 'The Journal of Open Source Software'},
+  'keywords': ['containers',
+   'scientific containers',
+   'HPC',
+   'singularity',
+   'reproducibility',
+   'registry',
+   'web infrastructure',
+   'Docker',
+   'Django',
+   'nginx',
+   'redis'],
+  'language': 'eng',
+  'license': {'id': 'BSD-3-Clause'},
+  'publication_date': '2017-10-15',
+  'related_identifiers': [{'identifier': '10.5281/zenodo.1012530',
+    'relation': 'isVersionOf',
+    'scheme': 'doi'}],
+  'relations': {'version': [{'count': 1,
+     'index': 0,
+     'is_last': True,
+     'last_child': {'pid_type': 'recid', 'pid_value': '1012531'},
+     'parent': {'pid_type': 'recid', 'pid_value': '1012530'}}]},
+  'resource_type': {'title': 'Software', 'type': 'software'},
+  'title': 'Singularity Registry'},
+ 'owners': [5828],
+ 'revision': 5,
+ 'stats': {'downloads': 7.0,
+  'unique_downloads': 6.0,
+  'unique_views': 70.0,
+  'version_downloads': 7.0,
+  'version_unique_downloads': 6.0,
+  'version_unique_views': 69.0,
+  'version_views': 75.0,
+  'version_volume': 53772733.0,
+  'views': 76.0,
+  'volume': 53772733.0},
+ 'updated': '2020-01-25T07:25:02.258480+00:00'}
+```
+
 
 You might next want to learn about the interactive [dashboard]({{ site.baseurl }}/getting-started/dashboard/).

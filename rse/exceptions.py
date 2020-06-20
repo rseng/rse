@@ -102,3 +102,14 @@ class NoReposError(RepoError):
     def __init__(self, *args, **kwargs):
         reason = "There are no repos in the database."
         super(NoReposError, self).__init__(reason=reason, *args, **kwargs)
+
+
+class RepoMetadataExistError(RepoError):
+    """Thrown if a metadata value (label) already exists.
+    """
+
+    def __init__(self, uid, key, *args, **kwargs):
+        reason = "Metadata value %s already is defined." % key
+        super(RepoMetadataExistError, self).__init__(
+            uid=uid, reason=reason, *args, **kwargs
+        )
