@@ -76,6 +76,7 @@ if __name__ == "__main__":
     ALL_REQUIRES = get_reqs(lookup, "ALL_REQUIRES")
     APP_REQUIRES = get_reqs(lookup, "APP_REQUIRES")
     DATABASE_REQUIRES = get_reqs(lookup, "DATABASE_REQUIRES")
+    SCRAPER_REQUIRES = get_reqs(lookup, "SCRAPER_REQUIRES")
 
     setup(
         name=NAME,
@@ -98,6 +99,7 @@ if __name__ == "__main__":
         tests_require=TESTS_REQUIRES,
         extras_require={
             "database": DATABASE_REQUIRES,
+            "scraper": SCRAPER_REQUIRES,
             "app": APP_REQUIRES,
             "all": ALL_REQUIRES,
         },

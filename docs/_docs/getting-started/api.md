@@ -23,6 +23,7 @@ If you look at the bottom of the table, there is a small link to view the tasks 
 
 ![../img/api/dashboard.png](../img/api/dashboard.png)
 
+
 ## API Views
 
  - [Api Index (root)](#index)
@@ -46,6 +47,7 @@ The first page you go to is the index, which shows the pattern for endpoints tha
 <a id="list-repos">
 ###  List Repositories
 
+
 **/api/repos**
 
 You can quickly see a listing of all repositories in the encyclopedia:
@@ -56,7 +58,8 @@ You can quickly see a listing of all repositories in the encyclopedia:
 <a id="list-parser">
 ###  List Repositories by Parser
 
-**/api/repos/parser/<name>**
+
+**/api/repos/parser/[name]**
 
 Or a listing based on the parser (e.g., GitHub)
 
@@ -66,7 +69,7 @@ Or a listing based on the parser (e.g., GitHub)
 <a id="list-repo">
 ### List Single Repository
 
-**/api/repos/<uid>**
+**/api/repos/[uid]**
 
 If you adjust the url (`/api/repos/<uid>`) to specify a particular repository, you'll see it's exported metadata:
 

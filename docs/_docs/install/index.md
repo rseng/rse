@@ -60,6 +60,13 @@ pip install rse[app]
 pip install -e .[app]
 ```
 
+if you want to use the scrapers, you need to install beautiful soup:
+
+```bash
+pip install rse[scraper]
+pip install -e .[scraper]
+```
+
 or just install all dependencies:
 
 ```bash

@@ -12,11 +12,11 @@ your software database.
  - [Exists](#exists): determine if a particular repository exists in your local repository
  - [Add](#add): add a new software repository to your database
  - [Get](#get): retrieve current metadata for a piece of software, or all software
+ - [Scrape](#scrape): automated update of new software repositories from a remote resource
  - [Update](#update): update metadata for a single repository or all repositories
  - [Label](#label) a software repository with custom metadata
  - [List](#list) all software or software specific to a parser
 
- - [Remote](#remote): query the rseng/software remote database
  - [Clear](#clear) a software repository, all under a parser, or the entire database.
  - [Search](#search) across your software to find a particular one.
  - [Shell](#shell) into a Python shell to interact with an encyclopedia client.
@@ -126,6 +126,37 @@ for you:
 ```bash
 rse get
 ```
+
+<a id="scrape">
+## Scrape
+
+Adding a repository here and there is logical, but it would be very arduous
+to need to consistently look for and add new software repositories. Toward
+this goal, the research software encyclopedia has a `scrape` command
+that will allow you to programaticaly discover new repos from some
+external resource. For example, if we wanted to query the [Journal of Open Source Software](https://joss.theoj.org/)
+
+```bash
+$ rse scrape joss
+```
+
+If you don't provide a query term, the latest set will be returned. If you do
+provide a term,
+
+```bash
+$ rse scrape joss docker
+```
+
+The term will be searched for instead. You can also do a dry run to see the 
+repos found, but not add them to the software repository:
+
+```bash
+$ rse scrape --dry-run joss
+```
+
+For more detailed scraping, it's recommended
+to interact with a scraper from within Python. See the [scrapers](../scrapers) getting
+started pages to do this.
 
 <a id="update">
 ## Update

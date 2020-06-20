@@ -172,6 +172,20 @@ def get_parser():
     )
     search.add_argument("query", nargs="*")
 
+    # Scrape for new repos
+    scrape = subparsers.add_parser(
+        "scrape", help="Add new software repositories from a resource.",
+    )
+    scrape.add_argument("scraper_name", nargs=1)
+    scrape.add_argument("query", nargs="?")
+    scrape.add_argument(
+        "--dry-run",
+        dest="dry_run",
+        help="Dump scrape output to the terminal, but don't create new repos.",
+        default=False,
+        action="store_true",
+    )
+
     # Shell
     subparsers.add_parser(
         "shell", help="start an interactive shell for an encyclopedia"
@@ -234,6 +248,7 @@ def get_parser():
         label,
         ls,
         search,
+        scrape,
         start,
         update,
     ]:
@@ -320,6 +335,8 @@ def main():
         from .listing import main
     if args.command == "search":
         from .search import main
+    if args.command == "scrape":
+        from .scrape import main
     if args.command == "shell":
         from .shell import main
     if args.command == "start":
