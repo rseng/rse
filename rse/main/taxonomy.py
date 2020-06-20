@@ -23,4 +23,6 @@ def get_taxonomy():
     response = requests.get(f"{RSE_API_ENDPOINT}/taxonomy/")
     if response.status_code != 200:
         sys.exit(f"Problem with getting {RSE_API_ENDPOINT}/taxonomy/")
-    return response.json()["data"]
+    taxonomy = response.json()["data"]
+    # Sort by the ordering
+    return sorted(taxonomy, key=lambda i: i["path"])

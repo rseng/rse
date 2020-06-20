@@ -47,6 +47,11 @@ class SoftwareRepository(Base):
         return self.parser.get_url(data)
 
     @property
+    def avatar(self):
+        data = json.loads(self.data)
+        return self.parser.get_avatar(data)
+
+    @property
     def description(self):
         data = json.loads(self.data)
         return self.parser.get_description(data)
@@ -92,8 +97,21 @@ class SoftwareRepository(Base):
     def has_criteria_annotation(self, uid, username):
         """Determine if a repository has been annotated by a user.
         """
-        if uid not in self.criteria:
+        if not self.criteria:
             return False
-        if username not in self.criteria[uid].get("users", []):
+        criteria = json.loads(self.criteria)
+        if uid not in criteria:
+            return False
+        if username not in criteria[uid].get("users", []):
+            return False
+        return True
+
+    def has_taxonomy_annotation(self, username):
+        """Determine if a repository has been annotated by a user.
+        """
+        if not self.taxonomy:
+            return False
+        taxonomy = json.loads(self.taxonomy)
+        if username not in taxonomy:
             return False
         return True

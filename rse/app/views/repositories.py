@@ -8,9 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from flask import render_template
+from flask import render_template, request, redirect
 from rse.app.server import app
-
+import random
 
 ## Repository Views
 
@@ -28,3 +28,162 @@ def repository_view(uid):
             database=app.client.database,
             skips=skips,
         )
+
+
+@app.route("/annotate")
+def annotate_repos(message=""):
+    return render_template(
+        "annotate/repos.html", database=app.client.database, message=message
+    )
+
+
+@app.route("/annotate-criteria", methods=["POST", "GET"])
+def annotate_criteria():
+
+    # If it's a post, update the annotation
+    username = None
+    if request.method == "POST":
+        username = update_criteria()
+
+    # Username on GitHub is required for annotation lookup
+    username = request.args.get("username", username)
+    print("Username is %s" % username)
+    if username in [None, ""]:
+        return annotate_repos(
+            message="Please provide your GitHub username above to start the annotation session."
+        )
+
+    # Get the first set of criteria
+    last = None
+    annotation_sets = []
+    for repo, criteria in app.client.yield_criteria_annotation_repos(
+        username=username, unseen_only=True
+    ):
+        if last is not None and last.uid != repo.uid:
+            break
+        last = repo
+        annotation_sets.append((repo, criteria,))
+
+    return render_template(
+        "annotate/criteria.html",
+        database=app.client.database,
+        sets=annotation_sets,
+        username=username,
+    )
+
+
+@app.route("/annotate-taxonomy", methods=["GET", "POST"])
+def annotate_taxonomy():
+
+    # If we don't have a color lookup, make one
+    if not hasattr(app, "taxonomy"):
+        app.taxonomy = generate_taxonomy(app)
+
+    # If it's a post, update the annotation
+    username = None
+    if request.method == "POST":
+        username = update_taxonomy()
+
+    # Username on GitHub is required for annotation lookup
+    username = request.args.get("username", username)
+    print("Username is %s" % username)
+    if username in [None, ""]:
+        return annotate_repos(
+            message="Please provide your GitHub username above to start the annotation session."
+        )
+
+    # Generator for repos that need annotation based on username
+    generator = app.client.yield_taxonomy_annotation_repos(username, unseen_only=True)
+
+    # Return the taxonomy with one repo, until we run out
+    try:
+        repo = next(generator)
+        print(repo)
+        return render_template(
+            "annotate/taxonomy.html",
+            database=app.client.database,
+            taxonomy=app.taxonomy,
+            repo=repo,
+            username=username,
+        )
+
+    except StopIteration as exc:
+        return annotate_repos(
+            message="You have already annotated taxonomy items for all the repos!"
+        )
+
+
+# Helper Functions
+
+
+def generate_taxonomy(app):
+
+    from rse.utils.colors import browser_palette as color_options
+
+    # Limit to dark colors
+    color_options = [x for x in color_options if "dark" in x or "medium" in x]
+    taxonomy = app.client.list_taxonomy()
+
+    # Generate a color for each unique entry
+    colors = {}
+    for entry in taxonomy:
+        parts = [x.strip() for x in entry["path"].split(">>")]
+        colorlist = []
+        for part in parts:
+            if part not in colors:
+                colors[part] = color_options.pop(
+                    color_options.index(random.choice(color_options))
+                )
+            colorlist.append(colors[part])
+        entry["colors"] = colorlist
+    return taxonomy
+
+
+def update_criteria():
+
+    updates = {}
+    repo_uid = request.form.get("repo_uid")
+    username = request.form.get("username")
+    for key in request.form.keys():
+        for value in request.form.getlist(key):
+            if key.startswith("radio-RSE-"):
+                updates[key.replace("radio-", "", 1)] = value
+
+    # Do the update for each criteria
+    repo = app.client.get(repo_uid)
+    for key, response in updates.items():
+        print(f"Updating {repo} {key} with {response}")
+        repo.update_criteria(key, username, response)
+
+    # The filesystem database saves at the end
+    if hasattr(repo, "save_criteria"):
+        repo.save_criteria()
+
+    # Relational saves the database item
+    else:
+        app.client.db.update(repo)
+    return username
+
+
+def update_taxonomy():
+
+    uids = []
+    repo_uid = request.form.get("repo_uid")
+    username = request.form.get("username")
+    for key in request.form.keys():
+        for value in request.form.getlist(key):
+            if key.startswith("RSE-taxonomy"):
+                uids.append(key)
+
+    # Do the update for each criteria
+    repo = app.client.get(repo_uid)
+    print(f"Updating {repo} with {uids}")
+
+    if hasattr(repo, "save_taxonomy"):
+        repo.taxonomy[username] = uids
+        repo.save_taxonomy()
+    else:
+        repo.update_taxonomy(username, uids)
+        app.client.db.update(repo)
+
+    return username

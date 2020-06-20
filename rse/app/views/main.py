@@ -64,33 +64,6 @@ def update_database():
         socketio.sleep(RSE_SOCKET_UPDATE_SECONDS)
 
 
-@socketio.on("deleterow", namespace="/table/action")
-def delete_row(json):
-    """a request to delete a particular row"""
-    app.logger.debug("Received deletion request for %s", json.get("taskid"))
-    taskid = json.get("taskid", "doesnotexist")
-    was_deleted = app.client.clear(target=taskid, noprompt=True)
-    socketio.emit(
-        "deleterowcomplete",
-        {"wasdeleted": was_deleted, "taskid": taskid},
-        namespace="/table/action",
-    )
-
-
-@socketio.on("rerunrow", namespace="/table/action")
-def rerun_row(json):
-    """a request to re-run a particular task.
-    """
-    app.logger.debug("Received re-run request for %s", json.get("taskid"))
-    taskid = json.get("taskid", "doesnotexist")
-    was_rerun = app.client.rerun(taskid) is not None
-    socketio.emit(
-        "reruncomplete",
-        {"wasrerun": was_rerun, "taskid": taskid},
-        namespace="/table/action",
-    )
-
-
 @socketio.on("connect", namespace="/update")
 def update_connect():
     # need visibility of the global thread object

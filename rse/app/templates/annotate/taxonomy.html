@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Annotate Criteria{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<style>
+.center {
+  margin: auto;
+  width: 50%;
+  padding-top: 130px !important;
+}
+
+.panel-default {
+  border-radius:20px;
+}
+</style>
+<div class='container'>
+  <div class='row'>
+    <div class='col-sm-12'>
+      <br>
+      <h2>{{ repo.uid }}</h2>
+      <p>How would you categorize this software? Choose more than one.</p>
+      <br>{{ colors }}
+      <div class="panel panel-default">
+        <div>
+          <hr> 
+         <form method="POST" action="/annotate-taxonomy?username={{ username }}">
+         <input type="hidden" name="repo_uid" value="{{ repo.uid }}">
+         <input type="hidden" name="username" value="{{ username }}">
+	  <table class="table">
+	    <tbody>
+	      {% for item in taxonomy %}{% set path = item.path.split('>>') %}
+		<tr>
+		   <td><span style="background-color:{{ item.colors[0] }};padding:16px;color:white;"><strong>{{ path[0] }}</strong></span><button style="padding:12px 4px" class="btn btn-secondary">>></button><span style="background-color:{{ item.colors[1] }};padding:16px;color:white;"><strong>{{ path[1] }}</strong></span><button style="padding:12px 4px" class="btn btn-secondary">>></button>
+		   <label class="btn btn-warning" style="font-size:18px; text-align:left;">
+                        <input type="checkbox" name="{{ item.uid }}" id="{{ item.uid }}"><strong>{{ path[2]}} </strong>
+                 </label></td>
+	      </tr>
+	     {% endfor %}
+	    </tbody>
+	  </table>
+	</div>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <a href="/annotate"><button type="button" id="back-annotate" class="btn btn-primary">< Back to Annotation</button></a>
+      <button id="next-button" class="btn btn-primary" type="submit">Next ></button>
+    </div>
+  </div>
+  </form>
+
+  <div class="controls">
+    <span style="float:right; margin-right:30px; margin-top:-5px" class="badge badge-primary">database: {{ database }}</span>
+  </div>
+  <hr>
+</div>
+{% endblock %}
+{% block footer %}
+{{ super() }}
+<script>
+$("form").submit(function(event) {
+  console.log($(this).serializeArray());
+});
+</script>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Annotate Repos{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<style>
+.center {
+  margin: auto;
+  width: 50%;
+  padding-top: 130px !important;
+}
+
+.panel-default {
+  border-radius:20px;
+}
+</style>
+<div class='container'>
+  <div class='row'>
+    <div class='col-sm-12'>
+      <br>
+      <div class="form-horizontal">
+        <div class="form-group has-feedback">
+          <div class='col-sm-12'>
+            <input class='form-control' placeholder="Enter your GitHub username..." name="username" id="username">
+            <p id="message">{{ message }}</p>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="panel panel-default">
+        <div>
+          <hr> 
+          <div class="row">
+            <div class="col-md-6">
+              <div class="panel panel-default" style="width:100%; height:300px; background-color:rgb(77, 194, 202);">
+               <a onclick="annotateCriteria()"><h2 class="center" style="color:white; font-size:28px"><strong>Annotate Criteria</strong></h2></a>
+              </div>
+            </div>
+            <div class="col-md-6">
+            <div class="panel panel-default" style="width:100%; height:300px; background-color:rgb(51, 167, 194)">
+               <a onclick="annotateTaxonomy()"><h2 class="center" style="color:white; font-size:28px;"><strong>Annotate Taxonomy</strong></h2></a>
+            </div>
+            </div>
+	</div>
+
+  <div class="controls">
+    <span style="float:right; margin-right:30px; margin-top:-5px" class="badge badge-primary">database: {{ database }}</span>
+  </div>
+  <hr>
+</div>
+{% endblock %}
+{% block footer %}
+{{ super() }}
+<script>
+function annotateCriteria() {
+    console.log("Annotate criteria.")
+    username = $("#username").val()
+    if ((username == "") || (username == undefined)){
+       $("#message").text("Please provide your GitHub username above to start the annotation session.")
+    } else {
+       document.location = "/annotate-criteria?username=" + username 
+    }
+}
+function annotateTaxonomy() {
+    console.log("Annotate taxonomy.")
+    username = $("#username").val()
+    if ((username == "") || (username == undefined)){
+       $("#message").text("Please provide your GitHub username above to start the annotation session.")
+    } else {
+       document.location = "/annotate-taxonomy?username=" + username 
+    }
+}
+</script>
+{% endblock %}
