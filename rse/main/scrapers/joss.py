@@ -59,7 +59,7 @@ class JossScraper(ScraperBase):
         while url is not None:
 
             response = requests.get(url, headers={"User-Agent": get_user_agent()})
-            soup = BeautifulSoup(response.text, "html5lib")
+            soup = BeautifulSoup(response.text, "html.parser")
             url = None
             for link in soup.find_all("link", href=True):
 
