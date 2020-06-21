@@ -29,5 +29,3 @@ def main(args, extra):
     # If we have results and it's not a dry run, create the repos
     if results and not args.dry_run:
         scraper.create(database=args.database, config_file=args.config_file)
-    elif results and args.dry_run:
-        print(results)

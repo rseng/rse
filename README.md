@@ -5,17 +5,23 @@
 The Research Software Encyclopedia (rse) is software to query and otherwise interact 
 with a database of research software, and a research software taxonomy.
 It is intended for research software engineers to be able to better qualify
-and quantify the work that they do.
+and quantify the work that they do. The rse uses the following resources:
 
-## Getting Started
+ - [rseng/rseng](https://rseng.github.io/rseng/): serves the taxonomy and criteria
+ - [rseng/software](https://github.com/rseng/software): is a static (flat file) "database" that is updated automatically.
 
-The basic idea is that you interact with a database of software, which can
-be generated locally in a flat file structure (with intention to add to version
-control) or queried from a repository that serves one of these datasets.
-The research software database, along with a taxonomy and criteria, can then
-be queried in an interactive way to generate a research software encyclopedia.
+Unlike traditional software databases, the rse and supporting tools are completely
+hosted and automated without need to manage a server.
+The rse works by way of regularly scraping known research software databases,
+and then adding entries to [rseng/software](https://github.com/rseng/software).
+Users are then (also automatically) prompted to answer questions about criteria
+and taxonomy via social media and chat (not developed yet).  Non-traditional
+use cases for the rse are generating a static web-site of your own research 
+software! See [the tutorials](https://rseng.github.io/rseng/blog/) section of the 
+criteria and taxonomy site to get started.
 
-**under development**
+Read the [documentation](https://rseng.github.io/rse/) to get started with interacting with the 
+research software encyclopedia.
 
 ## License
 

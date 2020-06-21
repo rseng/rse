@@ -9,6 +9,34 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 import random
+import logging
+
+bot = logging.getLogger("rse.utils.urls")
+
+repository_regex = (
+    "(github.com|gitlab.com)/(?P<owner>[\w,\-,\_]+)/(?P<repo>[\w,\-,\_]+)$"
+)
+
+
+def check_response(response):
+    """Given a requests.Response, return the json data if it's successful.
+       Otherwise issue an error and return None
+    """
+    print(response.status_code)
+    if response.status_code == 200:
+        return response.json()
+
+    elif response.status_code == 404:
+        bot.error(f"Cannot find endpoint {response.url}.")
+
+    elif response.status_code in [400, 401, 403]:
+        bot.error(f"Permission denied to query {response.url}")
+
+    else:
+        bot.error(
+            f"Cannot get {response.url}: {response.status_code}, {response.reason}"
+        )
+    return None
 
 
 def get_user_agent():
