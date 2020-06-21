@@ -11,6 +11,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 import logging
 import requests
 import urllib.parse
+from rse.utils.urls import check_response
 
 from .base import ParserBase
 
@@ -82,18 +83,5 @@ class GitLabParser(ParserBase):
         response = requests.get(url, headers=headers)
 
         # Successful query!
-        if response.status_code == 200:
-            self.data = response.json()
-            return self.data
-
-        elif response.status_code == 404:
-            bot.error(f"Cannot find repository {repo}.")
-
-        elif response.status_code in [400, 401, 403]:
-            bot.error(f"Permission denied to query {repo}")
-
-        else:
-            bot.error(
-                f"Cannot get repo {repo}: {response.status_code}, {response.reason}"
-            )
-        return None
+        self.data = check_response(response)
+        return self.data

@@ -30,9 +30,9 @@ The following scrapers are planned for development, depending on if an API is av
 and it includes links to repositories:
 
  - [The Journal of Open Source Software (JoSS)](#joss)
- - bio.tools
- - Hal Research Software Database
- - Software Dictionary: https://research-software.nl/
+ - [bio.tools](#biotools)
+ - [Hal Research Software Database](#hal)
+ - [Research Software NL Dictionary](#researchsoftwarenl)
 
 
 <a id="joss">
@@ -69,6 +69,9 @@ You can also scrape based on a term of interest:
 $ rse scrape --dryrun joss docker
 ```
 
+<a id="within-python">
+#### Within Python
+
 And of course you can interact with a scraper from within Python! Either
 of the following will work to get the joss scraper:
 
@@ -79,7 +82,7 @@ scraper = get_named_scraper('joss')
 
 ```python
 from rse.main.scrapers import JossScraper
-scraper = JossScraper('joss')
+scraper = JossScraper()
 ```
 
 And then you can either search for a term, or get the latest (on the front page)
@@ -104,4 +107,131 @@ The results are returned above, but they are also saved to the client.
 scraper.create()
 ```
 
-**under development**
+<a id="biotools">
+### Bio.Tools
+
+The [bio.tools](https://bio.tools) database is a rich source of scientific software,
+specifically for biotools. It serves an [application pgogramming interface](https://biotools.readthedocs.io/en/latest/api_reference.html) that we can query with the Research Software Encyclopedia, making
+it a good scraper. To scrape latest (does not have pagination), simply do:
+
+
+```bash
+$ rse scrape biotools
+```
+
+To do a dry run:
+
+```bash
+$ rse scrape --dry-run biotools
+INFO:rse.main.scrapers.biotools:Found repository: https://github.com/smajidian/phaseme
+INFO:rse.main.scrapers.biotools:Found repository: https://github.com/COVIDep/COVIDep
+INFO:rse.main.scrapers.biotools:Found repository: https://github.com/NIB-SI/DiNAR
+INFO:rse.main.scrapers.biotools:Found repository: https://github.com/reproducible-biomedical-modeling/Biosimulations
+INFO:rse.main.scrapers.biotools:Found repository: https://github.com/Brazelton-Lab/seq-annot
+INFO:rse.main.scrapers.biotools:Found repository: https://github.com/gevaertlab/BetaVAEImputation
+INFO:rse.main.scrapers.biotools:Found repository: https://github.com/herrsalmi/FConverter
+INFO:rse.main.scrapers.biotools:Found repository: https://github.com/yanzhanglab/Graph2GO
+```
+
+You can also search for a term (also using `--dry-run` if desired:
+
+```bash
+$ rse scrape --dry-run biotools docker
+```
+
+The [within python](#within-python) interaction is the same, except you need to
+select the biotools named parser.
+
+```python
+from rse.main.scrapers import get_named_scraper
+scraper = get_named_scraper('biotools')
+```
+```python
+from rse.main.scrapers import BioToolsScraper
+scraper = BioToolsScraper()
+```
+
+<a id='hal'>
+### Hal Research Software Database
+
+The [Hal Research Software Database](https://hal.archives-ouvertes.fr/) exposes a search API,
+and the client here tries to search for a subset of software that have github somewhere
+in the search (for latest). If you search for a term, although you will get more results,
+it's less likely to find GitHub or GitLab.
+
+
+```bash
+$ rse scrape hal
+```
+
+To do a dry run:
+
+```bash
+$ rse scrape --dry-run hal
+INFO:rse.main.scrapers.hal:Found repository: github.com/DreamCloud-Project/AMALTHEA-Microworkload-Generator
+INFO:rse.main.scrapers.hal:Found repository: github.com/DreamCloud-Project/AMALTHEA-SimGrid
+INFO:rse.main.scrapers.hal:Found repository: github.com/genotoul-bioinfo/dgenies
+INFO:rse.main.scrapers.hal:Found repository: github.com/gijut/gnucash
+INFO:rse.main.scrapers.hal:Found repository: github.com/DreamCloud-Project/McSim-Cycle-accurate-Xbar
+INFO:rse.main.scrapers.hal:Found repository: github.com/DreamCloud-Project/McSim-TLM-NoC
+INFO:rse.main.scrapers.hal:Found repository: github.com/DreamCloud-Project/McSim-Cycle-accurate-NoC
+INFO:rse.main.scrapers.hal:Found repository: github.com/HEML/HEML
+INFO:rse.main.scrapers.hal:Found repository: github.com/kkjawz/coref-ee
+INFO:rse.main.scrapers.hal:Found repository: github.com/linbox-team/linbox
+Found 10 results
+```
+
+You can also search for a term (also using `--dry-run` if desired:
+
+```bash
+$ rse scrape --dry-run hal docker
+```
+
+The [within python](#within-python) interaction is the same, except you need to
+select the biotools named parser.
+
+```python
+from rse.main.scrapers import get_named_scraper
+scraper = get_named_scraper('hal')
+```
+```python
+from rse.main.scrapers import HalScraper
+scraper = HalScraper()
+```
+
+<a id="researchsoftwarenl">
+### Research Software Dictionary (NL)
+
+The [Research Software Dictionary](https://research-software.nl/) is a dictionary
+of software deployed by the Netherlands eScience Center that also provides a nice
+application programming interface (API) that we can parse.
+
+```bash
+$ rse scrape rsnl
+```
+
+To do a dry run:
+
+```bash
+$ rse scrape --dry-run rsnl
+INFO:rse.main.scrapers.rsnl:Found repository: https://github.com/3D-e-Chem/knime-kripodb
+INFO:rse.main.scrapers.rsnl:Found repository: https://github.com/3D-e-Chem/knime-pharmacophore
+INFO:rse.main.scrapers.rsnl:Found repository: https://github.com/3D-e-Chem/knime-plants
+INFO:rse.main.scrapers.rsnl:Found repository: https://github.com/3D-e-Chem/knime-python-node-archetype
+...
+INFO:rse.main.scrapers.rsnl:Found repository: https://github.com/iomega/spec2vec
+INFO:rse.main.scrapers.rsnl:Found repository: https://github.com/NLESC-JCER/linux_actions_runner
+Found 149 results
+```
+
+The [within python](#within-python) interaction is the same, except you need to
+select the biotools named parser.
+
+```python
+from rse.main.scrapers import get_named_scraper
+scraper = get_named_scraper('rsnl')
+```
+```python
+from rse.main.scrapers import RSNLScraper
+scraper = RSNLScraper()
+```

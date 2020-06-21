@@ -9,6 +9,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 from rse.utils.urls import get_user_agent
+from rse.main.parsers import get_parser
 import logging
 import requests
 import random
@@ -103,8 +104,9 @@ class JossScraper(ScraperBase):
         client = Encyclopedia(config_file=config_file, database=database)
         for result in self.results:
             uid = result["url"].split("//")[-1]
+            repo = get_parser(uid)
 
             # Add results that don't exist
-            if not client.exists(uid):
-                client.add(uid)
-                client.label(uid, key="doi", value=result.get("doi"))
+            if not client.exists(repo.uid):
+                client.add(repo.uid)
+                client.label(repo.uid, key="doi", value=result.get("doi"))
