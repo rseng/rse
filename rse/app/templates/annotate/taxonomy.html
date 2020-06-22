@@ -25,7 +25,7 @@
       <div class="panel panel-default">
         <div>
           <hr> 
-         <form method="POST" action="/annotate-taxonomy?username={{ username }}">
+         <form method="POST" action="{{ url_prefix }}annotate-taxonomy?username={{ username }}">
          <input type="hidden" name="repo_uid" value="{{ repo.uid }}">
          <input type="hidden" name="username" value="{{ username }}">
 	  <table class="table">
@@ -44,7 +44,7 @@
   
   <div class="row">
     <div class="col-md-12">
-      <a href="/annotate"><button type="button" id="back-annotate" class="btn btn-primary">< Back to Annotation</button></a>
+      <a href="{{ url_prefix }}annotate"><button type="button" id="back-annotate" class="btn btn-primary">< Back to Annotation</button></a>
       <button id="next-button" class="btn btn-primary" type="submit">Next ></button>
     </div>
   </div>

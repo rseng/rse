@@ -10,8 +10,6 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from multiprocessing import Process
 import os
-import signal
-import sys
 
 from rse.main import Encyclopedia
 import logging
@@ -57,6 +55,3 @@ def main(args, extra):
 
         # Ensure that it stops!
         p.kill()
-        p.terminate()
-        os.kill(p.pid, signal.SIGKILL)
-        sys.exit(0)

@@ -56,5 +56,12 @@ RSE_PARSERS = ["github"]
 # Default taxonomy and criteria endpoint
 RSE_API_ENDPOINT = "https://rseng.github.io/rseng/api"
 
+# MUST start and end with slash
+RSE_URL_PREFIX = getenv("RSE_URL_PREFIX", "/")
+if not RSE_URL_PREFIX.startswith("/"):
+    RSE_URL_PREFIX = "/%s" % RSE_URL_PREFIX
+if not RSE_URL_PREFIX.endswith("/"):
+    RSE_URL_PREFIX = "%s/" % RSE_URL_PREFIX
+
 # Dashboard settings
 RSE_HOSTNAME = getenv("RSE_HOSTNAME", "127.0.0.1")

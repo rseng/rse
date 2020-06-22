@@ -10,12 +10,13 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from flask import render_template, request, redirect
 from rse.app.server import app
+from rse.defaults import RSE_URL_PREFIX
 import random
 
 ## Repository Views
 
 
-@app.route("/repository/<path:uid>")
+@app.route("%srepository/<path:uid>" % RSE_URL_PREFIX)
 def repository_view(uid):
 
     # Obtain the repository and load the data.
@@ -28,6 +29,7 @@ def repository_view(uid):
             "parsers/github.html",
             repo=repo.load(),
             database=app.client.database,
+            url_prefix=RSE_URL_PREFIX,
             skips=skips,
         )
     elif repo.parser.name == "gitlab":
@@ -35,19 +37,23 @@ def repository_view(uid):
         return render_template(
             "parsers/gitlab.html",
             repo=repo.load(),
+            url_prefix=RSE_URL_PREFIX,
             database=app.client.database,
             avatar=avatar,
         )
 
 
-@app.route("/annotate")
+@app.route("%sannotate" % RSE_URL_PREFIX)
 def annotate_repos(message=""):
     return render_template(
-        "annotate/repos.html", database=app.client.database, message=message
+        "annotate/repos.html",
+        database=app.client.database,
+        message=message,
+        url_prefix=RSE_URL_PREFIX,
     )
 
 
-@app.route("/annotate-criteria", methods=["POST", "GET"])
+@app.route("%sannotate-criteria" % RSE_URL_PREFIX, methods=["POST", "GET"])
 def annotate_criteria():
 
     # If it's a post, update the annotation
@@ -79,10 +85,11 @@ def annotate_criteria():
         database=app.client.database,
         sets=annotation_sets,
         username=username,
+        url_prefix=RSE_URL_PREFIX,
     )
 
 
-@app.route("/annotate-taxonomy", methods=["GET", "POST"])
+@app.route("%sannotate-taxonomy" % RSE_URL_PREFIX, methods=["GET", "POST"])
 def annotate_taxonomy():
 
     # If we don't have a color lookup, make one
@@ -115,6 +122,7 @@ def annotate_taxonomy():
             taxonomy=app.taxonomy,
             repo=repo,
             username=username,
+            url_prefix=RSE_URL_PREFIX,
         )
 
     except StopIteration as exc:
