@@ -128,6 +128,13 @@ def get_parser():
         "export", help="Export repository names, metadata, or static files."
     )
     export.add_argument(
+        "--type",
+        dest="export_type",
+        help="Type to export (defaults to repos.txt list)",
+        default="repos-txt",
+        choices=["repos-txt", "static-web"],
+    )
+    export.add_argument(
         "--force",
         dest="force",
         help="Don't ask for confirmation to overwrite existing file(s).",
@@ -195,28 +202,35 @@ def get_parser():
     start = subparsers.add_parser(
         "start", help="start an interface to browse software (requires Flask)"
     )
-    start.add_argument(
-        "--port",
-        dest="port",
-        default=5000,
-        type=int,
-        help="select port to run dashboard on (defaults to 5000)",
-    )
-    start.add_argument(
-        "--host",
-        dest="host",
-        default="127.0.0.1",
-        type=str,
-        help="the hostname to run for the server (defaults to 127.0.0.1)",
-    )
-
-    start.add_argument(
-        "--debug",
-        dest="debug",
-        help="run server in debug mode (defaults to False)",
-        default=False,
-        action="store_true",
-    )
+    for command in [start, export]:
+        command.add_argument(
+            "--port",
+            dest="port",
+            default=5000,
+            type=int,
+            help="select port to run dashboard on (defaults to 5000)",
+        )
+        command.add_argument(
+            "--host",
+            dest="host",
+            default="127.0.0.1",
+            type=str,
+            help="the hostname to run for the server (defaults to 127.0.0.1)",
+        )
+        command.add_argument(
+            "--debug",
+            dest="debug",
+            help="run server in debug mode (defaults to False)",
+            default=False,
+            action="store_true",
+        )
+        command.add_argument(
+            "--disable-annotate",
+            dest="disable_annotate",
+            help="disable annotation button (defaults to False)",
+            default=False,
+            action="store_true",
+        )
 
     # Label a repository with metadata, e.g., add a DOI.
     label = subparsers.add_parser(

@@ -83,15 +83,6 @@ If you set an environment level that is not one of the choices, it will default
 to using info. If you provide an inccorect value to `--log_level` you will be asked
 to run the command again and choose from the valid choices.
 
-### RSE_SOCKET_UPDATE_SECONDS
-
-If you are using the dashboard (which uses web sockets) this is the number of
-seconds to update it. This basically will update the dashboard table
-with the content of your Qme Database.
-
-You might next want to browse [commands]({{ site.baseurl }}/getting-started/commands/) that can
-be run with rse.
-
 ## RSE Parsers
 
 Each parser can maintain it's own namespace of environment variables. These
@@ -99,10 +90,18 @@ should be specified in the format `RSE_<PARSER>_<NAME>`
 
 ### RSE_GITHUB_TOKEN
 
-To interact with GitHub repositories, you need to set this environment variable,
-a personal access token or a GitHub actions `GITHUB_TOKEN` if run during a GitHub workflow.
-If you don't set it, you'll get this message when trying to add a repository:
+To interact with GitHub repositories with reasonable API limits, it's recommended 
+to set this environment variable, a personal access token or a GitHub actions 
+`GITHUB_TOKEN`.
 
 ```bash
-RSE_GITHUB_TOKEN is required
+export RSE_GITHUB_TOKEN=1234...
+```
+
+## RSE_ZENODO_TOKEN
+
+You can also provide a zenodo API token to increase limits for the Zenodo parser.
+
+```bash
+export RSE_ZENODO_TOKEN=1234...
 ```
