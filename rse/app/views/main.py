@@ -10,6 +10,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from flask import render_template
 from rse.app.server import app
+from rse.defaults import RSE_URL_PREFIX
 
 ## Main Index View
 
@@ -23,5 +24,6 @@ def index():
         database=app.client.database,
         criteria=app.client.list_criteria(),
         entries=app.client.list_taxonomy(),
+        url_prefix=RSE_URL_PREFIX,
         enable_annotate=not app.disable_annotate,
     )

@@ -45,7 +45,7 @@
       <div class='form-horizontal'>
         <div class='form-group has-feedback'>
           <div class='col-sm-12'>{% if enable_annotate %}
-              <a href="/annotate"><button class="btn btn-primary">Annotate</button></a>{% endif %}
+              <a href="{{ url_prefix }}annotate"><button class="btn btn-primary">Annotate</button></a>{% endif %}
           </div>
         </div>
       </div>
@@ -201,7 +201,7 @@ const app = new Vue({
 
     viewRow: function(event) {
         var uid = $(event.target).closest('tr').find('td:first').text()
-        document.location = "/repository/" + uid
+        document.location = "{{ url_prefix }}repository/" + uid
     },
 
     sortBy: function(s) {

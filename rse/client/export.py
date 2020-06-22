@@ -52,4 +52,6 @@ def main(args, extra):
             force=args.force,
             client=client,
         )
+
+        # Ensure that it stops!
         p.kill()

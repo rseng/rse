@@ -10,6 +10,8 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from rse.utils.urls import get_user_agent
 from rse.utils.file import mkdir_p, write_file
+from rse.defaults import RSE_URL_PREFIX
+import logging
 import shutil
 import os
 import sys
@@ -17,6 +19,8 @@ import requests
 import time
 
 here = os.path.abspath(os.path.dirname(__file__))
+
+bot = logging.getLogger("rse.app.export")
 
 
 def export_web_static(export_dir, base_url, client, force=False):
@@ -42,9 +46,10 @@ def export_web_static(export_dir, base_url, client, force=False):
     try:
         requests.head(base_url).status_code == 200
     except:
-        sys.exit(
+        bot.info(
             "Please export after the server is running: export --type static-web [export_dir]"
         )
+        return
 
     # Output directory cannot exist if force
     if os.path.exists(export_dir) and not force:
@@ -65,7 +70,9 @@ def export_web_static(export_dir, base_url, client, force=False):
     # Add repos
     for repo in client.list():
         repo_path = os.path.join("repository", repo[0])
-        urls["%s/%s" % (base_url, repo_path)] = os.path.join(repo_path, "index.html")
+        urls["%s%s%s" % (base_url, RSE_URL_PREFIX, repo_path)] = os.path.join(
+            repo_path, "index.html"
+        )
 
     for url, outfile in urls.items():
 
@@ -81,6 +88,7 @@ def export_web_static(export_dir, base_url, client, force=False):
         if not os.path.exists(out_dir):
             mkdir_p(out_dir)
 
+        # Url might have a prefix
         response = requests.get(url, headers={"User-Agent": get_user_agent()})
         if response.status_code == 200:
             write_file(outfile, response.text)

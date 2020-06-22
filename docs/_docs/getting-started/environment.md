@@ -83,6 +83,19 @@ If you set an environment level that is not one of the choices, it will default
 to using info. If you provide an inccorect value to `--log_level` you will be asked
 to run the command again and choose from the valid choices.
 
+### RSE_URL_PREFIX
+
+If you are running a server and want to add a prefix to the url, export
+that:
+
+```bash
+export RSE_URL_PREFIX=/software
+```
+
+This is especially important if you are running `rse export` for GitHub
+pages, as you'll need the url prefix to coincide with the GitHub pages repository
+name.
+
 ## RSE Parsers
 
 Each parser can maintain it's own namespace of environment variables. These

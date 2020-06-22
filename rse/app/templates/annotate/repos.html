@@ -59,7 +59,7 @@ function annotateCriteria() {
     if ((username == "") || (username == undefined)){
        $("#message").text("Please provide your GitHub username above to start the annotation session.")
     } else {
-       document.location = "/annotate-criteria?username=" + username 
+       document.location = "{{ url_prefix }}annotate-criteria?username=" + username 
     }
 }
 function annotateTaxonomy() {
@@ -68,7 +68,7 @@ function annotateTaxonomy() {
     if ((username == "") || (username == undefined)){
        $("#message").text("Please provide your GitHub username above to start the annotation session.")
     } else {
-       document.location = "/annotate-taxonomy?username=" + username 
+       document.location = "{{ url_prefix }}annotate-taxonomy?username=" + username 
     }
 }
 </script>
