@@ -57,5 +57,4 @@ RSE_PARSERS = ["github"]
 RSE_API_ENDPOINT = "https://rseng.github.io/rseng/api"
 
 # Dashboard settings
-RSE_SOCKET_UPDATE_SECONDS = int(getenv("RSE_SOCKET_UPDATE_SECONDS", 5))
 RSE_HOSTNAME = getenv("RSE_HOSTNAME", "127.0.0.1")

@@ -21,7 +21,13 @@ def main(args, extra):
     try:
         from rse.app.server import start
 
-        start(port=args.port, client=enc, debug=args.debug, level=args.log_level)
+        start(
+            port=args.port,
+            client=enc,
+            debug=args.debug,
+            level=args.log_level,
+            disable_annotate=args.disable_annotate,
+        )
     except:
         sys.exit(
             "You must 'pip install rse[app]' 'pip install rse[all]' to use the dashboard."

@@ -33,7 +33,9 @@ from rse.app.views import *
 from rse.app.api import *
 
 
-def start(port=5000, debug=True, client=None, host=None, level="DEBUG"):
+def start(
+    port=5000, debug=True, client=None, host=None, level="DEBUG", disable_annotate=False
+):
     """Start can be invoked when this file is executed (see __main__ below)
        or used as a function to programmatically start a server. If started
        via rse start, we can add the encyclopedia client to the server. 
@@ -60,6 +62,7 @@ def start(port=5000, debug=True, client=None, host=None, level="DEBUG"):
 
     # Add the queue to the server
     app.client = client
+    app.disable_annotate = disable_annotate
     socketio.run(app, port=port, debug=debug, host=host)
 
 

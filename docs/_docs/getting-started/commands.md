@@ -16,6 +16,7 @@ your software database.
  - [Update](#update): update metadata for a single repository or all repositories
  - [Label](#label) a software repository with custom metadata
  - [List](#list) all software or software specific to a parser
+ - [Export](#export) list of software, or static interface
 
  - [Clear](#clear) a software repository, all under a parser, or the entire database.
  - [Search](#search) across your software to find a particular one.
@@ -262,6 +263,37 @@ DATABASE: filesystem
 INFO:rse.main:Database: filesystem
 1  github/singularityhub/sregistry
 ```
+
+<a id="export">
+## Export
+
+If you want to export a flat listing of repos, you can do so like:
+
+```bash
+$ rse export repos.txt
+```
+
+The default filename is repos.txt, so you could also leave this out:
+
+```bash
+$ rse export
+```
+
+The `--type` is a variable that can be changed to indicate an export of a static
+interface, which will start the web server, and then query endpoints to export
+static files to some folder of interest. You're also required to indicate a path.
+
+```bash
+$ rse export --type static-web docs/
+```
+
+If the folder already exists and you want to over-write, it's suggested to remove
+it first and then run, but if you want to overwrite without removal, just add `--force`
+
+```bash
+$ rse export --type static-web --force docs/
+```
+
 
 <a id="clear">
 ## Clear

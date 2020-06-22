@@ -14,6 +14,7 @@ and **Merged pull requests**. Critical items to know are:
 The versions coincide with releases on pip.
 
 ## [0.2.x](https://github.com/rse/rse/tree/master) (0.0.x)
+ - Adding export of flask for static interface (0.0.12)
  - Updating beautiful soup to use html.parser (0.0.11)
  - first draft including database backends and GitHub parser (0.0.1)
  - skeleton release (0.0.0)
