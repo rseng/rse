@@ -1,6 +1,7 @@
 # Research Software Encyclopedia
 
 [![PyPI version](https://badge.fury.io/py/rse.svg)](https://badge.fury.io/py/rse)
+[![https://img.shields.io/badge/rseng-project-purple](https://img.shields.io/badge/rseng-project-purple)](https://rseng.github.io/) [![https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg](https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg)](https://good-labs.github.io/greater-good-affirmation)
 
 The Research Software Encyclopedia (rse) is software to query and otherwise interact 
 with a database of research software, and a research software taxonomy.
