@@ -212,6 +212,31 @@ class Encyclopedia:
             return results
         bot.info(f"No results matching {query}")
 
+    # Save Handlers
+
+    def save_criteria(self, repo):
+        """Given a repository that can be a handle to a filesystem entry
+           or database, save the criteria
+        """
+        # The filesystem database saves at the end
+        if hasattr(repo, "save_criteria"):
+            repo.save_criteria()
+
+        # Relational saves the database item
+        else:
+            self.db.update(repo)
+
+    def save_taxonomy(self, repo, username, uids):
+        """Given a repository that can be a handle to a filesystem entry
+           or database, save the criteria
+        """
+        if hasattr(repo, "save_taxonomy"):
+            repo.taxonomy[username] = uids
+            repo.save_taxonomy()
+        else:
+            repo.update_taxonomy(username, uids)
+            self.db.update(repo)
+
     # Annotation
 
     def annotate(self, username, atype, unseen_only=True, repo=None, save=False):
@@ -234,11 +259,9 @@ class Encyclopedia:
             return self.annotate_taxonomy(username, unseen_only, repo, save)
         bot.error(f"Unknown annotation type, {atype}.")
 
-    def import_criteria_annotation(self, input_file, username):
-        """Given a text file that has a bullet list of (some checked) criteria
-           as might be generated in a GitHub issue, read in the file and the
-           username to do an annotation. If a user has already done an annotation,
-           his or her record is updated.
+    def _import_annotation(self, input_file, username, stop_line="## Criteria"):
+        """A general helper (private)  function to import an annotation, meaning
+           we parse a repository and return additional lines for parsing.
         """
         if not username or not input_file:
             raise RuntimeError(
@@ -252,7 +275,7 @@ class Encyclopedia:
         line = lines.pop(0)
 
         # Find the repository name
-        while "## Criteria" not in line:
+        while stop_line not in line:
             match = re.search(repository_regex, line)
             if match:
                 break
@@ -264,6 +287,15 @@ class Encyclopedia:
         reponame = match.group()
         parser = get_parser(reponame)
         repo = self.get(parser.uid)
+        return repo, lines
+
+    def import_criteria_annotation(self, input_file, username):
+        """Given a text file that has a bullet list of (some checked) criteria
+           as might be generated in a GitHub issue, read in the file and the
+           username to do an annotation. If a user has already done an annotation,
+           his or her record is updated.
+        """
+        repo, lines = self._import_annotation(input_file, username)
 
         # Now iterate through checklist, update
         for line in lines:
@@ -274,6 +306,27 @@ class Encyclopedia:
             elif re.search("\[]|\[ \]", line):
                 repo.update_criteria(uid, username, "no")
                 print(f"Updating {repo.uid}: {uid}->no")
+
+    def import_taxonomy_annotation(self, input_file, username):
+        """Given a text file that has a bullet list of (some checked) criteria
+           as might be generated in a GitHub issue, read in the file and the
+           username to do an annotation. If a user has already done an annotation,
+           his or her record is updated.
+        """
+        repo, lines = self._import_annotation(
+            input_file, username, stop_line="## Taxonomy"
+        )
+
+        # Now iterate through checklist, update
+        uids = []
+        for line in lines:
+            if "RSE-taxonomy" not in line or "[x]" not in line:
+                continue
+            uid = line.split("]")[-1].strip()
+            if uid.startswith("RSE-taxonomy") and uid not in uids:
+                print(f"{repo.uid} adding {uid}")
+                uids.append(uid)
+        self.save_taxonomy(repo, username, uids)
 
     def yield_criteria_annotation_repos(self, username, unseen_only=True, repo=None):
         """Given a username, repository, and preference for seen / unseen,
@@ -333,10 +386,7 @@ class Encyclopedia:
 
                 # If we have a last repo, we need to save progress
                 if last is not None and save is True:
-                    if hasattr(last, "save_criteria"):
-                        last.save_criteria()
-                    else:
-                        self.db.update(last)
+                    self.save_criteria(last)
 
                 if last is not None:
                     annotations[last.uid] = last.criteria
@@ -358,14 +408,7 @@ class Encyclopedia:
 
         # Save the last repository
         if last is not None and save is True:
-
-            # The filesystem database saves at the end
-            if hasattr(last, "save_criteria"):
-                last.save_criteria()
-
-            # Relational saves the database item
-            else:
-                self.db.update(last)
+            self.save_criteria(last)
 
         if last is not None:
             annotations[last.uid] = last.criteria
@@ -414,12 +457,7 @@ class Encyclopedia:
             ]
 
             # Filesystem database we write filename to repository folder
-            if hasattr(repo, "save_taxonomy"):
-                repo.taxonomy[username] = uids
-                repo.save_taxonomy()
-            else:
-                repo.update_taxonomy(username, uids)
-                self.db.update(repo)
+            self.save_taxonomy(repo, username, uids)
             annotations[repo.uid] = repo.taxonomy
 
         return annotations

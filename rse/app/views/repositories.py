@@ -174,12 +174,8 @@ def update_criteria():
         repo.update_criteria(key, username, response)
 
     # The filesystem database saves at the end
-    if hasattr(repo, "save_criteria"):
-        repo.save_criteria()
+    app.client.save_criteria(repo)
 
-    # Relational saves the database item
-    else:
-        app.client.db.update(repo)
     return username
 
 
@@ -196,12 +192,5 @@ def update_taxonomy():
     # Do the update for each criteria
     repo = app.client.get(repo_uid)
     print(f"Updating {repo} with {uids}")
-
-    if hasattr(repo, "save_taxonomy"):
-        repo.taxonomy[username] = uids
-        repo.save_taxonomy()
-    else:
-        repo.update_taxonomy(username, uids)
-        app.client.db.update(repo)
-
+    app.client.save_taxonomy(repo, username, uids)
     return username
