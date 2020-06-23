@@ -9,7 +9,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 from rse.utils.urls import get_user_agent
-from rse.utils.file import mkdir_p, write_file
+from rse.utils.file import mkdir_p, write_file, write_json
 from rse.defaults import RSE_URL_PREFIX
 import logging
 import shutil
@@ -67,9 +67,23 @@ def export_web_static(export_dir, base_url, client, force=False):
     # Prepare urls (and filepath relative to export_dir) for export
     urls = {base_url: "index.html"}
 
+    # Create static data export
+    data = []
+
     # Add repos
     for repo in client.list():
-        repo_path = os.path.join("repository", repo[0])
+
+        repo = client.get(repo[0])
+        repo_path = os.path.join("repository", repo.uid)
+        data.append(
+            {
+                "uid": repo.uid,
+                "url": repo.url,
+                "rel": "%s%s" % (RSE_URL_PREFIX, repo_path),
+                "avatar": repo.avatar,
+                "description": repo.description,
+            }
+        )
         urls["%s%s%s" % (base_url, RSE_URL_PREFIX, repo_path)] = os.path.join(
             repo_path, "index.html"
         )
@@ -95,4 +109,6 @@ def export_web_static(export_dir, base_url, client, force=False):
         else:
             print(f"Issue parsing {url}")
 
+    print(f"Generating data export")
+    write_json(data, os.path.join(export_dir, "data.json"))
     print(f"Export is complete!")
