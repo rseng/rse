@@ -80,6 +80,13 @@ def get_parser():
         help="Specify a particular repository name to annotate.",
     )
     annotate.add_argument(
+        "-f",
+        "--file",
+        dest="file",
+        default=None,
+        help="Read annotation from file (e.g., markdown list, GitHub issue template).",
+    )
+    annotate.add_argument(
         "--all",
         "-a",
         dest="all_repos",

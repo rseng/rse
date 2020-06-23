@@ -16,6 +16,7 @@ from rse.main.database import init_db
 from rse.utils.prompt import confirm, choice_prompt
 from rse.utils.file import read_file
 from rse.utils.command import get_github_username
+from rse.utils.urls import repository_regex
 from rse.main.parsers import get_parser
 from rse.main.criteria import get_criteria
 from rse.main.taxonomy import get_taxonomy
@@ -232,6 +233,47 @@ class Encyclopedia:
         elif atype == "taxonomy":
             return self.annotate_taxonomy(username, unseen_only, repo, save)
         bot.error(f"Unknown annotation type, {atype}.")
+
+    def import_criteria_annotation(self, input_file, username):
+        """Given a text file that has a bullet list of (some checked) criteria
+           as might be generated in a GitHub issue, read in the file and the
+           username to do an annotation. If a user has already done an annotation,
+           his or her record is updated.
+        """
+        if not username or not input_file:
+            raise RuntimeError(
+                "A username and input file are required to import annotation criteria."
+            )
+
+        if not os.path.exists(input_file):
+            raise FileNotFoundError(input_file)
+
+        lines = read_file(input_file)
+        line = lines.pop(0)
+
+        # Find the repository name
+        while "## Criteria" not in line:
+            match = re.search(repository_regex, line)
+            if match:
+                break
+            line = lines.pop(0)
+
+        # Retrieve the match
+        if not match:
+            raise RuntimeError(f"repository pattern not found in {input_file}")
+        reponame = match.group()
+        parser = get_parser(reponame)
+        repo = self.get(parser.uid)
+
+        # Now iterate through checklist, update
+        for line in lines:
+            uid = line.split("criteria-")[-1].strip()
+            if "[x]" in line:
+                repo.update_criteria(uid, username, "yes")
+                print(f"Updating {repo.uid}: {uid}->yes")
+            elif re.search("\[]|\[ \]", line):
+                repo.update_criteria(uid, username, "no")
+                print(f"Updating {repo.uid}: {uid}->no")
 
     def yield_criteria_annotation_repos(self, username, unseen_only=True, repo=None):
         """Given a username, repository, and preference for seen / unseen,
