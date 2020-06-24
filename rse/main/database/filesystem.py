@@ -25,6 +25,7 @@ from rse.utils.file import (
 )
 from rse.main.database.base import Database
 from rse.main.parsers import get_parser
+from rse.main.parsers.base import ParserBase
 from glob import glob
 import logging
 import shutil
@@ -86,8 +87,14 @@ class FileSystemDatabase(Database):
         if uid:
             parser = get_parser(uid, config=self.config)
             data = parser.get_metadata()
+
+            # If it's a parser handoff
+            if isinstance(data, ParserBase):
+                parser = data
+                data = parser.data
+
             if data:
-                bot.info(f"{uid} was added to the the database.")
+                bot.info(f"{parser.uid} was added to the the database.")
                 return SoftwareRepository(parser, data_base=self.data_base)
         else:
             bot.error("Please define a unique identifier to add.")

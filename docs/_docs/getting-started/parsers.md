@@ -21,16 +21,14 @@ this means version control systems where software is stored.
  - [Base Parser](#base)
  - [GitHub Parser](#github)
  - [GitLab parser](#gitlab)
-
-**Secondary Parsers**
-
-A secondary parser is available as a tool to extract data from a resource, but
-isn't exposed via the `rse` command line client. You might want to use these
-parsers for your own analysis, although they aren't supported for the research
-software encyclopedia core database, which uses version control systems as the
-source of truth.
-
  - [Zenodo Parser](#zenodo)
+
+
+For the parsers above, those with version controlled code are considered sources of
+truth. For parsers like Zenodo, we look for a GitHub or Gitlab URL, and add an entry
+to the database given that we have one. The user is free to use the Zenodo Parser
+outside of the rse to bypass this requirement.
+
 
 ## The Parser Base
 
@@ -327,14 +325,33 @@ data = parser.get_metadata()
 
 The "zenodo" parser is intended to parse a Zenodo DOI or url into a software repository,
 and we use the [Zenodo API](https://developers.zenodo.org/) to handle this.
-Only entries that are classified as "software" are allowed. A `RSE_ZENODO_TOKEN` is required
-to be exported to the environment, and you can generate one under your [account application settings](https://zenodo.org/account/settings/applications/).
+ A `RSE_ZENODO_TOKEN` is required to be exported to the environment, and you can generate one under your [account application settings](https://zenodo.org/account/settings/applications/).
 
 ```bash
 export RSE_ZENODO_TOKEN=123456.......
 ```
 
 #### Example Usage
+
+To use the Zenodo parser with the Research Software Encyclopedia, you can try
+adding the DOI identifier. If there is a GitHub or GitLab record associated, it will
+be added, and the doi for zenodo included.
+
+```bash
+$ rse add 10.5281/zenodo.3819202
+INFO:rse.main:Database: filesystem
+INFO:rse.main.database.filesystem:github/CLARIAH/grlc was added to the the database.
+```
+
+On the other hand, if you try to add a record that doesn't have a GitHub identifier,
+you'll see this response:
+
+```bash
+$ rse add 10.5281/zenodo.1012531
+INFO:rse.main:Database: filesystem
+WARNING:rse.main.parsers.zenodo:Repository url not found with Zenodo record, skipping add.
+```
+
 Example usage of the parser outside of the Encyclopedia might look like the following.
 If you want to instantiate an empty parser (not associated with a software repository)
 you can do that as follows:
@@ -347,7 +364,6 @@ parser = ZenodoParser()
 However, it's more likely that you want to parse a specific repository. Let's say
 that we want to parse the [Singularity Registry](https://zenodo.org/record/1012531#.Xu5OOZZME5k) 
 record on Zenodo. We need to provide the DOI to do this:
-
 
 ```python
 from rse.main.parsers import ZenodoParser
@@ -383,10 +399,12 @@ parser.uid
 Once the identifier is loaded, you can parse updated metadata for it.
 Note that you can define an `RSE_ZENODO_TOKEN` to be set in the environment
 if you want to potentially increase your API limits.
-You can then get the metadata about the archive:
+You can then get the metadata about the archive. Note that if the record
+doesn't have a GitHub association (and you want to return the Zenodo response) you
+need to set `require_repo` to False:
 
 ```python
-data = parser.get_metadata()
+data = parser.get_metadata(require_repo=False)
 
 {'conceptdoi': '10.5281/zenodo.1012530',
  'conceptrecid': '1012530',
@@ -462,5 +480,7 @@ data = parser.get_metadata()
  'updated': '2020-01-25T07:25:02.258480+00:00'}
 ```
 
+If you set it to true, None will be returned if there is no GitHub association.
+If there is, you'll get back a GitHub parser with metadata and the added DOI.
 
 You might next want to learn about the interactive [dashboard]({{ site.baseurl }}/getting-started/dashboard/).
