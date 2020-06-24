@@ -70,9 +70,8 @@ def export_web_static(export_dir, base_url, client, force=False):
     # Create static data export
     data = []
 
-    # Add repos
+    # Add repos and static annotation
     for repo in client.list():
-
         repo = client.get(repo[0])
         repo_path = os.path.join("repository", repo.uid)
         data.append(
@@ -87,6 +86,24 @@ def export_web_static(export_dir, base_url, client, force=False):
         urls["%s%s%s" % (base_url, RSE_URL_PREFIX, repo_path)] = os.path.join(
             repo_path, "index.html"
         )
+
+        # Static annotation endpoints
+        for annotation_type in ["criteria", "taxonomy"]:
+            urls[
+                "%s%s%s/annotate-%s"
+                % (base_url, RSE_URL_PREFIX, repo_path, annotation_type)
+            ] = os.path.join(repo_path, "annotate-%s" % annotation_type, "index.html")
+
+    # Add API endpoints
+    urls["%s%s/api/repos" % (base_url, RSE_URL_PREFIX, repo_path)] = os.path.join(
+        "api", "repos", "index.html"
+    )
+    urls["%s%s/api/taxonomy" % (base_url, RSE_URL_PREFIX, repo_path)] = os.path.join(
+        "api", "taxonomy", "index.html"
+    )
+    urls["%s%s/api/criteria" % (base_url, RSE_URL_PREFIX, repo_path)] = os.path.join(
+        "api", "criteria", "index.html"
+    )
 
     for url, outfile in urls.items():
 

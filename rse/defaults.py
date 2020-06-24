@@ -53,8 +53,9 @@ RSE_DATABASE_STRING = os.environ.get("RSE_DATABASE")
 # Parsers installed
 RSE_PARSERS = ["github"]
 
-# Default taxonomy and criteria endpoint
-RSE_API_ENDPOINT = "https://rseng.github.io/rseng/api"
+# Default taxonomy and criteria endpoints, and place to post annotation issues
+RSE_API_ENDPOINT = getenv("RSE_API_ENDPOINT", "https://rseng.github.io/rseng/api")
+RSE_ISSUE_ENDPOINT = getenv("RSE_ISSUE_ENDPOINT", "https://github.com/rseng/software")
 
 # MUST start and end with slash
 RSE_URL_PREFIX = getenv("RSE_URL_PREFIX", "/")

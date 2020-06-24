@@ -33,7 +33,7 @@
        <div class="controls">
          <button class="btn btn-sm" :disabled="!hasPage(-1)" @click="prevPage">←</button> 
          <button class="btn btn-sm" :disabled="!hasPage(1)"  @click="nextPage">→</button>
-         <span style="float:right; margin-right:30px; margin-top:20px" class="badge badge-primary">database: {{ database }}</span><a href="/api"><span style="float:right; margin-right:30px; margin-top:20px" class="badge badge-primary">api</span></a>
+         <span style="float:right; margin-right:30px; margin-top:20px" class="badge badge-primary">database: {{ database }}</span><a href="{{ url_prefix }}/api/repos"><span style="float:right; margin-right:30px; margin-top:20px" class="badge badge-primary">api</span></a>
 
          <hr>
          </div>
@@ -202,6 +202,16 @@ const app = new Vue({
     viewRow: function(event) {
         var uid = $(event.target).closest('tr').find('td:first').text()
         document.location = "{{ url_prefix }}repository/" + uid
+    },
+
+    annotateTaxonomyRow: function(event) {
+        var uid = $(event.target).closest('tr').find('td:first').text()
+        document.location = "{{ url_prefix }}repository/" + uid + "/annotate-taxonomy"
+    },
+
+    annotateCriteriaRow: function(event) {
+        var uid = $(event.target).closest('tr').find('td:first').text()
+        document.location = "{{ url_prefix }}repository/" + uid + "/annotate-criteria"
     },
 
     sortBy: function(s) {

@@ -10,7 +10,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from flask import render_template, request, redirect
 from rse.app.server import app
-from rse.defaults import RSE_URL_PREFIX
+from rse.defaults import RSE_URL_PREFIX, RSE_ISSUE_ENDPOINT
 import random
 
 ## Repository Views
@@ -85,6 +85,47 @@ def annotate_criteria():
         database=app.client.database,
         sets=annotation_sets,
         username=username,
+        url_prefix=RSE_URL_PREFIX,
+    )
+
+
+@app.route("%srepository/<path:uid>/annotate-criteria" % RSE_URL_PREFIX)
+def annotate_static_criteria(uid):
+
+    # Get criteria / annotation set for specific repository
+    username = request.args.get("username")
+    repo = app.client.get(uid)
+    criteria = app.client.list_criteria()
+
+    return render_template(
+        "annotate/criteria-static.html",
+        database=app.client.database,
+        sets=criteria,
+        repo=repo,
+        username=username,
+        issue_endpoint=RSE_ISSUE_ENDPOINT,
+        url_prefix=RSE_URL_PREFIX,
+    )
+
+
+@app.route("%srepository/<path:uid>/annotate-taxonomy" % RSE_URL_PREFIX)
+def annotate_static_taxonomy(uid):
+
+    # Get criteria / annotation set for specific repository
+    username = request.args.get("username")
+    repo = app.client.get(uid)
+
+    # If we don't have a color lookup, make one
+    if not hasattr(app, "taxonomy"):
+        app.taxonomy = generate_taxonomy(app)
+
+    return render_template(
+        "annotate/taxonomy-static.html",
+        database=app.client.database,
+        sets=app.taxonomy,
+        repo=repo,
+        username=username,
+        issue_endpoint=RSE_ISSUE_ENDPOINT,
         url_prefix=RSE_URL_PREFIX,
     )
 
