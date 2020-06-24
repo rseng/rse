@@ -95,7 +95,7 @@ def export_web_static(export_dir, base_url, client, force=False):
             ] = os.path.join(repo_path, "annotate-%s" % annotation_type, "index.html")
 
     # Add API endpoints
-    urls["%s%s/api/repos" % (base_url, RSE_URL_PREFIX)] = os.path.join(
+    urls["%s%sapi/repos" % (base_url, RSE_URL_PREFIX)] = os.path.join(
         "api", "repos", "index.html"
     )
     urls["%s%sapi/taxonomy" % (base_url, RSE_URL_PREFIX)] = os.path.join(
