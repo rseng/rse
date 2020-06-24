@@ -11,6 +11,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 import flask
 from flask_restful import Resource, Api
 from rse.app.server import app
+from rse.defaults import RSE_URL_PREFIX
 
 
 def list_repos(parser=None):
@@ -63,12 +64,13 @@ class apiEndpoints(Resource):
     def get(self):
         url = flask.request.host_url
         return {
-            "/api": "%sapi" % url,
-            "/api/repos": "%sapi/repos" % url,
-            "/api/criteria": "%sapi/criteria" % url,
-            "/api/taxonomy": "%sapi/taxonomy" % url,
-            "/api/repos/<path:uid>": "%sapi/repos/<path:uid>" % url,
-            "/api/repos/parser/<string:parser>": "%sapi/repos/parser/<string:parser>"
+            "%sapi" % RSE_URL_PREFIX: "%sapi" % url,
+            "%sapi/repos" % RSE_URL_PREFIX: "%sapi/repos" % url,
+            "%sapi/criteria" % RSE_URL_PREFIX: "%sapi/criteria" % url,
+            "%sapi/taxonomy" % RSE_URL_PREFIX: "%sapi/taxonomy" % url,
+            "%sapi/repos/<path:uid>" % RSE_URL_PREFIX: "%sapi/repos/<path:uid>" % url,
+            "%sapi/repos/parser/<string:parser>"
+            % RSE_URL_PREFIX: "%sapi/repos/parser/<string:parser>"
             % url,
         }
 
@@ -90,9 +92,9 @@ class apiGetTaxonomy(Resource):
 
 
 api = Api(app)
-api.add_resource(apiEndpoints, "/api")
-api.add_resource(apiList, "/api/repos")
-api.add_resource(apiGet, "/api/repos/<path:uid>")
-api.add_resource(apiGetTaxonomy, "/api/taxonomy")
-api.add_resource(apiGetCriteria, "/api/criteria")
-api.add_resource(apiListParser, "/api/repos/parser/<string:parser>")
+api.add_resource(apiEndpoints, "%sapi" % RSE_URL_PREFIX)
+api.add_resource(apiList, "%sapi/repos" % RSE_URL_PREFIX)
+api.add_resource(apiGet, "%sapi/repos/<path:uid>" % RSE_URL_PREFIX)
+api.add_resource(apiGetTaxonomy, "%sapi/taxonomy" % RSE_URL_PREFIX)
+api.add_resource(apiGetCriteria, "%sapi/criteria" % RSE_URL_PREFIX)
+api.add_resource(apiListParser, "%sapi/repos/parser/<string:parser>" % RSE_URL_PREFIX)

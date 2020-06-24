@@ -14,6 +14,7 @@ and **Merged pull requests**. Critical items to know are:
 The versions coincide with releases on pip.
 
 ## [0.2.x](https://github.com/rse/rse/tree/master) (0.0.x)
+ - bugfix to export json api including url prefix 0.0.18)
  - static annotation export to GitHub issues (0.0.17)
  - allowing Zenodo parser to hand off to GitLab or GitHub (0.0.16)
  - adding import of static issue (markdown) files for annotation (0.0.15)
