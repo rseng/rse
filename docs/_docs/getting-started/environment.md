@@ -83,6 +83,25 @@ If you set an environment level that is not one of the choices, it will default
 to using info. If you provide an inccorect value to `--log_level` you will be asked
 to run the command again and choose from the valid choices.
 
+### RSE_API_ENDPOINT
+
+The endpoint to retrieve the taxonomy and criteria from. Defaults to `https://rseng.github.io/rseng/api`.
+
+```bash
+export RSE_API_ENDPOINT=https://rseng.github.io/another/api
+```
+
+### RSE_ISSUE_ENDPOINT
+
+The repository to post criteria and taxonomy annotations to, via the static interface.
+Defaults to `https://github.com/rseng/software`
+
+```bash
+export RSE_ISSUE_ENDPOINT=https://github.com/rseng/another
+```
+
+## RSE Dashboard
+
 ### RSE_URL_PREFIX
 
 If you are running a server and want to add a prefix to the url, export

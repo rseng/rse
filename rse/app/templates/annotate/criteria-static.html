@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Annotate Criteria for {{ repo.uid }}{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<style>
+.center {
+  margin: auto;
+  width: 50%;
+  padding-top: 130px !important;
+}
+
+.panel-default {
+  border-radius:20px;
+}
+td {
+  font-size:17px;
+}
+</style>
+<div class='container'>
+  <div class='row'>
+    <div class='col-sm-12'>
+      <br>
+      <br>
+      <div class="panel panel-default">
+        <div>
+          <hr> 
+          <div class="row">
+            <div class="col-md-12">
+<div style="padding:20px">
+  <h3>What do you think about <strong><a target="_blank" href="{{ repo.url }}">{{ repo.uid }}</strong></a>
+  <a href="{{ repo.url }}" target="_blank"><img src="{{ repo.avatar }}" style="max-height:200px; float:right"></a> 
+</h3>
+  <p><strong>{{ repo.description }}</strong></p> 
+  <p style="font-style:italic; color: darkred;">If you don't know an answer, don't answer it!</p>
+</div>
+  <br>
+
+  <form method="GET">
+  <table class="table table-bordered">
+    <colgroup>
+      <col width="50%">
+      <col width="50%">
+    </colgroup>
+    <thead>
+    <th>Question</th>
+    <th>Your Response</th>
+    </thead>
+    <tbody>
+     <input type="hidden" name="repo_uid" value="{{ repo.url }}">
+    {% for set in sets %}<tr>
+      <td>{{ set.name }}</td>
+      <td>
+        {% for option in set.options %}
+        <label class="radio-inline"><input type="radio" name="{{ set.uid }}" id="inlineRadio1" value="{{ option }}"> {{ option }}</label>{% endfor %}        
+      </td>
+    </tr>{% endfor %}
+    </tbody>
+  </table>
+
+  <br>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <a href="{{ url_prefix }}"><button type="button" id="back-annotate" class="btn btn-primary">< Back</button></a>
+      <button id="next-button" class="btn btn-primary" type="submit">Submit</button>
+      <i class="glyphicon glyphicon-question-sign" style="font-size:20px; color:#428bca; cursor:pointer" title="Your submission will be posted as a new GitHub issue, with automation to update the database."></i>
+    </div>
+  </div>
+  </form>
+            </div>
+	</div>
+
+  <div class="controls">
+    <span style="float:right; margin-right:30px; margin-top:-5px" class="badge badge-primary">database: {{ database }}</span>
+  </div>
+  <hr>
+</div>
+{% endblock %}
+{% block footer %}
+{{ super() }}
+<script>
+$("form").submit(function(event) {
+  
+   body = "%23%23%20Criteria%0A"
+   var repo_id
+
+   $.each($(this).serializeArray(), function(index, item) {
+      console.log(item)
+      if (item.name == "repo_uid") {
+          repo_id = item.value;
+      } else if (item.value == "yes") {
+          body += ("%20-%20%5Bx%5D%20criteria-" + item.name + "%0A")
+      } else if (item.value == "no") {
+          body += ("%20-%20%5B%20%5D%20criteria-" + name + "%0A")
+      }
+   });
+   
+   body = "%23%23%20Repository%20%0A" + encodeURIComponent(repo_id) + "%0A%0A" + body 
+   console.log(body)
+   url = "{{ issue_endpoint }}/issues/new?labels=criteria&title=[CRITERIA]&body=" + body
+   console.log(url)
+   document.location = url
+   event.preventDefault();
+});
+</script>
+{% endblock %}

@@ -22,7 +22,6 @@ def check_response(response):
     """Given a requests.Response, return the json data if it's successful.
        Otherwise issue an error and return None
     """
-    print(response.status_code)
     if response.status_code == 200:
         return response.json()
 

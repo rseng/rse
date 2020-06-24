@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Annotate Criteria{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<style>
+.center {
+  margin: auto;
+  width: 50%;
+  padding-top: 130px !important;
+}
+
+.panel-default {
+  border-radius:20px;
+}
+</style>
+<div class='container'>
+  <div class='row'>
+    <div class='col-sm-12'>
+      <br>
+      <h2><a target="_blank" href="{{ repo.url }}">{{ repo.uid }}</a></h2>
+      <p>How would you categorize this software? Choose more than one.</p>
+      <p>Your submission will be posted as a new GitHub issue, with automation to update the database.</p>
+      <br>{{ colors }}
+      <div class="panel panel-default">
+        <div>
+          <hr> 
+         <form method="GET"">
+         <input type="hidden" name="repo_uid" value="{{ repo.uid }}">
+         <input type="hidden" name="username" value="{{ username }}">
+	  <table class="table">
+	    <tbody>
+	      {% for item in sets %}{% set path = item.path.split('>>') %}
+		<tr>
+		   <td><span style="background-color:{{ item.colors[0] }};padding:16px;color:white;"><strong>{{ path[0] }}</strong></span><button style="padding:12px 4px" class="btn btn-secondary">>></button><span style="background-color:{{ item.colors[1] }};padding:16px;color:white;"><strong>{{ path[1] }}</strong></span><button style="padding:12px 4px" class="btn btn-secondary">>></button>
+		   <label class="btn btn-warning" style="font-size:18px; text-align:left;">
+                        <input type="checkbox" name="{{ item.uid }}" id="{{ item.uid }}"><strong>{{ path[2]}} </strong>
+                 </label></td>
+	      </tr>
+	     {% endfor %}
+	    </tbody>
+	  </table>
+	</div>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <a href="{{ url_prefix }}"><button type="button" id="back-annotate" class="btn btn-primary">< Back</button></a>
+      <button id="next-button" class="btn btn-primary" type="submit">Submit</button>
+    </div>
+  </div>
+  </form>
+
+  <div class="controls">
+    <span style="float:right; margin-right:30px; margin-top:-5px" class="badge badge-primary">database: {{ database }}</span>
+  </div>
+  <hr>
+</div>
+{% endblock %}
+{% block footer %}
+{{ super() }}
+<script>
+$("form").submit(function(event) {
+  
+   count = 0
+   body = "%23%23%20Taxonomy%0A"
+   var repo_id;
+   $.each($(this).serializeArray(), function(index, item) {
+      console.log(item)
+      if (item.name == "repo_uid") {
+          repo_id = item.value;
+      } else if (item.value == "on") {
+          count +=1
+          body += ("%20-%20%5Bx%5D%20" + item.name)
+      }  
+   });
+
+   if (count == 0) {
+      alert("Please select one or more categories!")
+   } else {
+       body = "%23%23%20Repository%20%0A" + encodeURIComponent(repo_id) + "%0A%0A" + body 
+       console.log(body)
+       url = "{{ issue_endpoint }}/issues/new?labels=taxonomy&title=[TAXONOMY]&body=" + body
+       console.log(url)
+       document.location = url
+   }
+   event.preventDefault();
+});
+</script>
+{% endblock %}

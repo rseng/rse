@@ -307,6 +307,9 @@ class Encyclopedia:
                 repo.update_criteria(uid, username, "no")
                 print(f"Updating {repo.uid}: {uid}->no")
 
+        # Save the criteria
+        self.save_criteria(repo)
+
     def import_taxonomy_annotation(self, input_file, username):
         """Given a text file that has a bullet list of (some checked) criteria
            as might be generated in a GitHub issue, read in the file and the
