@@ -27,7 +27,8 @@ def test_parser_zenodo(tmp_path):
         assert parser.summary()
 
     # Only test one get of data
-    assert parser.get_metadata()
+    assert not parser.get_metadata()
+    assert parser.get_metadata(require_repo=False)
     data = parser.export()
     for key in ["timestamp", "doi", "links", "metadata"]:
         assert key in data
