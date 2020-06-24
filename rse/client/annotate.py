@@ -15,16 +15,31 @@ from rse.exceptions import RepoNotFoundError
 def main(args, extra):
 
     # Create a research software encyclopedia
-    enc = Encyclopedia(config_file=args.config_file, database=args.database)
+    client = Encyclopedia(config_file=args.config_file, database=args.database)
+
+    # If a file is defined, we import from it
+    if args.file is not None:
+        try:
+            if args.type[0] == "criteria":
+                client.import_criteria_annotation(
+                    input_file=args.file, username=args.username
+                )
+            elif args.type[0] == "taxonomy":
+                client.import_taxonomy_annotation(
+                    input_file=args.file, username=args.username
+                )
+        except Exception as exc:
+            print(exc)
 
     # The type is either criteria or taxonomy
-    try:
-        enc.annotate(
-            username=args.username,
-            atype=args.type[0],
-            unseen_only=not args.all_repos,
-            repo=args.repo,
-            save=True,
-        )
-    except RepoNotFoundError as exc:
-        print(exc)
+    else:
+        try:
+            client.annotate(
+                username=args.username,
+                atype=args.type[0],
+                unseen_only=not args.all_repos,
+                repo=args.repo,
+                save=True,
+            )
+        except RepoNotFoundError as exc:
+            print(exc)

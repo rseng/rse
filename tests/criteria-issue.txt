@@ -1,0 +1,25 @@
+## Repository
+
+github.com/singularityhub/sregistry
+
+## Criteria
+
+<!-- check one or more boxes for criteria to indicate yes -->
+
+ - [x] criteria-RSE-research-intention
+Is the software intended for research?
+
+ - [ ] criteria-RSE-domain-intention
+Is the software intended for a particular domain?
+
+ - [ ] criteria-RSE-question-intention
+Was the software created with intention to solve a research question?
+
+ - [x] criteria-RSE-citation
+Has the software been cited?
+
+ - [x] criteria-RSE-usage
+Has the software been used by researchers?
+
+ - [x] criteria-RSE-absence
+Would taking away the software be a detriment to research?

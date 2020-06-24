@@ -64,6 +64,14 @@ echo
 echo "#### Testing [filesystem] rse update (bulk)"""
 runTest 0 $output rse --config_file $config/rse.ini update --file $tmpdir/filesystem-repos.txt
 
+echo 
+echo "#### Testing [filesystem] rse import criteria"
+runTest 0 $output rse --config_file $config/rse.ini annotate criteria --file $here/criteria-issue.txt --username vsoch
+
+echo 
+echo "#### Testing [filesystem] rse import taxonomy"
+runTest 0 $output rse --config_file $config/rse.ini annotate taxonomy --file $here/taxonomy-issue.txt --username vsoch
+
 echo
 echo "#### Testing [sqlite] rse config to use sqlite"
 runTest 0 $output rse --config_file $config/rse.ini config --database sqlite
@@ -93,5 +101,12 @@ echo
 echo "#### Testing [sqlite] rse clear"
 runTest 0 $output rse --config_file $config/rse.ini clear --force
 
+echo 
+echo "#### Testing [sqlite] rse import criteria"
+runTest 0 $output rse --config_file $config/rse.ini annotate criteria --file $here/criteria-issue.txt --username vsoch
+
+echo 
+echo "#### Testing [sqlite] rse import taxonomy"
+runTest 0 $output rse --config_file $config/rse.ini annotate taxonomy --file $here/taxonomy-issue.txt --username vsoch
 
 rm -rf ${tmpdir}
