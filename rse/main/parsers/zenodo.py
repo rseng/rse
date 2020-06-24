@@ -58,14 +58,20 @@ class ZenodoParser(ParserBase):
         data = data or self.data
         return data.get("metadata", {}).get("description")
 
-    def get_metadata(self, uri=None):
+    def get_metadata(self, uri=None, require_repo=True):
         """Retrieve repository metadata. The common metadata (timestamp) is
            added by the software repository parser, and here we need to
            ensure that the url field is populated with a correct url.
 
            Arguments:
            uri (str) : a repository uri string to override one currently set
+           require_repo (bool) : require a repository to parse.
         """
+        from rse.main.parsers import get_parser
+        from rse.utils.urls import repository_regex
+
+        repository_regex = repository_regex.rstrip("$")
+
         if uri:
             self.set_uri(uri)
         self.load_secrets()
@@ -85,6 +91,29 @@ class ZenodoParser(ParserBase):
         # Successful query!
         if response.status_code == 200:
             self.data = response.json()
+
+            # For Zenodo, we require a GitHub or GitLab related identifier to add
+            repo_url = None
+            for identifier in self.data["metadata"].get("related_identifiers", []):
+                match = re.search(repository_regex, identifier["identifier"])
+                if match:
+                    repo_url = "https://%s" % match.group()
+                    break
+
+            # If we return None, the entry is not added
+            if repo_url is None and require_repo is True:
+                bot.warning(
+                    "Repository url not found with Zenodo record, skipping add."
+                )
+                return repo_url
+
+            # Convert the class into another parser type
+            elif repo_url is not None:
+                uid = self.uid
+                self = get_parser(repo_url)
+                self.get_metadata()
+                self.data["doi"] = uid
+                return self
             return self.data
 
         elif response.status_code == 404:

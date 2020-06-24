@@ -32,6 +32,8 @@ def get_parser(uri, config=None):
         parser = GitHubParser(uri)
     if matches(GitLabParser, uri):
         parser = GitLabParser(uri)
+    if matches(ZenodoParser, uri):
+        parser = ZenodoParser(uri)
 
     if not parser:
         raise NotImplementedError(f"There is no matching parser for {uri}")

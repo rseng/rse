@@ -16,6 +16,7 @@ from rse.exceptions import (
 )
 from rse.main.database.base import Database
 from rse.main.parsers import get_parser
+from rse.main.parsers.base import ParserBase
 
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -107,6 +108,12 @@ class RelationalDatabase(Database):
         parser = get_parser(uid, config=self.config)
         if not self.exists(parser.uid):
             data = parser.get_metadata()
+
+            # If it's a parser handoff
+            if isinstance(data, ParserBase):
+                parser = data
+                data = parser.data
+
             if data:
                 repo = SoftwareRepository(
                     uid=parser.uid, parser=parser.name, data=json.dumps(parser.export())

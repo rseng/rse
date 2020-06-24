@@ -364,7 +364,6 @@ def main():
         from .start import main
 
     # Pass on to the correct parser
-    return_code = 0
     main(args=args, extra=extra)
 
 
