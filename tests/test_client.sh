@@ -53,6 +53,14 @@ runTest 0 $output rse --config_file $config/rse.ini export $tmpdir/filesystem-re
 runTest 0 $output ls $tmpdir/filesystem-repos.txt
 
 echo 
+echo "#### Testing [filesystem] rse summary github.com/singularityhub/sregistry"
+runTest 0 $output rse --config_file $config/rse.ini summary github.com/singularityhub/sregistry
+
+echo
+echo "#### Testing [sqlite] rse config to use sqlite"
+runTest 0 $output rse --config_file $config/rse.ini config --database sqlite
+
+echo 
 echo "#### Testing [filesystem] rse clear"
 runTest 0 $output rse --config_file $config/rse.ini clear --force
 
@@ -72,9 +80,9 @@ echo
 echo "#### Testing [filesystem] rse import taxonomy"
 runTest 0 $output rse --config_file $config/rse.ini annotate taxonomy --file $here/taxonomy-issue.txt --username vsoch
 
-echo
-echo "#### Testing [sqlite] rse config to use sqlite"
-runTest 0 $output rse --config_file $config/rse.ini config --database sqlite
+echo 
+echo "#### Testing [filesystem] rse summary"
+runTest 0 $output rse --config_file $config/rse.ini summary
 
 echo
 echo "#### Testing [sqlite] rse add for a repo"
@@ -96,6 +104,14 @@ echo
 echo "#### Testing [sqlite] rse export"""
 runTest 0 $output rse --config_file $config/rse.ini export $tmpdir/repos.txt
 runTest 0 $output ls $tmpdir/repos.txt
+
+echo 
+echo "#### Testing [sqlite] rse summary"
+runTest 0 $output rse --config_file $config/rse.ini summary
+
+echo 
+echo "#### Testing [sqlite] rse summary github.com/singularityhub/sregistry"
+runTest 0 $output rse --config_file $config/rse.ini summary github.com/singularityhub/sregistry
 
 echo 
 echo "#### Testing [sqlite] rse clear"

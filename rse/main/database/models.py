@@ -65,21 +65,27 @@ class SoftwareRepository(Base):
 
         return data
 
+    def get_criteria(self):
+        """load criteria into a dictionary"""
+        return json.loads(self.criteria or "{}")
+
+    def get_taxonomy(self):
+        """load taxonomy into a dictionary"""
+        return json.loads(self.taxonomy or "{}")
+
     def update_criteria(self, uid, username, response):
         """Given a username and unique id update criteria"""
-        criteria = json.loads(self.criteria or "{}")
+        criteria = self.get_criteria()
 
         if uid not in criteria:
             criteria[uid] = {}
         if response:
-            criteria[uid][username] = "yes"
-        else:
-            criteria[uid][username] = "no"
-        self.criteria = json.dumps(criteria)
+            criteria[uid][username] = response
+            self.criteria = json.dumps(criteria)
 
     def update_taxonomy(self, username, uids):
         """Given a username and unique id update taxonomy items"""
-        taxonomy = json.loads(self.taxonomy or "{}")
+        taxonomy = self.get_taxonomy()
 
         if username not in taxonomy:
             taxonomy[username] = uids

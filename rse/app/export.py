@@ -126,6 +126,6 @@ def export_web_static(export_dir, base_url, client, force=False):
         else:
             print(f"Issue parsing {url}")
 
-    print(f"Generating data export")
+    print("Generating data export")
     write_json(data, os.path.join(export_dir, "data.json"))
-    print(f"Export is complete!")
+    print("Export is complete!")
