@@ -154,6 +154,44 @@ def get_parser():
         default="repos.txt",
     )
 
+    # Metrics
+    summary = subparsers.add_parser(
+        "summary", help="View summary metrics for all repositories."
+    )
+    summary.add_argument(
+        "--type",
+        dest="metric_type",
+        help="Metric type to view.",
+        default="summary",
+        choices=["criteria", "taxonomy", "users"],
+    )
+    summary.add_argument(
+        "repo", help="Filter down to one repository.", default=None, nargs="?"
+    )
+
+    analyze = subparsers.add_parser(
+        "analyze", help="View metrics for a specific repository."
+    )
+    analyze.add_argument(
+        "repo", help="Software repository to show", default=None,
+    )
+    analyze.add_argument(
+        "--ct",
+        "--cthresh",
+        dest="cthresh",
+        help="Criteria threshold (between 0 and 1)",
+        default=0.5,
+        type=percentage_type_asint,
+    )
+    analyze.add_argument(
+        "--tt",
+        "--tthresh",
+        dest="tthresh",
+        help="Minimum taxonomy votes to count category in response",
+        default=1,
+        type=positive_int_type,
+    )
+
     # Update
     update = subparsers.add_parser(
         "update", help="Update one or more software entries."
@@ -259,6 +297,7 @@ def get_parser():
     # Most commands allow specification of a database backend
     for command in [
         add,
+        analyze,
         annotate,
         clear,
         config,
@@ -271,6 +310,7 @@ def get_parser():
         search,
         scrape,
         start,
+        summary,
         update,
     ]:
         command.add_argument(
@@ -294,6 +334,27 @@ def get_parser():
         )
 
     return parser
+
+
+def percentage_type_asint(arg):
+    """ensure that an input is between 0 and 1"""
+    try:
+        number = float(arg)
+    except ValueError:
+        raise argparse.ArgumentTypeError("Must be a floating point number")
+    if number < 0 or number > 1:
+        raise argparse.ArgumentTypeError("Argument must be between 0 and 1")
+    return number
+
+
+def positive_int_type(arg):
+    """ensure user is providing a positive integer"""
+    value = int(arg)
+    if value < 0:
+        raise argparse.ArgumentTypeError(
+            "%s is an invalid positive integer value" % arg
+        )
+    return value
 
 
 def main():
@@ -330,6 +391,8 @@ def main():
         sys.exit(0)
 
     # Does the user want a shell?
+    if args.command == "analyze":
+        from .metrics import analyze as main
     if args.command == "annotate":
         from .annotate import main
     if args.command == "add":
@@ -354,6 +417,8 @@ def main():
         from .init import main
     if args.command == "ls":
         from .listing import main
+    if args.command == "summary":
+        from .metrics import summary as main
     if args.command == "search":
         from .search import main
     if args.command == "scrape":

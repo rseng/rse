@@ -237,6 +237,150 @@ class Encyclopedia:
             repo.update_taxonomy(username, uids)
             self.db.update(repo)
 
+    # Metrics
+    def analyze_bulk(
+        self,
+        cthresh=0.5,
+        tthresh=1,
+        taxonomy_uids=None,
+        criteria_uids=None,
+        include_empty=False,
+    ):
+        """analyze takes a repository and calculates a "final answer" based on user provided
+           thresholds
+        """
+        results = []
+        for repo in self.list():
+            result = self.analyze(
+                repo[0],
+                cthresh=cthresh,
+                tthresh=tthresh,
+                taxonomy_uids=taxonomy_uids,
+                criteria_uids=criteria_uids,
+            )
+            if not result["taxonomy"] and not result["criteria"] and not include_empty:
+                continue
+            results.append(result)
+        return results
+
+    def analyze(
+        self, repo, cthresh=0.5, tthresh=1, taxonomy_uids=None, criteria_uids=None
+    ):
+        """analyze takes a repository and calculates a "final answer" based on user provided
+           thresholds
+        """
+        # If taxonomy or criteria lists aren't defined, use all
+        if not taxonomy_uids:
+            taxonomy_uids = [x["uid"] for x in self.list_taxonomy()]
+        if not criteria_uids:
+            criteria_uids = [x["uid"] for x in self.list_criteria()]
+
+        parser = get_parser(repo, config=self.config)
+        repo = self.get(parser.uid)
+        metrics = {"repo": parser.uid, "criteria": {}, "taxonomy": {}}
+
+        # Calculate "final" answers for each criteria based on votes and threshold
+        counts = {}
+        for name, votes in repo.get_criteria().items():
+            # Skip criteria if not important
+            if name not in criteria_uids:
+                continue
+            if name not in counts:
+                counts[name] = {"yes": 0, "no": 0, "total": 0}
+            for username, response in votes.items():
+                counts[name][response] += 1
+                counts[name]["total"] += 1
+
+        # Calculate final answers!
+        for name, summary in counts.items():
+            if summary["yes"] / summary["total"] >= cthresh:
+                metrics["criteria"][name] = "yes"
+            else:
+                metrics["criteria"][name] = "no"
+
+        counts = {}
+        for username, categories in repo.get_taxonomy().items():
+            for category in categories:
+                if category not in counts:
+                    counts[category] = 0
+                counts[category] += 1
+
+        # Include those above the requested threshold
+        for name, count in counts.items():
+            if count >= tthresh:
+                metrics["taxonomy"][name] = count
+
+        return metrics
+
+    def summary(self, repo=None):
+        """Summarize metrics for the entire database if uid is not defined,
+           or one specific repository.
+        """
+        if repo is None:
+            repos = self.list()
+            metrics = {"repos": len(repos)}
+        else:
+            parser = get_parser(repo, config=self.config)
+            repos = [[parser.uid]]
+            metrics = {"repo": parser.uid}
+
+        # Add taxonomy and criteria items
+        metrics["taxonomy-count"] = len(self.list_taxonomy())
+        metrics["criteria-count"] = len(self.list_criteria())
+        metrics["users"] = {}
+        metrics["taxonomy"] = {}
+        metrics["criteria"] = {}
+
+        # Count annotations for
+        for repo in repos:
+            parser = get_parser(repo[0], config=self.config)
+            repo = self.get(parser.uid)
+
+            if not repo.criteria and not repo.taxonomy:
+                continue
+
+            # Add repository to summary metrics
+            metrics["taxonomy"][repo.uid] = {}
+            metrics["criteria"][repo.uid] = {}
+
+            # Derive all users that have annotated taxonomy/criteria
+            users = set()
+            for name, votes in repo.get_criteria().items():
+                [users.add(user) for user in votes.keys()]
+                if name not in metrics["criteria"][repo.uid]:
+                    metrics["criteria"][repo.uid] = {"yes": 0, "no": 0}
+                for vote in votes.values():
+                    metrics["criteria"][repo.uid][vote] += 1
+
+            # Update criteria annotations
+            for user in users:
+                if user not in metrics["users"]:
+                    metrics["users"][user] = {
+                        "criteria-annotations": 0,
+                        "taxonomy-annotations": 0,
+                    }
+                metrics["users"][user]["criteria-annotations"] += 1
+
+            # Derive all users that have annotated taxonomy/criteria
+            users = set()
+            for username, categories in repo.get_taxonomy().items():
+                users.add(username)
+                for category in categories:
+                    if category not in metrics["taxonomy"][repo.uid]:
+                        metrics["taxonomy"][repo.uid][category] = 0
+                    metrics["taxonomy"][repo.uid][category] += 1
+
+            # Don't add empty entries
+            if not repo.taxonomy and repo.uid in metrics["taxonomy"]:
+                del metrics["taxonomy"][repo.uid]
+
+            if not repo.criteria and repo.uid in metrics["criteria"]:
+                del metrics["criteria"][repo.uid]
+
+        # Add unique users
+        metrics["users-count"] = len(metrics["users"])
+        return metrics
+
     # Annotation
 
     def annotate(self, username, atype, unseen_only=True, repo=None, save=False):

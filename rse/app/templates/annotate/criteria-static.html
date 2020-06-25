@@ -88,12 +88,14 @@ $("form").submit(function(event) {
 
    $.each($(this).serializeArray(), function(index, item) {
       console.log(item)
-      if (item.name == "repo_uid") {
+      if (item.name.startsWith("RSE")) {
+          if (item.value == "yes") {
+              body += ("%20-%20%5Bx%5D%20criteria-" + item.name + "%0A")
+          } else if (item.value == "no") {
+              body += ("%20-%20%5B%20%5D%20criteria-" + item.name + "%0A")
+          }
+      } else if (item.name == "repo_uid") {
           repo_id = item.value;
-      } else if (item.value == "yes") {
-          body += ("%20-%20%5Bx%5D%20criteria-" + item.name + "%0A")
-      } else if (item.value == "no") {
-          body += ("%20-%20%5B%20%5D%20criteria-" + name + "%0A")
       }
    });
    

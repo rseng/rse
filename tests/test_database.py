@@ -86,6 +86,12 @@ def test_filesystem(tmp_path, database):
     lastrepo = enc.get()
     assert lastrepo.uid == repo.uid
 
+    # Summary
+    enc.summary()
+    enc.summary("github.com/singularityhub/sregistry")
+    enc.analyze("github.com/singularityhub/sregistry")
+    enc.analyze_bulk()
+
     # Clean up a specific repo (no prompt)
     enc.clear(repo.uid, noprompt=True)
     assert len(enc.list()) == 0

@@ -20,6 +20,8 @@ your software database.
 
  - [Clear](#clear) a software repository, all under a parser, or the entire database.
  - [Search](#search) across your software to find a particular one.
+ - [Summary](#summary) to summarize your research software database.
+ - [Analyze](#analyze) a specific software repository, indicating a consensus/summary about criteria and taxonomy.
  - [Shell](#shell) into a Python shell to interact with an encyclopedia client.
  - [Start](#start) an interactive dashboard to see software and annotate crtieria and taxonomy membership.
 
@@ -347,6 +349,207 @@ $ rse search singularity
 INFO:rse.main:Database: filesystem
 1  github/singularityhub/sregistry
 ```
+
+<a id="summary">
+## Summary
+
+You might want a quick summary of the annotations, whether taxonomy or criteria,
+or number of unique users that have annotated your database. The `summary` command
+can help you here.
+
+```bash
+$ rse summary
+INFO:rse.main:Database: filesystem
+{
+    "repos": 86,
+    "taxonomy-count": 17,
+    "criteria-count": 6,
+    "users": {
+        "vsoch": {
+            "criteria-annotations": 2,
+            "taxonomy-annotations": 0
+        }
+    },
+    "taxonomy": {
+        "github/vsoch/gridtest": {
+            "RSE-taxonomy-numerical-libraries": 1
+        },
+        "github/singularityhub/sregistry": {
+            "RSE-taxonomy-databases": 1,
+            "RSE-taxonomy-application-programming-interfaces": 1
+        }
+    },
+    "criteria": {
+        "github/singularityhub/sregistry": {
+            "yes": 1,
+            "no": 0
+        },
+        "github/singularityhub/singularity-compose": {
+            "yes": 0,
+            "no": 1
+        }
+    },
+    "users-count": 1
+}
+```
+
+You can also ask to show just metrics associated with taxonomy, criteria, or users:
+
+```bash
+$ rse summary --type criteria
+INFO:rse.main:Database: filesystem
+{
+    "criteria": {
+        "github/singularityhub/sregistry": {
+            "yes": 1,
+            "no": 0
+        },
+        "github/singularityhub/singularity-compose": {
+            "yes": 0,
+            "no": 1
+        }
+    },
+    "criteria-count": 6,
+    "repos": 86
+}
+```
+```bash
+$ rse summary --type taxonomy
+INFO:rse.main:Database: filesystem
+{
+    "taxonomy": {
+        "github/vsoch/gridtest": {
+            "RSE-taxonomy-numerical-libraries": 1
+        },
+        "github/singularityhub/sregistry": {
+            "RSE-taxonomy-databases": 1,
+            "RSE-taxonomy-application-programming-interfaces": 1
+        }
+    },
+    "taxonomy-count": 17,
+    "repos": 86
+}
+```
+```bash
+$ rse summary --type users
+INFO:rse.main:Database: filesystem
+{
+    "users-count": 1,
+    "users": {
+        "vsoch": {
+            "criteria-annotations": 2,
+            "taxonomy-annotations": 0
+        }
+    },
+    "repos": 86
+}
+```
+
+or ask to filter down to one repository:
+
+```bash
+$ rse summary github/singularityhub/sregistry
+INFO:rse.main:Database: filesystem
+{
+    "repo": "github/singularityhub/sregistry",
+    "taxonomy-count": 17,
+    "criteria-count": 6,
+    "users": {
+        "vsoch": {
+            "criteria-annotations": 1,
+            "taxonomy-annotations": 0
+        }
+    },
+    "taxonomy": {
+        "github/singularityhub/sregistry": {
+            "RSE-taxonomy-databases": 1,
+            "RSE-taxonomy-application-programming-interfaces": 1
+        }
+    },
+    "criteria": {
+        "github/singularityhub/sregistry": {
+            "yes": 1,
+            "no": 0
+        }
+    },
+    "users-count": 1
+}
+```
+
+<a id="analyze">
+## Analyze
+
+Analyze can provide metrics (or calculations) specific to a single repository, or
+across all repositories. We will start with the single repository example first.
+Let's say that we want to analyze the repository `github.com/singularityhub/sregistry`.
+For criteria, by default it will give you a "final answer" of yes/no depending on the majority,
+or indicate a tie otherwise. For taxonomy items, it will list all categories with > 1 vote.
+
+```bash
+$ rse analyze github/singularityhub/sregistry
+INFO:rse.main:Database: filesystem
+Summary for github/singularityhub/sregistry
+
+Criteria
+1  yes	Would taking away the software be a detriment to research?
+2  no	Is the software intended for a particular domain?
+3  no	Was the software created with intention to solve a research question?
+4  no	Is the software intended for research?
+5  yes	Has the software been used by researchers?
+6  yes	Has the software been cited?
+
+Taxonomy
+1  1	Databases
+2  1	Application Programming Interfaces
+```
+
+The above shows us that the majority (>50%) said that taking away the software would
+be a detriment to research, and that it's been used and cited by researchers. The taxonomy
+categories that were voted for (greater than 1 user) include Databases and application programming
+interfaces. You can change these thresholds easily:
+
+```bash
+$ rse analyze github/singularityhub/sregistry --cthresh 0.6 --tthresh 2
+```
+
+For the above, we wouldn't have any taxonomy results because there are none with more
+than two votes. If you want to do a bulk analysis for all repositories, you
+are required to use the internal client:
+
+```python
+from rse.main import Encyclopedia
+client = Encyclopedia()
+```
+
+The client analyze_bulk function takes the same arguments, but returns a large json
+structure with all repos that have annotations for criteria or taxonomy categories.
+
+```python
+client.analyze_bulk()
+[{'repo': 'github/vsoch/gridtest',
+  'criteria': {},
+  'taxonomy': {'RSE-taxonomy-numerical-libraries': 1}},
+ {'repo': 'github/singularityhub/sregistry',
+  'criteria': {'RSE-absence': 'yes',
+   'RSE-domain-intention': 'no',
+   'RSE-question-intention': 'no',
+   'RSE-research-intention': 'no',
+   'RSE-usage': 'yes',
+   'RSE-citation': 'yes'},
+  'taxonomy': {'RSE-taxonomy-databases': 1,
+   'RSE-taxonomy-application-programming-interfaces': 1}},
+ {'repo': 'github/singularityhub/singularity-compose',
+  'criteria': {'RSE-absence': 'yes',
+   'RSE-domain-intention': 'no',
+   'RSE-question-intention': 'no',
+   'RSE-research-intention': 'no',
+   'RSE-usage': 'yes',
+   'RSE-citation': 'no'},
+  'taxonomy': {}}]
+```
+
+If you want to include empty repos (without votes) set `include_empty` to True.
+
 
 <a id="shell">
 ## Shell

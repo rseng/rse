@@ -267,9 +267,7 @@ class SoftwareRepository:
         if uid not in self.criteria:
             self.criteria[uid] = {}
         if response:
-            self.criteria[uid][username] = "yes"
-        else:
-            self.criteria[uid][username] = "no"
+            self.criteria[uid][username] = response
 
     def create(self, should_exist=False):
         """create the filename if it doesn't exist, otherwise if it should (and
@@ -325,6 +323,14 @@ class SoftwareRepository:
         if os.path.exists(self.filename):
             return read_json(self.filename)
 
+    def get_criteria(self):
+        """Get loaded criteria"""
+        return self.criteria
+
+    def get_taxonomy(self):
+        """Get loaded taxonomy"""
+        return self.taxonomy
+
     def load_criteria(self):
         """Given a repository directory, load criteria files if they exist
         """
@@ -366,7 +372,7 @@ class SoftwareRepository:
             content = read_file(taxonomy_file)
             for row in content:
                 username, uids = row.split("\t")
-                taxonomy[username] = uids.split(",")
+                taxonomy[username] = [x.strip() for x in uids.split(",")]
         return taxonomy
 
     def save_taxonomy(self):
