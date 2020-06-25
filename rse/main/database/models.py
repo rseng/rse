@@ -85,7 +85,7 @@ class SoftwareRepository(Base):
 
     def update_taxonomy(self, username, uids):
         """Given a username and unique id update taxonomy items"""
-        criteria = self.get_taxonomy()
+        taxonomy = self.get_taxonomy()
 
         if username not in taxonomy:
             taxonomy[username] = uids

@@ -8,12 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from multiprocessing import Process
-import os
 import json
 
 from rse.main import Encyclopedia
-from rse.utils.file import write_file
 from rse.logger.message import bot
 
 
