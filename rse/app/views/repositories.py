@@ -177,22 +177,27 @@ def annotate_taxonomy():
 
 def generate_taxonomy(app):
 
-    from rse.utils.colors import browser_palette as color_options
-
-    # Limit to dark colors
-    color_options = [x for x in color_options if "dark" in x or "medium" in x]
     taxonomy = app.client.list_taxonomy()
 
-    # Generate a color for each unique entry
+    # Update the color list with existing colors (consistency)
     colors = {}
+    for item in taxonomy:
+        colors[item["name"]] = item["color"]
+
+    # Add parents to the lookup
+    colors["Software to directly conduct research"] = "darkblue"
+    colors["General software"] = "darkgoldenrod"
+    colors["Software to support research"] = "darkgreen"
+    colors["Incidentally used for research"] = "darkmagenta"
+    colors["Used for research but not explicitly for it"] = "darkslateblue"
+    colors["Domain-specific software"] = "darkcyan"
+    colors["Explicitly for research"] = "mediumpurple"
+
+    # Generate a color for each unique entry
     for entry in taxonomy:
         parts = [x.strip() for x in entry["path"].split(">>")]
         colorlist = []
         for part in parts:
-            if part not in colors:
-                colors[part] = color_options.pop(
-                    color_options.index(random.choice(color_options))
-                )
             colorlist.append(colors[part])
         entry["colors"] = colorlist
     return taxonomy

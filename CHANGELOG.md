@@ -13,8 +13,9 @@ and **Merged pull requests**. Critical items to know are:
 
 The versions coincide with releases on pip.
 
-## [0.2.x](https://github.com/rse/rse/tree/master) (0.0.x)
- - bug that taxonomy needs newline for export (0.0.20)
+## [0.0.x](https://github.com/rseng/rse/tree/master) (0.0.x)
+ - ensuring that interface generation uses constent colors (0.0.21)
+ - bug that taxonomy needs newline for export (0.0.2)
  - adding analysis metrics (0.0.19)
  - bugfix to export json api including url prefix 0.0.18)
  - static annotation export to GitHub issues (0.0.17)
