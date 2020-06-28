@@ -10,7 +10,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from flask import render_template
 from rse.app.server import app
-from rse.defaults import RSE_URL_PREFIX
+from rse.defaults import RSE_URL_PREFIX, RSE_HOST
 
 import flask
 
@@ -34,7 +34,7 @@ def index():
 @app.route("%ssearch" % RSE_URL_PREFIX)
 def search():
     repos = []
-    url = flask.request.host_url + RSE_URL_PREFIX
+    url = RSE_HOST + RSE_URL_PREFIX or flask.request.host_url + RSE_URL_PREFIX
     for i, name in enumerate(app.client.list()):
         repo = app.client.get(name[0])
         repos.append(

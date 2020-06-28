@@ -115,6 +115,15 @@ This is especially important if you are running `rse export` for GitHub
 pages, as you'll need the url prefix to coincide with the GitHub pages repository
 name.
 
+### RSE_HOST
+
+In the case that you are exporting content for GitHub pages, you'll want to export
+`RSE_HOST` to be the hostname and port that you need. For example:
+
+```bash
+export RSE_HOST=https://rseng.github.io
+```
+
 ## RSE Parsers
 
 Each parser can maintain it's own namespace of environment variables. These
