@@ -104,6 +104,12 @@ def export_web_static(export_dir, base_url, client, force=False):
     urls["%s%sapi/repos" % (base_url, RSE_URL_PREFIX)] = os.path.join(
         "api", "repos", "index.json"
     )
+
+    for parser in ["github", "gitlab"]:
+        urls[
+            "%s%sapi/repos/parser/%s" % (base_url, RSE_URL_PREFIX, parser)
+        ] = os.path.join("api", "repos", "parser", parser, "index.json")
+
     urls["%s%sapi/taxonomy" % (base_url, RSE_URL_PREFIX)] = os.path.join(
         "api", "taxonomy", "index.json"
     )
