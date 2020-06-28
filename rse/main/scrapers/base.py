@@ -24,13 +24,13 @@ class ScraperBase:
         self.query = query
         self.results = []
 
-    def latest(self, paginate=True):
+    def latest(self, paginate=True, delay=0.0):
         """The scraper should expose a function to populate self.results with
            some number of latest entries.
         """
         raise NotImplementedError
 
-    def search(self, paginate=True):
+    def search(self, paginate=True, delay=0.0):
         """The scraper should expose a function to populate self.results with
            a listing based on matching a search criteria.
         """

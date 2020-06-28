@@ -94,15 +94,32 @@ def export_web_static(export_dir, base_url, client, force=False):
                 % (base_url, RSE_URL_PREFIX, repo_path, annotation_type)
             ] = os.path.join(repo_path, "annotate-%s" % annotation_type, "index.html")
 
+        # Repository API endpoints
+        urls["%s%sapi/repos/%s" % (base_url, RSE_URL_PREFIX, repo.uid)] = os.path.join(
+            "api", "repos", repo.uid, "index.json"
+        )
+
     # Add API endpoints
+    urls["%s%sapi" % (base_url, RSE_URL_PREFIX)] = os.path.join("api", "index.json")
     urls["%s%sapi/repos" % (base_url, RSE_URL_PREFIX)] = os.path.join(
         "api", "repos", "index.json"
     )
+
+    for parser in ["github", "gitlab"]:
+        urls[
+            "%s%sapi/repos/parser/%s" % (base_url, RSE_URL_PREFIX, parser)
+        ] = os.path.join("api", "repos", "parser", parser, "index.json")
+
     urls["%s%sapi/taxonomy" % (base_url, RSE_URL_PREFIX)] = os.path.join(
         "api", "taxonomy", "index.json"
     )
     urls["%s%sapi/criteria" % (base_url, RSE_URL_PREFIX)] = os.path.join(
         "api", "criteria", "index.json"
+    )
+
+    # Add search
+    urls["%s%ssearch" % (base_url, RSE_URL_PREFIX)] = os.path.join(
+        "search", "index.html"
     )
 
     for url, outfile in urls.items():

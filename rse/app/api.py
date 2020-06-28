@@ -11,7 +11,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 import flask
 from flask_restful import Resource, Api
 from rse.app.server import app
-from rse.defaults import RSE_URL_PREFIX
+from rse.defaults import RSE_URL_PREFIX, RSE_HOST
 
 
 def list_repos(parser=None):
@@ -19,12 +19,12 @@ def list_repos(parser=None):
        and return a json list to serialize to the api view
     """
     repos = []
-    url = flask.request.host_url
+    url = (RSE_HOST or flask.request.host_url) + RSE_URL_PREFIX
     for i, repo in enumerate(app.client.list(parser)):
         repos.append(
             {
                 "uid": repo[0],
-                "html_url": "%sparser/%s" % (url, repo[0]),
+                "html_url": "%srepository/%s" % (url, repo[0]),
                 "api_url": "%sapi/repos/%s" % (url, repo[0]),
             }
         )
@@ -54,7 +54,7 @@ class apiGet(Resource):
 
     def get(self, uid):
         repo = app.client.get(uid)
-        return repo.export()
+        return repo.load()
 
 
 class apiEndpoints(Resource):
@@ -62,7 +62,7 @@ class apiEndpoints(Resource):
     """
 
     def get(self):
-        url = flask.request.host_url
+        url = (RSE_HOST or flask.request.host_url) + RSE_URL_PREFIX
         return {
             "%sapi" % RSE_URL_PREFIX: "%sapi" % url,
             "%sapi/repos" % RSE_URL_PREFIX: "%sapi/repos" % url,

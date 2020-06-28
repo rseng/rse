@@ -29,23 +29,23 @@ class JossScraper(ScraperBase):
     def __init__(self, query=None, **kwargs):
         super().__init__(query)
 
-    def latest(self, paginate=False):
+    def latest(self, paginate=False, delay=0.0):
         """The scraper should expose a function to populate self.results with
            some number of latest entries. Unlike a search, a latest scraper does
            not by default paginate. The user needs to interact directly with
            the Python client to do a scrape for all papers in JoSS.
         """
         url = "https://joss.theoj.org/papers/published.atom"
-        return self.scrape(url, paginate=paginate)
+        return self.scrape(url, paginate=paginate, delay=delay)
 
-    def search(self, query, paginate=True):
+    def search(self, query, paginate=True, delay=0.0):
         """The scraper should expose a function to populate self.results with
            a listing based on matching a search criteria.
         """
         url = "https://joss.theoj.org/papers/search?q=%s" % query
-        return self.scrape(url, paginate=paginate)
+        return self.scrape(url, paginate=paginate, delay=delay)
 
-    def scrape(self, url, paginate=False):
+    def scrape(self, url, paginate=False, delay=None):
         """A shared function to scrape a set of repositories. Since the JoSS
            pages for a search and the base are the same, we can use a shared
            function.
@@ -64,7 +64,7 @@ class JossScraper(ScraperBase):
             for link in soup.find_all("link", href=True):
 
                 # Sleep for a random amount of time to give a rest!
-                sleep(random.choice(range(1, 10)) * 0.1)
+                sleep(delay or random.choice(range(1, 10)) * 0.1)
                 paper_url = link.attrs.get("href", "")
 
                 # If we don't have the next page yet

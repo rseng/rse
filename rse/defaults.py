@@ -56,6 +56,9 @@ RSE_PARSERS = ["github"]
 # Default taxonomy and criteria endpoints, and place to post annotation issues
 RSE_API_ENDPOINT = getenv("RSE_API_ENDPOINT", "https://rseng.github.io/rseng/api")
 RSE_ISSUE_ENDPOINT = getenv("RSE_ISSUE_ENDPOINT", "https://github.com/rseng/software")
+RSE_HOST = getenv("RSE_HOST")
+if RSE_HOST and RSE_HOST.endswith("/"):
+    RSE_HOST = RSE_HOST.rstrip("/")
 
 # MUST start and end with slash
 RSE_URL_PREFIX = getenv("RSE_URL_PREFIX", "/")
