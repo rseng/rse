@@ -57,6 +57,8 @@ RSE_PARSERS = ["github"]
 RSE_API_ENDPOINT = getenv("RSE_API_ENDPOINT", "https://rseng.github.io/rseng/api")
 RSE_ISSUE_ENDPOINT = getenv("RSE_ISSUE_ENDPOINT", "https://github.com/rseng/software")
 RSE_HOST = getenv("RSE_HOST")
+if RSE_HOST and not RSE_HOST.endswith("/"):
+    RSE_HOST = "%s/" % RSE_HOST
 
 # MUST start and end with slash
 RSE_URL_PREFIX = getenv("RSE_URL_PREFIX", "/")
