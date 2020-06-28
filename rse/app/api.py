@@ -19,7 +19,7 @@ def list_repos(parser=None):
        and return a json list to serialize to the api view
     """
     repos = []
-    url = RSE_HOST or flask.request.host_url
+    url = (RSE_HOST or flask.request.host_url) + RSE_URL_PREFIX
     for i, repo in enumerate(app.client.list(parser)):
         repos.append(
             {
@@ -54,7 +54,7 @@ class apiGet(Resource):
 
     def get(self, uid):
         repo = app.client.get(uid)
-        return repo.export()
+        return repo.load()
 
 
 class apiEndpoints(Resource):
