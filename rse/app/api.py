@@ -62,7 +62,7 @@ class apiEndpoints(Resource):
     """
 
     def get(self):
-        url = RSE_HOST or flask.request.host_url
+        url = (RSE_HOST or flask.request.host_url) + RSE_URL_PREFIX
         return {
             "%sapi" % RSE_URL_PREFIX: "%sapi" % url,
             "%sapi/repos" % RSE_URL_PREFIX: "%sapi/repos" % url,
