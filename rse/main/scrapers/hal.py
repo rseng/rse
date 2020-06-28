@@ -13,6 +13,7 @@ from rse.main.parsers import get_parser
 import logging
 import requests
 import re
+import time
 
 from .base import ScraperBase
 
@@ -29,16 +30,16 @@ class HalScraper(ScraperBase):
     def __init__(self, query=None, **kwargs):
         super().__init__(query)
 
-    def latest(self, paginate=False):
+    def latest(self, paginate=False, delay=0.0):
         """populate self.results with some number of latest entries. Unlike 
            a search, a latest scraper does not by default paginate. Hal will by
            default return all entries, so the user is required to define a number
            for latest.
         """
         url = "https://api.archives-ouvertes.fr/search/?q=github&fq=docType_s:(SOFTWARE)&wt=json"
-        return self.scrape(url)
+        return self.scrape(url, delay=delay)
 
-    def search(self, query, paginate=True):
+    def search(self, query, paginate=True, delay=0.0):
         """populate self.results with a listing based on matching a search criteria.
            we search the description.
         """
@@ -46,9 +47,9 @@ class HalScraper(ScraperBase):
             "http://api.archives-ouvertes.fr/search/?q=%s&fq=docType_s:(SOFTWARE)&wt=json"
             % query
         )
-        return self.scrape(url)
+        return self.scrape(url, delay=delay)
 
-    def scrape(self, url, paginate=False):
+    def scrape(self, url, paginate=False, delay=0.0):
         """A shared function to scrape a set of repositories. Since the JoSS
            pages for a search and the base are the same, we can use a shared
            function.
@@ -69,6 +70,7 @@ class HalScraper(ScraperBase):
             if repo_url:
                 bot.info("Found repository: %s" % repo_url)
                 self.results.append(repo_url)
+            time.sleep(delay)
 
         return self.results
 

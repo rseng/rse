@@ -237,6 +237,13 @@ def get_parser():
         default=False,
         action="store_true",
     )
+    scrape.add_argument(
+        "--delay",
+        dest="delay",
+        help="Number of seconds (float) to delay, default 0.",
+        type=float_type,
+        default=0.0,
+    )
 
     # Shell
     subparsers.add_parser(
@@ -344,6 +351,17 @@ def percentage_type_asint(arg):
         raise argparse.ArgumentTypeError("Must be a floating point number")
     if number < 0 or number > 1:
         raise argparse.ArgumentTypeError("Argument must be between 0 and 1")
+    return number
+
+
+def float_type(arg):
+    """ensure that an input is greater than 0 and a float"""
+    try:
+        number = float(arg)
+    except ValueError:
+        raise argparse.ArgumentTypeError("Must be a floating point number")
+    if number < 0:
+        raise argparse.ArgumentTypeError("Argument must be greater than 0.")
     return number
 
 

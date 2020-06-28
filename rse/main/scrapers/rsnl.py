@@ -12,6 +12,7 @@ from rse.utils.urls import get_user_agent, check_response
 from rse.main.parsers import get_parser
 import logging
 import requests
+import time
 
 from .base import ScraperBase
 
@@ -25,15 +26,15 @@ class RSNLScraper(ScraperBase):
     def __init__(self, query=None, **kwargs):
         super().__init__(query)
 
-    def latest(self, paginate=False):
+    def latest(self, paginate=False, delay=0.0):
         """The scraper should expose a function to populate self.results with
            some number of latest entries. Unlike a search, a latest scraper does
            not by default paginate.
         """
         url = "https://research-software.nl/api/software"
-        return self.scrape(url)
+        return self.scrape(url, delay=delay)
 
-    def search(self, query, paginate=True):
+    def search(self, query, paginate=True, delay=0.0):
         """The scraper should expose a function to populate self.results with
            a listing based on matching a search criteria.
         """
@@ -41,9 +42,9 @@ class RSNLScraper(ScraperBase):
         bot.warning(
             "The RSNL scraper does not support search, returning latest instead."
         )
-        return self.latest(paginate)
+        return self.latest(paginate, delay=delay)
 
-    def scrape(self, url, paginate=False):
+    def scrape(self, url, paginate=False, delay=0.0):
         """A shared function to scrape a set of repositories. Since the JoSS
            pages for a search and the base are the same, we can use a shared
            function.
@@ -64,6 +65,7 @@ class RSNLScraper(ScraperBase):
             elif repo_url:
                 bot.info("Found repository: %s" % repo_url)
                 self.results.append({"url": repo_url})
+            time.sleep(delay)
 
         return self.results
 

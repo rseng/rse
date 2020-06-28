@@ -12,6 +12,8 @@ from flask import render_template
 from rse.app.server import app
 from rse.defaults import RSE_URL_PREFIX
 
+import flask
+
 ## Main Index View
 
 
@@ -26,4 +28,27 @@ def index():
         entries=app.client.list_taxonomy(),
         url_prefix=RSE_URL_PREFIX,
         enable_annotate=not app.disable_annotate,
+    )
+
+
+@app.route("%ssearch" % RSE_URL_PREFIX)
+def search():
+    repos = []
+    url = flask.request.host_url + RSE_URL_PREFIX
+    for i, name in enumerate(app.client.list()):
+        repo = app.client.get(name[0])
+        repos.append(
+            {
+                "uid": repo.uid,
+                "description": repo.description,
+                "url": repo.url,
+                "html_url": "%srepository/%s" % (url, repo.uid),
+                "api_url": "%sapi/repos/%s" % (url, repo.uid),
+            }
+        )
+    return render_template(
+        "search.html",
+        repos=repos,
+        database=app.client.database,
+        url_prefix=RSE_URL_PREFIX,
     )

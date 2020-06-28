@@ -21,9 +21,9 @@ def main(args, extra):
 
     # Either get latest entries, or based on search
     if args.query is not None:
-        results = scraper.search(args.query)
+        results = scraper.search(args.query, delay=args.delay)
     else:
-        results = scraper.latest()
+        results = scraper.latest(delay=args.delay)
     print("Found %s results" % len(results))
 
     # If we have results and it's not a dry run, create the repos

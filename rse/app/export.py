@@ -105,6 +105,11 @@ def export_web_static(export_dir, base_url, client, force=False):
         "api", "criteria", "index.json"
     )
 
+    # Add search
+    urls["%s%ssearch" % (base_url, RSE_URL_PREFIX)] = os.path.join(
+        "search", "index.html"
+    )
+
     for url, outfile in urls.items():
 
         # Skip if we've already created it
