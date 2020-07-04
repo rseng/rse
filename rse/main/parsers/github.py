@@ -78,5 +78,33 @@ class GitHubParser(ParserBase):
         response = requests.get(url, headers=headers)
 
         # Successful query!
-        self.data = check_response(response)
+        data = check_response(response)
+
+        # Only save minimal set
+        self.data = {}
+        for key in [
+            "name",
+            "url",
+            "full_name",
+            "html_url",
+            "private",
+            "description",
+            "created_at",
+            "updated_at",
+            "clone_url",
+            "homepage",
+            "size",
+            "stargazers_count",
+            "watchers_count",
+            "language",
+            "open_issues_count",
+            "license",
+            "subscribers_count",
+        ]:
+            if key in data:
+                self.data[key] = data[key]
+        self.data["owner"] = {}
+        for key in ["html_url", "avatar_url", "login", "type"]:
+            self.data["owner"][key] = data["owner"][key]
+
         return self.data

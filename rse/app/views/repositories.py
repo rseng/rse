@@ -8,10 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from flask import render_template, request, redirect
+from flask import render_template, request
 from rse.app.server import app
 from rse.defaults import RSE_URL_PREFIX, RSE_ISSUE_ENDPOINT
-import random
 
 ## Repository Views
 
@@ -166,7 +165,7 @@ def annotate_taxonomy():
             url_prefix=RSE_URL_PREFIX,
         )
 
-    except StopIteration as exc:
+    except StopIteration:
         return annotate_repos(
             message="You have already annotated taxonomy items for all the repos!"
         )

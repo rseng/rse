@@ -24,10 +24,11 @@ def main(args, extra):
 
     # Case 1: empty list indicates listing all
     if os.path.exists(args.path) and not args.force:
-        bot.error("{args.path} already exists, use --force to overwrite it.")
+        bot.error(f"{args.path} already exists, use --force to overwrite it.")
 
     # Export a list of repos
     if args.export_type == "repos-txt":
+
         # We just want the unique id, the first result
         repos = [x[0] for x in client.list()]
         write_file(args.path, "\n".join(repos))

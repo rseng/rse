@@ -18,6 +18,6 @@ def main(args, extra):
 
     # If a file is provided:
     if args.file:
-        enc.bulk_update(args.file)
+        enc.bulk_update(args.file, rewrite=args.rewrite)
     else:
-        enc.update(args.uid)
+        enc.update(args.uid, rewrite=args.rewrite)

@@ -124,7 +124,7 @@ class RelationalDatabase(Database):
                 repo.parser = parser
                 return repo
 
-    def update(self, repo, updates=None):
+    def update(self, repo, updates=None, rewrite=False):
         """update a repo with a json dictionary.
         """
         # Return of None indicates non-success
@@ -135,7 +135,7 @@ class RelationalDatabase(Database):
 
             # Load the previous data to update
             data = {}
-            if repo.data:
+            if repo.data and not rewrite:
                 data = json.loads(repo.data)
             data.update(updates)
             repo.data = json.dumps(data)

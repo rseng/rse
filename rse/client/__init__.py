@@ -211,6 +211,13 @@ def get_parser():
         default=False,
         action="store_true",
     )
+    update.add_argument(
+        "--rewrite",
+        dest="rewrite",
+        help="If data exists, don't update but rewrite.",
+        default=False,
+        action="store_true",
+    )
 
     # List repos and print to terminal
     ls = subparsers.add_parser("ls", help="List software")
