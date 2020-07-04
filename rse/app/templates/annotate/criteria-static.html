@@ -53,7 +53,8 @@ td {
       <td>{{ set.name }}</td>
       <td>
         {% for option in set.options %}
-        <label class="radio-inline"><input type="radio" name="{{ set.uid }}" id="inlineRadio1" value="{{ option }}"> {{ option }}</label>{% endfor %}        
+        <label class="radio-inline"><input type="radio" name="{{ set.uid }}" id="inlineRadio1" value="{{ option }}"> {{ option }}</label>{% endfor %}
+        <label class="radio-inline"><input type="radio" name="{{ set.uid }}" id="inlineRadio1" value=""> unsure</label>
       </td>
     </tr>{% endfor %}
     </tbody>
