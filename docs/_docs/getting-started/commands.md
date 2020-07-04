@@ -197,7 +197,15 @@ We would update in bulk as follows:
 $ rse update --file repos.txt
 ```
 
-By default, repos that are not present will be skipped over.
+By default, repos that are not present will be skipped over. If you want
+to rewrite existing metadata (for example, if you change the structure of the data)
+you can add the `--rewrite` flag:
+
+```bash
+$ rse update --file repos.txt --rewrite
+```
+
+This works for single repository updates as well.
 
 <a id="label">
 ## Label

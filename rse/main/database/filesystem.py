@@ -127,13 +127,16 @@ class FileSystemDatabase(Database):
         parser = get_parser(uid, config=self.config)
         return SoftwareRepository(parser, exists=True, data_base=self.data_base)
 
-    def update(self, repo):
+    def update(self, repo, rewrite=False):
         """Update a repository by retrieving metadata, and then calling update 
            on the software repository to save it.
         """
         data = repo.parser.get_metadata()
         if data:
-            repo.update()
+            if rewrite:
+                self.add(repo.uid)
+            else:
+                repo.update()
 
     def label(self, repo, key, value, force=False):
         """Update a repository with a specific key/value pair.

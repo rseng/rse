@@ -117,7 +117,7 @@ class Encyclopedia:
                 repos += [self.add(uid, quiet=True)] or []
         return repos
 
-    def bulk_update(self, filename):
+    def bulk_update(self, filename, rewrite=False):
         """Given a filename with a single list of repos, add each
         """
         repos = []
@@ -125,7 +125,7 @@ class Encyclopedia:
             for name in read_file(filename):
                 uid = name.strip()
                 try:
-                    repos += [self.update(uid)]
+                    repos += [self.update(uid, rewrite=rewrite)]
                 except RepoNotFoundError:
                     pass
         return repos
@@ -176,12 +176,12 @@ class Encyclopedia:
         else:
             raise RuntimeError(f"Unrecognized {target} to clear")
 
-    def update(self, uid):
+    def update(self, uid, rewrite=False):
         """Update an existing software repository.
         """
         try:
             repo = self.get(uid)
-            self.db.update(repo)
+            self.db.update(repo, rewrite=rewrite)
             bot.info(f"{repo.uid} has been updated.")
             return repo
         except RepoNotFoundError:

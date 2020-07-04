@@ -14,6 +14,7 @@ and **Merged pull requests**. Critical items to know are:
 The versions coincide with releases on pip.
 
 ## [0.0.x](https://github.com/rseng/rse/tree/master) (0.0.x)
+ - streamline data export to included minimal repo data (0.0.23)
  - static search interface and delay parameter for scrape (0.0.22)
  - ensuring that interface generation uses constent colors (0.0.21)
  - bug that taxonomy needs newline for export (0.0.2)
