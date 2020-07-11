@@ -4,17 +4,13 @@
     <thead>
       <tr>
         <th :class="{ sorted: sort === 'id' }" @click="sortBy('id')">
-          Id
-        </th>
-        <th :class="{ sorted: sort === 'name' }" @click="sortBy('name')">
-          Name
+          Repository
         </th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="row in sortedRows">
-        <td>{% raw %}{{ row.id }}{% endraw %}</td>
-        <td>{% raw %}{{ row.name }}{% endraw %}</td>
+        <td style="display:none">{% raw %}{{ row.id }}{% endraw %}</td>
         <td data-id="{% raw %}{{ row.id }}{% endraw %}">
           <div class='btn-group btn-group-xs'>
             <button v-on:click="viewRow" class="btn btn-default" title="View">
@@ -26,7 +22,7 @@
             <button v-on:click="annotateTaxonomyRow" class="btn btn-default btn-sm" title="Annotate Taxonomy">
               🦉️
             </button>
-          </div>
+          </div><span v-on:click="viewRow" style="padding-left:10px; cursor:pointer"><strong>{% raw %}{{ row.id }}{% endraw %}</strong></span>
         </td>
       </tr>
     </tbody>
