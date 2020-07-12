@@ -14,6 +14,7 @@ and **Merged pull requests**. Critical items to know are:
 The versions coincide with releases on pip.
 
 ## [0.0.x](https://github.com/rseng/rse/tree/master) (0.0.x)
+ - bug in github parser (0.0.25)
  - refactoring interface to have one column table (0.0.24)
  - streamline data export to included minimal repo data (0.0.23)
  - static search interface and delay parameter for scrape (0.0.22)

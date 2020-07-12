@@ -101,7 +101,7 @@ class GitHubParser(ParserBase):
             "license",
             "subscribers_count",
         ]:
-            if key in data:
+            if date and key in data:
                 self.data[key] = data[key]
         self.data["owner"] = {}
         for key in ["html_url", "avatar_url", "login", "type"]:
