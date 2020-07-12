@@ -79,6 +79,8 @@ class GitHubParser(ParserBase):
 
         # Successful query!
         data = check_response(response)
+        if data is None:
+            return None
 
         # Only save minimal set
         self.data = {}
@@ -101,7 +103,7 @@ class GitHubParser(ParserBase):
             "license",
             "subscribers_count",
         ]:
-            if date and key in data:
+            if key in data:
                 self.data[key] = data[key]
         self.data["owner"] = {}
         for key in ["html_url", "avatar_url", "login", "type"]:
