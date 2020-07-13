@@ -376,11 +376,14 @@ class SoftwareRepository:
         if os.path.exists(taxonomy_file):
             content = read_file(taxonomy_file)
             for row in content:
-                print(row)
+                row = row.strip()
                 if not row:
                     continue
-                username, uids = row.split("\t")
-                taxonomy[username] = [x.strip() for x in uids.split(",")]
+                try:
+                    username, uids = row.split("\t")
+                    taxonomy[username] = [x.strip() for x in uids.split(",")]
+                except:
+                    print(f"Issue parsing row {row}")
         return taxonomy
 
     def save_taxonomy(self):
