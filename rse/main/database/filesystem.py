@@ -377,6 +377,8 @@ class SoftwareRepository:
             content = read_file(taxonomy_file)
             for row in content:
                 print(row)
+                if not row:
+                    continue
                 username, uids = row.split("\t")
                 taxonomy[username] = [x.strip() for x in uids.split(",")]
         return taxonomy
