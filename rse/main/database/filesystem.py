@@ -338,7 +338,6 @@ class SoftwareRepository:
         """Given a repository directory, load criteria files if they exist
         """
         criteria = {}
-        print("PARSING CRITERIA")
         for filename in glob(f"{self.parser_dir}/criteria*.tsv"):
             uid = (
                 os.path.basename(filename).replace("criteria-", "").replace(".tsv", "")
@@ -348,7 +347,6 @@ class SoftwareRepository:
                 criteria[uid] = {}
             for row in content:
                 row = row.strip()
-                print(row)
                 if not row:
                     continue
                 username, response = row.split("\t")
@@ -382,13 +380,8 @@ class SoftwareRepository:
                 row = row.strip()
                 if not row:
                     continue
-                print(row)
-                try:
-                    username, uids = row.split("\t")
-                    taxonomy[username] = [x.strip() for x in uids.split(",")]
-                except:
-                    print(f"Issue parsing row {row}")
-        print(taxonomy)
+                username, uids = row.split("\t")
+                taxonomy[username] = [x.strip() for x in uids.split(",")]
         return taxonomy
 
     def save_taxonomy(self):
