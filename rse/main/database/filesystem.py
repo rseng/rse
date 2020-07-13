@@ -125,6 +125,7 @@ class FileSystemDatabase(Database):
                 raise NoReposError
 
         parser = get_parser(uid, config=self.config)
+        print("Parser %s" % parser)
         return SoftwareRepository(parser, exists=True, data_base=self.data_base)
 
     def update(self, repo, rewrite=False):
@@ -281,6 +282,7 @@ class SoftwareRepository:
 
                 # Might be provided prefix
                 contenders = glob("%s*" % os.path.join(self.data_base, self.parser.uid))
+                print(contenders)
                 if len(contenders) == 1:
                     self.parser.uid = re.sub(
                         "(%s/|[.]json)" % self.data_base, "", contenders[0],
@@ -374,6 +376,7 @@ class SoftwareRepository:
         if os.path.exists(taxonomy_file):
             content = read_file(taxonomy_file)
             for row in content:
+                print(row)
                 username, uids = row.split("\t")
                 taxonomy[username] = [x.strip() for x in uids.split(",")]
         return taxonomy
