@@ -125,7 +125,6 @@ class FileSystemDatabase(Database):
                 raise NoReposError
 
         parser = get_parser(uid, config=self.config)
-        print("Parser %s" % parser)
         return SoftwareRepository(parser, exists=True, data_base=self.data_base)
 
     def update(self, repo, rewrite=False):
@@ -282,7 +281,6 @@ class SoftwareRepository:
 
                 # Might be provided prefix
                 contenders = glob("%s*" % os.path.join(self.data_base, self.parser.uid))
-                print(contenders)
                 if len(contenders) == 1:
                     self.parser.uid = re.sub(
                         "(%s/|[.]json)" % self.data_base, "", contenders[0],
@@ -340,6 +338,7 @@ class SoftwareRepository:
         """Given a repository directory, load criteria files if they exist
         """
         criteria = {}
+        print("PARSING CRITERIA")
         for filename in glob(f"{self.parser_dir}/criteria*.tsv"):
             uid = (
                 os.path.basename(filename).replace("criteria-", "").replace(".tsv", "")
@@ -348,6 +347,10 @@ class SoftwareRepository:
             if uid not in criteria:
                 criteria[uid] = {}
             for row in content:
+                row = row.strip()
+                print(row)
+                if not row:
+                    continue
                 username, response = row.split("\t")
                 criteria[uid][username] = response
         return criteria
@@ -379,11 +382,13 @@ class SoftwareRepository:
                 row = row.strip()
                 if not row:
                     continue
+                print(row)
                 try:
                     username, uids = row.split("\t")
                     taxonomy[username] = [x.strip() for x in uids.split(",")]
                 except:
                     print(f"Issue parsing row {row}")
+        print(taxonomy)
         return taxonomy
 
     def save_taxonomy(self):

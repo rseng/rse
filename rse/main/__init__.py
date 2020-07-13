@@ -143,7 +143,6 @@ class Encyclopedia:
         """A wrapper to get a repo id from the database. If an id is not provided,
            will return the last updated repo based on timestamp of file or database.
         """
-        print("UID %s" % uid)
         return self.db.get(uid)
 
     def get_or_create(self, uid):
