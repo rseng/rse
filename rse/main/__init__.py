@@ -417,6 +417,8 @@ class Encyclopedia:
 
         lines = read_file(input_file)
         line = lines.pop(0)
+        print("Lines %s" % lines)
+        print("Line %s" % line)
 
         # Find the repository name
         while stop_line not in line:
@@ -425,12 +427,18 @@ class Encyclopedia:
                 break
             line = lines.pop(0)
 
+        print("Line %s" % line)
+        print("Match %s" % match)
+ 
         # Retrieve the match
         if not match:
             raise RuntimeError(f"repository pattern not found in {input_file}")
         reponame = match.group()
+        print("Reponame %s" % reponame)
         parser = get_parser(reponame)
+        print("Parser %s" % parser)
         repo = self.get(parser.uid)
+        print("Repo %s" % repo)
         return repo, lines
 
     def import_criteria_annotation(self, input_file, username):
@@ -460,9 +468,11 @@ class Encyclopedia:
            username to do an annotation. If a user has already done an annotation,
            his or her record is updated.
         """
-        repo, lines = self._import_annotation(
+        result = self._import_annotation(
             input_file, username, stop_line="## Taxonomy"
         )
+        print("Result %s" % result)
+        repo, lines = result[0], result[1]
 
         # Now iterate through checklist, update
         uids = []
