@@ -429,7 +429,7 @@ class Encyclopedia:
         if not match:
             raise RuntimeError(f"repository pattern not found in {input_file}")
         reponame = match.group()
-        parser = get_parser(reponame)
+        parser = get_parser(reponame, config=self.config)
         repo = self.get(parser.uid)
         return repo, lines
 

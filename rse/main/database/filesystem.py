@@ -346,6 +346,9 @@ class SoftwareRepository:
             if uid not in criteria:
                 criteria[uid] = {}
             for row in content:
+                row = row.strip()
+                if not row:
+                    continue
                 username, response = row.split("\t")
                 criteria[uid][username] = response
         return criteria
@@ -374,6 +377,9 @@ class SoftwareRepository:
         if os.path.exists(taxonomy_file):
             content = read_file(taxonomy_file)
             for row in content:
+                row = row.strip()
+                if not row:
+                    continue
                 username, uids = row.split("\t")
                 taxonomy[username] = [x.strip() for x in uids.split(",")]
         return taxonomy
