@@ -104,7 +104,13 @@ class JossScraper(ScraperBase):
         client = Encyclopedia(config_file=config_file, database=database)
         for result in self.results:
             uid = result["url"].split("//")[-1]
-            repo = get_parser(uid)
+
+            # If a repository is added that isn't represented
+            try:
+                repo = get_parser(uid)
+            except NotImplementedError as exc:
+                bot.warning(exc)
+                continue
 
             # Add results that don't exist
             if not client.exists(repo.uid):
