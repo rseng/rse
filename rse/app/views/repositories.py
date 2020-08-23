@@ -12,6 +12,7 @@ from flask import render_template, request
 from rse.app.server import app
 from rse.defaults import RSE_URL_PREFIX, RSE_ISSUE_ENDPOINT
 
+
 ## Repository Views
 
 

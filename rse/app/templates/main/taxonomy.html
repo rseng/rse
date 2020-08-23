@@ -1,0 +1,28 @@
+{% extends "topics/base.html" %}
+{% block content %}
+  <body>
+    <meta charset="UTF-8">
+<title>Taxonomy</title>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i'>
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="{{ url_prefix | replace('/', '')}}{{ url_for('static', filename='css/topics.css') }}">
+<link rel="stylesheet" href="{{ url_prefix }}{{ url_for('static', filename='css/topics.css') }}">
+<br><br>
+<header>
+  <h1 style="color:white">Taxonomy 🦉️</h1>
+</header>
+   <nav>
+
+  <ul>
+    <li><a class="button" href="{% if url_prefix == '/' %}{{ url_prefix | replace('/', '')}}{% else %}{{ url_prefix }}{% endif %}/">home</a></li>
+    <li><a class="button" href="{% if url_prefix == '/' %}{{ url_prefix | replace('/', '')}}{% else %}{{ url_prefix }}{% endif %}/criteria">criteria</a></li>
+    <li><a class="button" href="{% if url_prefix == '/' %}{{ url_prefix | replace('/', '')}}{% else %}{{ url_prefix }}{% endif %}/taxonomy">taxonomy</a></li>
+    {% if enable_annotate %}<li><a class="button" href="{{ url_prefix }}annotate">annotate</a></li>{% endif %}
+  </ul>
+</nav>
+
+
+<main class="grid flex-grid" style="background-color: white">
+      {% include "tables/taxonomy-table.html" %}
+</main>
+{% endblock %}

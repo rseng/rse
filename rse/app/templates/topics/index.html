@@ -1,0 +1,203 @@
+{% extends "topics/base.html" %}
+{% block content %}
+<style>
+.customSuggestionsList > div{
+  max-height: 300px;
+  border: 2px solid pink;
+  overflow: auto;
+}
+.tagify {
+  text-align: left;
+  background-color: white;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.pen-intro{
+}
+
+input{
+  order: 5;
+}
+
+.tagify__input {
+    color: black !important;
+}
+
+label[for='checkbox-tagify-show-input']{
+  position: absolute;
+  top: .85em;
+  left: 2.5em;
+}
+
+label[for='checkbox-tagify-show-input'] + input{
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  transform: scale(1.4);
+}
+
+label[for='checkbox-tagify-show-input'] + input:checked ~ input,
+label[for='checkbox-tagify-show-input'] + input:checked ~ textarea{
+  display: block !important;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 1.5em;
+}
+
+label[for='checkbox-tagify-show-input'] + input:checked ~ textaragifyea{
+    min-height: 11ch;
+}
+</style>
+
+  <body>
+    <meta charset="UTF-8">
+<title>Research Software Encyclopedia</title>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i'>
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="{{ url_prefix | replace('/', '')}}{{ url_for('static', filename='css/topics.css') }}">
+<link rel="stylesheet" href="{{ url_prefix }}{{ url_for('static', filename='css/topics.css') }}">
+
+    <br><br>
+<header>
+  <h1 style="color:white">Research Software Encyclopedia</h1>
+</header>
+   <nav>
+
+  <input name='tags' value="">
+  <ul>
+    <li><a class="button reset filter-reset" href="#">reset</a></li>
+    <li><a class="button" href="{% if url_prefix == '/' %}{{ url_prefix | replace('/', '')}}{% else %}{{ url_prefix }}{% endif %}/criteria">criteria</a></li>
+    <li><a class="button" href="{% if url_prefix == '/' %}{{ url_prefix | replace('/', '')}}{% else %}{{ url_prefix }}{% endif %}/taxonomy">taxonomy</a></li>
+    {% if enable_annotate %}<li><a class="button" href="{{ url_prefix }}annotate">annotate</a></li>{% endif %}
+  </ul>
+</nav>
+
+<main class="grid flex-grid">{% for repo in repos %}{% if repo.data.owner %}
+     <div onclick="window.open('{{ repo.data.html_url }}', '_blank');" class="card {% for topic in repo.topics %}{{ topic }} card-{{ topic }} {% endfor %}">
+          <p><a href="{{ repo.data.html_url }}" target="_blank">{{ repo.data.full_name }}</a></p><br>
+          <a target="_blank" href="{{ url_prefix }}repository/{{ repo.uid }}/annotate-taxonomy">✏️ Taxonomy</a><br>
+          <a target="_blank" href="{{ url_prefix }}repository/{{ repo.uid }}/annotate-criteria">✏️ Criteria</a></p>
+          {% if repo.description %}<p style="position:absolute; bottom:0px; right:0px; margin-bottom:0px"><span type="button" style="border-radius:10px" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="{{ repo.description }}">ℹ️</span></p>{% endif %}
+          <p><a style="position:absolute; bottom:0px; left: 0px" href="{{ repo.data.owner.html_url }}" target="_blank"><img src="{{ repo.data.owner.avatar_url }}" width="30px"></a></p>
+     </div>{% endif %}{% endfor %}
+</main>
+
+    <div class="container">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js'></script>
+<script>
+var grid = $('.grid').isotope();
+$('.filter-reset').on('click', function(event) {
+  event.preventDefault();
+  grid.isotope({ filter: '*' });
+});
+</script>
+<script src='https://unpkg.com/@yaireo/tagify@3.17.7/dist/tagify.min.js'></script>
+<script>
+
+var tags = [{% for topic in topics %}{"value": "{{ topic }}", "icon": "⭐️"}{% if loop.last %}{% else %},{% endif %}{% endfor %}]
+console.log(tags)
+
+var input = document.querySelector('input[name=tags]'),
+    tagify = new Tagify(input, {
+        pattern: /^.{0,200}$/,  // Validate typed tag(s) by Regex. Here maximum chars length is defined as "20"
+        delimiters: ",|;",      // add new tags when these characters are used
+        keepInvalidTags: false, // dont keep invalid tags
+        editTags: 1,            // single click to edit a tag
+        maxTags: 6,
+        blacklist: [],          // words to blacklist?
+        whitelist: tags,
+        transformTag: transformTag,
+        // backspace: "edit",
+        placeholder: "Enter one or more topics to filter to!",
+        dropdown : {
+            enabled: 1,            // show suggestion after 1 typed character
+            fuzzySearch: false,    // match only suggestions that starts with the typed characters
+            position: 'text',      // position suggestions list next to typed text
+            caseSensitive: true,   // allow adding duplicate items if their case is different
+        },
+        templates: {
+            dropdownItemNoMatch: function(data) {
+                return `<div class='${this.settings.classNames.dropdownItem}' tabindex="0" role="option">
+                    No suggestion found for: <strong>${data.value}</strong>
+                </div>`
+            },
+            tag : function(tagData){
+               try {
+                    return `<tag title='${tagData.value}' contenteditable='false' spellcheck="false" class='tagify__tag ${tagData.class ? tagData.class : ""}' ${this.getAttributes(tagData)}>
+                        <x title='remove tag' class='tagify__tag__removeBtn'></x>
+                        <div>${tagData.icon}
+                            <span class='tagify__tag-text'>${tagData.value}</span>
+                        </div>
+                    </tag>`
+               }
+               catch(err){}
+            },
+            dropdownItem : function(tagData){
+                try {
+                    return `<div class='tagify__dropdown__item ${tagData.class ? tagData.class : ""}' tagifySuggestionIdx="${tagData.tagifySuggestionIdx}">${tagData.icon}
+                            <span>${tagData.value}</span>
+                        </div>`
+                }
+                catch(err){}
+              }
+            }
+        })
+
+// generate a random color (in HSL format)
+function getRandomColor(){
+    function rand(min, max) {
+        return min + Math.random() * (max - min);
+    }
+
+    var h = rand(1, 360)|0,
+        s = rand(40, 70)|0,
+        l = rand(65, 72)|0;
+
+    return 'hsl(' + h + ',' + s + '%,' + l + '%)';
+}
+
+function transformTag( tagData ){
+    tagData.style = "--tag-bg:" + getRandomColor();
+
+    if( tagData.value.toLowerCase() == 'shit' )
+       tagData.value = 's✲✲t'
+}
+
+tagify.on('invalid', function(e){
+    console.log(e, e.detail);
+})
+
+tagify.on('remove', function(e){
+    updateFilters()
+});
+
+tagify.on('add', function(e){
+    console.log( "original Input:", tagify.DOM.originalInput);
+    console.log( "original Input's value:", tagify.DOM.originalInput.value);
+    console.log( "event detail:", e.detail);
+    updateFilters()
+});
+
+function updateFilters() {
+    var values = $('[name=tags]').val()
+    if (values == ""){
+        grid.isotope({ filter: "*" });
+    } else {
+        values = JSON.parse(values)
+        filters = ""
+        $.each(values, function(i, e){
+          filters = filters + ".card-" + e['value']
+        })
+
+        // If no tags, do a reset
+        if (filters==""){
+            filters = "*"
+        }
+        console.log(filters)
+        grid.isotope({ filter: filters });
+    }
+}
+</script>
+{% endblock %}

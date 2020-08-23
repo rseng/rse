@@ -17,18 +17,10 @@ Research Software Encyclopedia: running on http://127.0.0.1:5000
 ```
 
 By default, it will deploy the dashboard to [localhost:5000](http://localhost:5000).
-The dashboard currently just displays the software repositories, criteria, and taxonomy
-categories:
+The dashboard will show a cards view of your repositories, with an option to filter
+by GitHub tags.
 
-![img/dashboard/prototype.png](../img/dashboard/prototype.png)
-
-and by clicking on a repository, you can see metadata for it. Here is a GitHub repository:
-
-![img/dashboard/github.png](../img/dashboard/github.png)
-
-and a GitLab repository:
-
-![img/dashboard/gitlab.png](../img/dashboard/gitlab.png)
+![img/dashboard/topics.png](../img/dashboard/topics.png)
 
 When the application starts, it will initialize the encyclopedia and database,
 so you should either be in the same directory as a `rse.ini` (the root of the
