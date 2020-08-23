@@ -22,6 +22,7 @@ from rse.main.criteria import get_criteria
 from rse.main.taxonomy import get_taxonomy
 from rse.logger.message import bot as message
 
+import json
 import logging
 import os
 import re
@@ -220,7 +221,14 @@ class Encyclopedia:
         topics = set()
         for name in self.list():
             repo = self.get(name[0])
-            topiclist = repo.data.get("topics", [])
+
+            # Relational needs to load from string
+            data = repo.data
+            if isinstance(data, str):
+                data = json.loads(data)
+
+            # Get the list of topics, optionally filter by a pattern
+            topiclist = data.get("topics", [])
             if pattern is not None:
                 topiclist = [t for t in topiclist if re.search(pattern, t)]
 
@@ -234,7 +242,7 @@ class Encyclopedia:
         repos = []
         for name in self.list():
             repo = self.get(name[0])
-            topiclist = repo.data.get("topics", [])
+            topiclist = repo.parser.get_metadata().get("topics", [])
             if set(topics).intersection(set(topiclist)):
                 repos.append(repo.uid)
 
