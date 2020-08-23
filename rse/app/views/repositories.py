@@ -12,36 +12,6 @@ from flask import render_template, request
 from rse.app.server import app
 from rse.defaults import RSE_URL_PREFIX, RSE_ISSUE_ENDPOINT
 
-## Topics View
-
-
-@app.route("%stopics" % RSE_URL_PREFIX)
-def topics_view(uid):
-
-    # Obtain the repository and load the data.
-    repo = app.client.get(uid)
-    repo.parser.load(repo.data)
-
-    if repo.parser.name == "github":
-        skips = ["owner", "organization", "node_id"]
-        return render_template(
-            "parsers/github.html",
-            repo=repo.load(),
-            database=app.client.database,
-            url_prefix=RSE_URL_PREFIX,
-            skips=skips,
-        )
-    elif repo.parser.name == "gitlab":
-        avatar = repo.parser.get_avatar()
-        return render_template(
-            "parsers/gitlab.html",
-            repo=repo.load(),
-            url_prefix=RSE_URL_PREFIX,
-            database=app.client.database,
-            avatar=avatar,
-        )
-
-
 ## Repository Views
 
 
