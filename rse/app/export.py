@@ -83,9 +83,10 @@ def export_web_static(export_dir, base_url, client, force=False):
                 "description": repo.description,
             }
         )
-        urls["%s%s%s" % (base_url, RSE_URL_PREFIX, repo_path)] = os.path.join(
-            repo_path, "index.html"
-        )
+        # Currently don't link to repository page
+        # urls["%s%s%s" % (base_url, RSE_URL_PREFIX, repo_path)] = os.path.join(
+        #    repo_path, "index.html"
+        # )
 
         # Static annotation endpoints
         for annotation_type in ["criteria", "taxonomy"]:
@@ -117,10 +118,11 @@ def export_web_static(export_dir, base_url, client, force=False):
         "api", "criteria", "index.json"
     )
 
-    # Add search
-    urls["%s%ssearch" % (base_url, RSE_URL_PREFIX)] = os.path.join(
-        "search", "index.html"
-    )
+    # Add search, criteria, and taxonomy
+    for term in ["search", "criteria", "taxonomy"]:
+        urls["%s%s%s" % (base_url, RSE_URL_PREFIX, term)] = os.path.join(
+            term, "index.html"
+        )
 
     for url, outfile in urls.items():
 

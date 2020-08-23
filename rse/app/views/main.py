@@ -17,15 +17,59 @@ import flask
 ## Main Index View
 
 
-@app.route("/")
+@app.route("/home")
 def index():
-
+    """this is the older version of home, not as useful to search"""
     return render_template(
         "home/filesystem-index.html",
         repos=app.client.list(),
         database=app.client.database,
         criteria=app.client.list_criteria(),
         entries=app.client.list_taxonomy(),
+        url_prefix=RSE_URL_PREFIX,
+        enable_annotate=not app.disable_annotate,
+    )
+
+
+@app.route("/")
+def topics_view():
+
+    topics = app.client.topics()
+    repos = []
+    for name in app.client.list():
+
+        # Obtain the repository and load the data.
+        repo = app.client.get(name[0])
+        repo.parser.load(repo.data)
+        repos.append(repo.load())
+
+    return render_template(
+        "topics/index.html",
+        topics=topics,
+        repos=repos,
+        database=app.client.database,
+        url_prefix=RSE_URL_PREFIX,
+        enable_annotate=not app.disable_annotate,
+    )
+
+
+@app.route("%staxonomy" % RSE_URL_PREFIX)
+def taxonomy_view():
+    return render_template(
+        "main/taxonomy.html",
+        database=app.client.database,
+        entries=app.client.list_taxonomy(),
+        url_prefix=RSE_URL_PREFIX,
+        enable_annotate=not app.disable_annotate,
+    )
+
+
+@app.route("%scriteria" % RSE_URL_PREFIX)
+def criteria_view():
+    return render_template(
+        "main/criteria.html",
+        database=app.client.database,
+        criteria=app.client.list_criteria(),
         url_prefix=RSE_URL_PREFIX,
         enable_annotate=not app.disable_annotate,
     )
