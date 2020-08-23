@@ -694,3 +694,19 @@ singularityhub
 web-scraping
 webscraping
 ```
+
+Finally, you can provide one or more topics, and find repositories that are labeled 
+as such:
+
+```bash
+$ rse topics --search science
+INFO:rse.main:Database: filesystem
+github/JuliaLang/julia
+github/MD-Studio/MDStudio
+github/MDAnalysis/mdanalysis
+github/SCM-NV/qmflows
+github/SCM-NV/qmflows-namd
+github/astropy/astropy
+github/hpcng/singularity
+github/recipy/recipy
+```
