@@ -24,7 +24,7 @@ your software database.
  - [Analyze](#analyze) a specific software repository, indicating a consensus/summary about criteria and taxonomy.
  - [Shell](#shell) into a Python shell to interact with an encyclopedia client.
  - [Start](#start) an interactive dashboard to see software and annotate crtieria and taxonomy membership.
-
+ - [Topics](#topics) list topics (tags) associated with a repository
 
 <a id="exists">
 ## Exists
@@ -612,3 +612,101 @@ $ rse start --port 8000 --host 0.0.0.0
 For each, you can specify a particular action (e.g., delete or re-run)
 or click on it for further details.  See the [dashboard]({{ site.baseurl }}/getting-started/dashboard/) 
 documentation page for more details.
+
+<a id="topics">
+
+## Topics
+
+As of version 0.0.29, the Research Software Encyclopedia has support for topics,
+primarily for the GitHub parser. If you have an older verison you can update your
+metadata with:
+
+```bash
+rse update github/<usename>/<repo>
+```
+
+or export all names to file, and bulk update
+
+```bash
+rse export repos.txt
+rse update --file repos.txt
+```
+
+Then you can ask to list topics, for example filtered by a pattern:
+
+```bash
+$ rse topics --pattern meta
+INFO:rse.main:Database: filesystem
+metadata-extraction
+metadata
+```
+
+If you want to see topics for a single repository, they are part of the standard
+metadata returned by get:
+
+```bash
+$ rse get github/<usename>/<repo>
+```
+
+If you want to list all unique topics:
+
+```bash
+$ rse topics
+INFO:rse.main:Database: filesystem
+cli
+client
+cloud-native
+container
+container-friends
+container-orchestration
+containers
+cosmology
+date
+date-parser
+datetime
+docker
+entity-extraction
+hdf5
+hpc
+html-parsing
+information-extraction
+linux
+management
+metadata
+metadata-extraction
+natural-language-processing
+nlp
+parallel
+particle
+portability
+portable
+registry
+reproducible
+reproducible-science
+rootless-containers
+science
+singularity
+singularity-compose
+singularity-container
+singularity-containers
+singularity-python
+singularityhub
+web-scraping
+webscraping
+```
+
+Finally, you can provide one or more topics, and find repositories that are labeled 
+as such:
+
+```bash
+$ rse topics --search science
+INFO:rse.main:Database: filesystem
+github/JuliaLang/julia
+github/MD-Studio/MDStudio
+github/MDAnalysis/mdanalysis
+github/SCM-NV/qmflows
+github/SCM-NV/qmflows-namd
+github/astropy/astropy
+github/hpcng/singularity
+github/recipy/recipy
+```

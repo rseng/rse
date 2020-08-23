@@ -29,7 +29,9 @@ def check_response(response):
         bot.error(f"Cannot find endpoint {response.url}.")
 
     elif response.status_code in [400, 401, 403]:
-        bot.error(f"Permission denied to query {response.url}")
+        bot.error(
+            f"Permission denied to query {response.url}: {response.status_code}, {response.reason}"
+        )
 
     else:
         bot.error(

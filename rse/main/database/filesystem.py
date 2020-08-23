@@ -136,7 +136,7 @@ class FileSystemDatabase(Database):
             if rewrite:
                 self.add(repo.uid)
             else:
-                repo.update()
+                repo.update(updates=data)
 
     def label(self, repo, key, value, force=False):
         """Update a repository with a specific key/value pair.
@@ -163,6 +163,12 @@ class FileSystemDatabase(Database):
         if self.exists(uid):
             repo = self.get(uid)
             os.remove(repo.filename)
+
+            # Remove the directory if no other repos
+            dirname = os.path.dirname(repo.filename)
+            if not os.listdir(dirname):
+                shutil.rmtree(dirname)
+
             bot.info(f"{uid} has been removed.")
             return True
 
