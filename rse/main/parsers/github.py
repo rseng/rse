@@ -109,4 +109,14 @@ class GitHubParser(ParserBase):
         for key in ["html_url", "avatar_url", "login", "type"]:
             self.data["owner"][key] = data["owner"][key]
 
+        # Also try to get topics
+        headers.update({"Accept": "application/vnd.github.mercy-preview+json"})
+        url = "%s/topics" % url
+        response = requests.get(url, headers=headers)
+
+        # Successful query!
+        topics = check_response(response)
+        if topics is not None:
+            self.data["topics"] = topics.get("names", [])
+
         return self.data

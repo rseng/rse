@@ -219,6 +219,23 @@ def get_parser():
         action="store_true",
     )
 
+    # List topics (global) or matching pattern
+    topics = subparsers.add_parser(
+        "topics", help="List software topics (GitHub support only)"
+    )
+    topics.add_argument(
+        "--pattern",
+        help="filter topics to a particular pattern",
+        type=str,
+        default=None,
+    )
+    topics.add_argument(
+        "--search",
+        help="find repositories based on a list of topics",
+        type=str,
+        nargs="*",
+    )
+
     # List repos and print to terminal
     ls = subparsers.add_parser("ls", help="List software")
     ls.add_argument(
@@ -325,6 +342,7 @@ def get_parser():
         scrape,
         start,
         summary,
+        topics,
         update,
     ]:
         command.add_argument(
@@ -452,6 +470,8 @@ def main():
         from .shell import main
     if args.command == "start":
         from .start import main
+    if args.command == "topics":
+        from .topics import main
 
     # Pass on to the correct parser
     main(args=args, extra=extra)

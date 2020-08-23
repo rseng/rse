@@ -212,6 +212,34 @@ class Encyclopedia:
             return results
         bot.info(f"No results matching {query}")
 
+    # Topics
+
+    def topics(self, pattern=None):
+        """return a list of unique topics, optionally matching a pattern
+        """
+        topics = set()
+        for name in self.list():
+            repo = self.get(name[0])
+            topiclist = repo.data.get("topics", [])
+            if pattern is not None:
+                topiclist = [t for t in topiclist if re.search(pattern, t)]
+
+            # Add to topics set
+            [topics.add(t) for t in topiclist]
+        return sorted(list(topics))
+
+    def repos_by_topics(self, topics):
+        """return a list of unique topics, optionally matching a pattern
+        """
+        repos = []
+        for name in self.list():
+            repo = self.get(name[0])
+            topiclist = repo.data.get("topics", [])
+            if set(topics).intersection(set(topiclist)):
+                repos.append(repo.uid)
+
+        return sorted(repos)
+
     # Save Handlers
 
     def save_criteria(self, repo):

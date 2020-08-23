@@ -48,6 +48,18 @@ echo "#### Testing [filesystem] rse ls"""
 runTest 0 $output rse --config_file $config/rse.ini ls
 
 echo
+echo "#### Testing [filesystem] rse topics"""
+runTest 0 $output rse --config_file $config/rse.ini topics
+
+echo
+echo "#### Testing [filesystem] rse topics with pattern"""
+runTest 0 $output rse --config_file $config/rse.ini topics --pattern singularity
+
+echo
+echo "#### Testing [filesystem] rse repos from topics"""
+runTest 0 $output rse --config_file $config/rse.ini topics --search singularity
+
+echo
 echo "#### Testing [filesystem] rse export"""
 runTest 0 $output rse --config_file $config/rse.ini export $tmpdir/filesystem-repos.txt
 runTest 0 $output ls $tmpdir/filesystem-repos.txt
@@ -91,6 +103,18 @@ runTest 0 $output rse --config_file $config/rse.ini add github.com/singularityhu
 echo
 echo "#### Testing [sqlite] rse ls"""
 runTest 0 $output rse --config_file $config/rse.ini ls
+
+echo
+echo "#### Testing [sqlite] rse topics"""
+runTest 0 $output rse --config_file $config/rse.ini topics
+
+echo
+echo "#### Testing [sqlite] rse topics with pattern"""
+runTest 0 $output rse --config_file $config/rse.ini topics --pattern singularity
+
+echo
+echo "#### Testing [sqlite] rse repos from topics"""
+runTest 0 $output rse --config_file $config/rse.ini topics --search singularity
 
 echo
 echo "#### Testing [sqlite] rse add (bulk)"""
