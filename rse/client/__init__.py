@@ -16,6 +16,7 @@ import rse
 import argparse
 import sys
 import logging
+import os
 
 
 def get_parser():
@@ -49,7 +50,10 @@ def get_parser():
 
     description = "actions for rse"
     subparsers = parser.add_subparsers(
-        help="rse actions", title="actions", description=description, dest="command",
+        help="rse actions",
+        title="actions",
+        description=description,
+        dest="command",
     )
 
     # print version and exit
@@ -106,7 +110,10 @@ def get_parser():
         "init", help="Add an rse.ini to the present working directory."
     )
     init.add_argument(
-        "path", help="Path to generate rse.ini file", nargs="?", default=".",
+        "path",
+        help="Path to generate rse.ini file",
+        nargs="?",
+        default=".",
     )
 
     # Config
@@ -173,7 +180,9 @@ def get_parser():
         "analyze", help="View metrics for a specific repository."
     )
     analyze.add_argument(
-        "repo", help="Software repository to show", default=None,
+        "repo",
+        help="Software repository to show",
+        default=None,
     )
     analyze.add_argument(
         "--ct",
@@ -244,13 +253,17 @@ def get_parser():
 
     # Search for software
     search = subparsers.add_parser(
-        "search", help="Search for a piece of research software",
+        "search",
+        help="Search for a piece of research software",
     )
     search.add_argument("query", nargs="*")
+    search.add_argument("--taxonomy", nargs="*")
+    search.add_argument("--criteria", nargs="*")
 
     # Scrape for new repos
     scrape = subparsers.add_parser(
-        "scrape", help="Add new software repositories from a resource.",
+        "scrape",
+        help="Add new software repositories from a resource.",
     )
     scrape.add_argument("scraper_name", nargs=1)
     scrape.add_argument("query", nargs="?")
@@ -423,6 +436,8 @@ def main():
     args, extra = parser.parse_known_args()
 
     # Set the logging level
+    os.putenv("RSE_LOG_LEVEL", args.log_level)
+    RSE_LOG_LEVEL = args.log_level
     logging.basicConfig(level=getattr(logging, args.log_level))
     bot = logging.getLogger("rse.client")
     bot.setLevel(getattr(logging, args.log_level))

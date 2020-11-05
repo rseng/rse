@@ -358,6 +358,64 @@ INFO:rse.main:Database: filesystem
 1  github/singularityhub/sregistry
 ```
 
+For a filesystem database, you can also search across taxonomy and/or criteria items:
+
+```bash
+$ rse search --taxonomy package
+RSE-taxonomy-package-management
+1  github/easybuilders/easybuild
+2  github/spack/spack
+
+$ rse search --criteria research
+RSE-research-intention
+1  github/AA-ALERT/AstroData
+2  github/fair-software/howfairis
+3  github/BrianAronson/birankr
+4  github/3D-e-Chem/knime-sstea
+5  github/davidebolo1993/TRiCoLOR
+6  github/AA-ALERT/AMBER
+7  gitlab/davidtourigny/dynamic-fba
+8  github/Sulstice/cocktail-shaker
+9  github/spack/spack
+10 github/snakemake/snakemake
+11 github/potree/PotreeConverter
+12 github/Effective-Quadratures/Effective-Quadratures
+13 github/3D-e-Chem/knime-pharmacophore
+14 github/sunpy/sunpy
+15 github/AA-ALERT/frbcatdb
+16 github/AA-ALERT/frbcat-web
+17 github/Parsl/parsl
+18 github/JuliaOpt/JuMP.jl
+19 github/AA-ALERT/Dedispersion
+20 github/scikit-image/scikit-image
+21 github/3D-e-Chem/sygma
+22 github/nextflow-io/nextflow
+23 gitlab/LouisLab/PiVR
+24 github/3D-e-Chem/knime-gpcrdb
+25 gitlab/cosmograil/PyCS3
+26 github/sjvrijn/mf2
+27 github/KVSlab/turtleFSI
+28 github/ropensci/chirps
+29 gitlab/ampere2/metalwalls
+```
+
+The searches are independent, meaning that you might see the same repository in two
+results listings if it has more than one match for a given taxonomy or criteria item.
+The same is true for adding a search term at the onset:
+
+```python
+$ rse search singularity --taxonomy package
+singularity
+1  github/hpcng/singularity
+2  github/singularityhub/singularity-compose
+3  github/singularityhub/sregistry
+4  github/eWaterCycle/setup-singularity
+
+RSE-taxonomy-package-management
+1  github/spack/spack
+2  github/easybuilders/easybuild
+```
+
 <a id="summary">
 ## Summary
 
@@ -695,7 +753,7 @@ web-scraping
 webscraping
 ```
 
-Finally, you can provide one or more topics, and find repositories that are labeled 
+Finally, you can search for one or more topics, and find repositories that are labeled 
 as such:
 
 ```bash

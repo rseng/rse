@@ -295,13 +295,14 @@ class RseMessage:
 
     # Terminal ------------------------------------------
 
-    def table(self, rows, col_width=2):
+    def table(self, rows, col_width=2, labels=None):
         """table will print a table of entries. If the rows is
         a dictionary, the keys are interpreted as column names. if
         not, a numbered list is used.
         """
+        if not labels:
+            labels = [str(x) for x in range(1, len(rows) + 1)]
 
-        labels = [str(x) for x in range(1, len(rows) + 1)]
         if isinstance(rows, dict):
             labels = list(rows.keys())
             rows = list(rows.values())

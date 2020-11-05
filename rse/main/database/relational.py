@@ -240,19 +240,26 @@ class RelationalDatabase(Database):
             rows.append([repo.uid])
         return rows
 
-    def search(self, query):
+    def search(self, query, taxonomy=None, criteria=None):
         """Search across the database for a particular query."""
         from rse.main.database.models import SoftwareRepository
 
-        # Ensure that query can be part of a larger string
-        query = "%" + query + "%"
+        # We will return a lookup of results
+        results = {}
 
-        query = self.session.query(SoftwareRepository).filter(
+        # Required to have a query
+        if not query:
+            return results
+
+        # Ensure that query can be part of a larger string
+        expression = "%" + query + "%"
+
+        result = self.session.query(SoftwareRepository).filter(
             or_(
-                SoftwareRepository.data.ilike(query),
-                SoftwareRepository.uid.ilike(query),
+                SoftwareRepository.data.ilike(expression),
+                SoftwareRepository.uid.ilike(expression),
             )
         )
         # list of tuples, (uid, datetime, executor]
-        results = self.session.execute(query).fetchall()
-        return [[r[0], str(r[2]), str(r[1])] for r in results]
+        results = self.session.execute(result).fetchall()
+        return {query: [[r[0], str(r[2]), str(r[1])] for r in results]}
