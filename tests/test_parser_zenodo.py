@@ -15,8 +15,7 @@ import pytest
 
 
 def test_parser_zenodo(tmp_path):
-    """Test the zenodo parser.
-    """
+    """Test the zenodo parser."""
     from rse.main.parsers import ZenodoParser
 
     for repo in [

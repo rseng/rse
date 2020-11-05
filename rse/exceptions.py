@@ -10,8 +10,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
 class MissingEnvironmentVariable(RuntimeError):
-    """Thrown if a required environment variable is not provided.
-    """
+    """Thrown if a required environment variable is not provided."""
 
     def __init__(self, varname, *args, **kwargs):
         super(MissingEnvironmentVariable, self).__init__(*args, **kwargs)
@@ -22,8 +21,7 @@ class MissingEnvironmentVariable(RuntimeError):
 
 
 class DirectoryNotFoundError(FileNotFoundError):
-    """Thrown if a directory is not found
-    """
+    """Thrown if a directory is not found"""
 
     def __init__(self, dirname, reason, *args, **kwargs):
         super(DirectoryNotFoundError, self).__init__(*args, **kwargs)
@@ -35,8 +33,7 @@ class DirectoryNotFoundError(FileNotFoundError):
 
 
 class MissingDatabaseString(RuntimeError):
-    """Thrown if a database string is required and not provided
-    """
+    """Thrown if a database string is required and not provided"""
 
     def __init__(self, reason=None, *args, **kwargs):
         super(MissingDatabaseString, self).__init__(*args, **kwargs)
@@ -50,8 +47,7 @@ class MissingDatabaseString(RuntimeError):
 
 
 class DatabaseStringFormatError(RuntimeError):
-    """Thrown if database prefix is not supported
-    """
+    """Thrown if database prefix is not supported"""
 
     def __str__(self):
         return (
@@ -63,8 +59,7 @@ class DatabaseStringFormatError(RuntimeError):
 
 
 class RepoError(RuntimeError):
-    """Abstract base class for any kind of RepoError.
-    """
+    """Abstract base class for any kind of RepoError."""
 
     def __init__(self, uid=None, reason=None, *args, **kwargs):
         super(RepoError, self).__init__(*args, **kwargs)
@@ -76,8 +71,7 @@ class RepoError(RuntimeError):
 
 
 class MultipleReposExistError(RepoError):
-    """Thrown if multiple repos exist.
-    """
+    """Thrown if multiple repos exist."""
 
     def __init__(self, uid, *args, **kwargs):
         reason = "More than one repository found for"
@@ -87,8 +81,7 @@ class MultipleReposExistError(RepoError):
 
 
 class RepoNotFoundError(RepoError):
-    """Thrown if a repo does not exist (for a remote)
-    """
+    """Thrown if a repo does not exist (for a remote)"""
 
     def __init__(self, uid, *args, **kwargs):
         reason = "Cannot find repo"
@@ -96,8 +89,7 @@ class RepoNotFoundError(RepoError):
 
 
 class NoReposError(RepoError):
-    """Thrown if repos are requested, but there are none
-    """
+    """Thrown if repos are requested, but there are none"""
 
     def __init__(self, *args, **kwargs):
         reason = "There are no repos in the database."
@@ -105,8 +97,7 @@ class NoReposError(RepoError):
 
 
 class RepoMetadataExistError(RepoError):
-    """Thrown if a metadata value (label) already exists.
-    """
+    """Thrown if a metadata value (label) already exists."""
 
     def __init__(self, uid, key, *args, **kwargs):
         reason = "Metadata value %s already is defined." % key

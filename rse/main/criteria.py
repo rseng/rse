@@ -18,8 +18,7 @@ parser_regex = "github"
 
 
 def get_criteria():
-    """Get criteria from the default endpoint.
-    """
+    """Get criteria from the default endpoint."""
     response = requests.get(f"{RSE_API_ENDPOINT}/criteria/")
     if response.status_code != 200:
         sys.exit(f"Problem with getting {RSE_API_ENDPOINT}/criteria/")

@@ -12,39 +12,38 @@ import os
 
 
 class ScraperBase:
-    """A scraper base exists get new records from a resource.
-    """
+    """A scraper base exists get new records from a resource."""
 
     name = "base"
 
     def __init__(self, query=None):
         """create a scraper. if a query term is provided, do search. Otherwise
-           do a query for latest.
+        do a query for latest.
         """
         self.query = query
         self.results = []
 
     def latest(self, paginate=True, delay=0.0):
         """The scraper should expose a function to populate self.results with
-           some number of latest entries.
+        some number of latest entries.
         """
         raise NotImplementedError
 
     def search(self, paginate=True, delay=0.0):
         """The scraper should expose a function to populate self.results with
-           a listing based on matching a search criteria.
+        a listing based on matching a search criteria.
         """
         raise NotImplementedError
 
     def create(self, uri, **kwargs):
         """After a scrape (whether we obtain latest or a search query) we
-           run create to create software repositories based on results.
+        run create to create software repositories based on results.
         """
         raise NotImplementedError
 
     def get_setting(self, key, default=None):
         """Get a setting, meaning that we first check the environment, then
-           the config file, and then (if provided) a default.
+        the config file, and then (if provided) a default.
         """
         # First preference to environment
         envar = ("RSE_%s_%s" % (self.name, key)).upper()

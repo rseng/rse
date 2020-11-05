@@ -16,8 +16,8 @@ import os
 
 
 def get_lookup():
-    """get version by way of version file, returns a 
-       lookup dictionary with several global variables
+    """get version by way of version file, returns a
+    lookup dictionary with several global variables
     """
     lookup = dict()
     version_file = os.path.join("rse", "version.py")
@@ -28,7 +28,7 @@ def get_lookup():
 
 def get_reqs(lookup=None, key="INSTALL_REQUIRES"):
     """get requirements, mean reading in requirements and versions from
-       the lookup obtained with get_lookup
+    the lookup obtained with get_lookup
     """
     if lookup == None:
         lookup = get_lookup()

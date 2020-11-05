@@ -16,8 +16,7 @@ import re
 
 
 def get_named_scraper(name, config=None):
-    """get a named scraper, meaning determining based on name
-    """
+    """get a named scraper, meaning determining based on name"""
     scraper = None
     if re.search("(joss|journal of open source software)", name, re.IGNORECASE):
         scraper = JossScraper()

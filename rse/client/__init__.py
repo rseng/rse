@@ -401,14 +401,13 @@ def positive_int_type(arg):
 
 
 def main():
-    """main entrypoint for rse
-    """
+    """main entrypoint for rse"""
 
     parser = get_parser()
 
     def help(return_code=0):
-        """print help, including the software version and active client 
-           and exit with return code.
+        """print help, including the software version and active client
+        and exit with return code.
         """
         version = rse.__version__
 
