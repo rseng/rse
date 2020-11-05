@@ -62,7 +62,7 @@ class Encyclopedia:
             or "filesystem"
         )
         database_string = self.config.get("DEFAULT", "databaseconnect")
-        bot.info("Database: %s" % self.database)
+        bot.debug("Database: %s" % self.database)
 
         # Supported database options
         valid = ("sqlite", "postgresql", "mysql+pymysql", "filesystem")
@@ -196,12 +196,12 @@ class Encyclopedia:
         except RepoNotFoundError:
             bot.error(f"{uid} does not exist.")
 
-    def search(self, query):
+    def search(self, query, taxonomy=None, criteria=None):
         """Search across commands and general metadata for a string of interest.
         We use regular expressions (re.search) so they are supported.
         Search is only available for non-filesystem databases.
         """
-        results = self.db.search(query)
+        results = self.db.search(query, taxonomy=taxonomy, criteria=criteria)
         if results:
             return results
         bot.info(f"No results matching {query}")

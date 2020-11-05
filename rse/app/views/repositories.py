@@ -78,7 +78,12 @@ def annotate_criteria():
         if last is not None and last.uid != repo.uid:
             break
         last = repo
-        annotation_sets.append((repo, criteria,))
+        annotation_sets.append(
+            (
+                repo,
+                criteria,
+            )
+        )
 
     return render_template(
         "annotate/criteria.html",

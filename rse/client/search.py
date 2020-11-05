@@ -17,8 +17,15 @@ def main(args, extra):
 
     enc = Encyclopedia(config_file=args.config_file, database=args.database)
     query = " ".join(args.query).strip()
-    if not query:
+
+    # We can search taxonomy, criteria, or both
+    taxonomy = args.taxonomy or []
+    criteria = args.criteria or []
+    if not query and not taxonomy and not criteria:
         sys.exit("Please provide a query to search for.")
-    results = enc.search(query)
+    results = enc.search(query, taxonomy=taxonomy, criteria=criteria)
     if results:
-        bot.table(results)
+        for key, listing in results.items():
+            bot.info(key)
+            bot.table(listing)
+            bot.newline()
