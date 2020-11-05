@@ -11,9 +11,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 def init_db(database, config_dir=None, database_string="", config=None):
     """Initialize the database, meaning a base client and appropriate functions
-       to save, or generate a unique ID based on the backend being used. Each
-       client has it's own init to check for a connection (or filesystem 
-       path existence) and then functions to interact with entities.
+    to save, or generate a unique ID based on the backend being used. Each
+    client has it's own init to check for a connection (or filesystem
+    path existence) and then functions to interact with entities.
     """
     # Case 1: Filesystem database saves to ./database
     if database == "filesystem":

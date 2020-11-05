@@ -18,8 +18,7 @@ parser_regex = "github"
 
 
 def get_taxonomy():
-    """Get taxonomy from the default endpoint.
-    """
+    """Get taxonomy from the default endpoint."""
     response = requests.get(f"{RSE_API_ENDPOINT}/taxonomy/")
     if response.status_code != 200:
         sys.exit(f"Problem with getting {RSE_API_ENDPOINT}/taxonomy/")

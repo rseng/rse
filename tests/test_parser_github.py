@@ -15,8 +15,7 @@ import pytest
 
 
 def test_parser_github(tmp_path):
-    """Test the github parser.
-    """
+    """Test the github parser."""
     from rse.main.parsers import GitHubParser
 
     for repo in [

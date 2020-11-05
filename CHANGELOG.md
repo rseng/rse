@@ -14,6 +14,7 @@ and **Merged pull requests**. Critical items to know are:
 The versions coincide with releases on pip.
 
 ## [0.0.x](https://github.com/rseng/rse/tree/master) (0.0.x)
+ - ipython should not be required for shell (0.0.31)
  - updating annotation interface to be better searched (0.0.30)
  - adding topics to GitHub request (0.0.29)
  - scraper should not fail on invalid URL (0.0.28)

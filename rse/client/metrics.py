@@ -16,8 +16,8 @@ from rse.logger.message import bot
 
 def analyze(args, extra):
     """analyze is intended to provide calculations for repos, by default including
-       all taxonomy categories and criteria. For a custom set, the user should
-       interact with the client directly.
+    all taxonomy categories and criteria. For a custom set, the user should
+    interact with the client directly.
     """
     client = Encyclopedia(config_file=args.config_file, database=args.database)
     result = client.analyze(repo=args.repo, cthresh=args.cthresh, tthresh=args.tthresh)

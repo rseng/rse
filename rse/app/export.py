@@ -25,19 +25,19 @@ bot = logging.getLogger("rse.app.export")
 
 def export_web_static(export_dir, base_url, client, force=False):
     """Export a running web interface to a folder. If the folder exists, the
-       user must use force. This should be run via:
-           rse export --type static-web [export_dir]
-       If the user manually starts the server, the user needs to do:
-           export RSE_DISABLE_ANNOTATE=True before the server is started
-       to disable the annotation interface button. This will be fixed
-       in a future PR to have an interface that submits an issue to do
-       an annotation, but this needs to be developed first.
+    user must use force. This should be run via:
+        rse export --type static-web [export_dir]
+    If the user manually starts the server, the user needs to do:
+        export RSE_DISABLE_ANNOTATE=True before the server is started
+    to disable the annotation interface button. This will be fixed
+    in a future PR to have an interface that submits an issue to do
+    an annotation, but this needs to be developed first.
 
-       Arguments:
-        - export_dir (str)      : the path to an export directory
-        - base_url (str)        : the base url of the server, including port
-        - client (Encyclopedia) : the encyclopedia to use
-        - force (bool)          : if directory exists, overwrite
+    Arguments:
+     - export_dir (str)      : the path to an export directory
+     - base_url (str)        : the base url of the server, including port
+     - client (Encyclopedia) : the encyclopedia to use
+     - force (bool)          : if directory exists, overwrite
     """
     print(f"Starting export for {base_url}")
     time.sleep(2)

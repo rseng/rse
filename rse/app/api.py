@@ -16,7 +16,7 @@ from rse.defaults import RSE_URL_PREFIX, RSE_HOST
 
 def list_repos(parser=None):
     """A shared function to list one or more repos, optionally for a parser,
-       and return a json list to serialize to the api view
+    and return a json list to serialize to the api view
     """
     repos = []
     url = (RSE_HOST or flask.request.host_url) + RSE_URL_PREFIX
@@ -32,16 +32,14 @@ def list_repos(parser=None):
 
 
 class apiList(Resource):
-    """display all tasks
-    """
+    """display all tasks"""
 
     def get(self):
         return list_repos()
 
 
 class apiListParser(Resource):
-    """display all tasks for an executor
-    """
+    """display all tasks for an executor"""
 
     def get(self, parser):
         return list_repos(parser)
@@ -58,8 +56,7 @@ class apiGet(Resource):
 
 
 class apiEndpoints(Resource):
-    """show all API endpoints
-    """
+    """show all API endpoints"""
 
     def get(self):
         url = (RSE_HOST or flask.request.host_url) + RSE_URL_PREFIX
@@ -76,16 +73,14 @@ class apiEndpoints(Resource):
 
 
 class apiGetCriteria(Resource):
-    """display the listing of criteria
-    """
+    """display the listing of criteria"""
 
     def get(self):
         return app.client.list_criteria()
 
 
 class apiGetTaxonomy(Resource):
-    """display the flattened taxonomy.
-    """
+    """display the flattened taxonomy."""
 
     def get(self):
         return app.client.list_taxonomy()

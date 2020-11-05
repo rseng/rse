@@ -16,8 +16,7 @@ import pytest
 
 @pytest.mark.parametrize("database", ["filesystem", "sqlite"])
 def test_parsers_filesystem(tmp_path, database):
-    """test each parser with the filesystem database.
-    """
+    """test each parser with the filesystem database."""
     from rse.main import Encyclopedia
 
     config_dir = os.path.join(str(tmp_path), "software")
@@ -52,8 +51,7 @@ def test_parsers_filesystem(tmp_path, database):
 
 @pytest.mark.parametrize("database", ["filesystem", "sqlite"])
 def test_filesystem(tmp_path, database):
-    """Test loading and using a queue with the filesystem database.
-    """
+    """Test loading and using a queue with the filesystem database."""
     from rse.main import Encyclopedia
 
     config_dir = os.path.join(str(tmp_path), "software")

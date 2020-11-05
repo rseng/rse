@@ -37,10 +37,10 @@ def start(
     port=5000, debug=True, client=None, host=None, level="DEBUG", disable_annotate=False
 ):
     """Start can be invoked when this file is executed (see __main__ below)
-       or used as a function to programmatically start a server. If started
-       via rse start, we can add the encyclopedia client to the server. 
-       If you want to change the hostname, set the environment variable 
-       RSE_HOSTNAME or set on command line with rse start.
+    or used as a function to programmatically start a server. If started
+    via rse start, we can add the encyclopedia client to the server.
+    If you want to change the hostname, set the environment variable
+    RSE_HOSTNAME or set on command line with rse start.
     """
     host = host or RSE_HOSTNAME
     bot.info(f"Research Software Encyclopedia: running on http://{host}:{port}")

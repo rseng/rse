@@ -22,8 +22,7 @@ Base = declarative_base()
 
 
 class SoftwareRepository(Base):
-    """A software repository.
-    """
+    """A software repository."""
 
     __tablename__ = "software_repository"
     uid = Column(String(150), primary_key=True)
@@ -101,8 +100,7 @@ class SoftwareRepository(Base):
     # Annotation
 
     def has_criteria_annotation(self, uid, username):
-        """Determine if a repository has been annotated by a user.
-        """
+        """Determine if a repository has been annotated by a user."""
         if not self.criteria:
             return False
         criteria = json.loads(self.criteria)
@@ -113,8 +111,7 @@ class SoftwareRepository(Base):
         return True
 
     def has_taxonomy_annotation(self, username):
-        """Determine if a repository has been annotated by a user.
-        """
+        """Determine if a repository has been annotated by a user."""
         if not self.taxonomy:
             return False
         taxonomy = json.loads(self.taxonomy)

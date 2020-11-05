@@ -31,24 +31,24 @@ class JossScraper(ScraperBase):
 
     def latest(self, paginate=False, delay=0.0):
         """The scraper should expose a function to populate self.results with
-           some number of latest entries. Unlike a search, a latest scraper does
-           not by default paginate. The user needs to interact directly with
-           the Python client to do a scrape for all papers in JoSS.
+        some number of latest entries. Unlike a search, a latest scraper does
+        not by default paginate. The user needs to interact directly with
+        the Python client to do a scrape for all papers in JoSS.
         """
         url = "https://joss.theoj.org/papers/published.atom"
         return self.scrape(url, paginate=paginate, delay=delay)
 
     def search(self, query, paginate=True, delay=0.0):
         """The scraper should expose a function to populate self.results with
-           a listing based on matching a search criteria.
+        a listing based on matching a search criteria.
         """
         url = "https://joss.theoj.org/papers/search?q=%s" % query
         return self.scrape(url, paginate=paginate, delay=delay)
 
     def scrape(self, url, paginate=False, delay=None):
         """A shared function to scrape a set of repositories. Since the JoSS
-           pages for a search and the base are the same, we can use a shared
-           function.
+        pages for a search and the base are the same, we can use a shared
+        function.
         """
         try:
             from bs4 import BeautifulSoup
@@ -97,7 +97,7 @@ class JossScraper(ScraperBase):
 
     def create(self, database=None, config_file=None):
         """After a scrape (whether we obtain latest or a search query) we
-           run create to create software repositories based on results.
+        run create to create software repositories based on results.
         """
         from rse.main import Encyclopedia
 

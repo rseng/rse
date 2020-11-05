@@ -29,24 +29,24 @@ class BioToolsScraper(ScraperBase):
         super().__init__(query)
 
     def latest(self, paginate=False, delay=0.0):
-        """populate self.results with some number of latest entries. Unlike 
-           a search, a latest scraper does not by default paginate. The user 
-           needs to interact directly with the Python client to scrape all.
+        """populate self.results with some number of latest entries. Unlike
+        a search, a latest scraper does not by default paginate. The user
+        needs to interact directly with the Python client to scrape all.
         """
         url = "https://bio.tools/api/tool/?format=json"
         return self.scrape(url, paginate=paginate, delay=delay)
 
     def search(self, query, paginate=True, delay=0.0):
         """populate self.results with a listing based on matching a search criteria.
-           we search the description.
+        we search the description.
         """
         url = 'https://bio.tools/api/t/?description="%s"&format=json' % query
         return self.scrape(url, paginate=paginate, delay=delay)
 
     def scrape(self, url, paginate=False, delay=None):
         """A shared function to scrape a set of repositories. Since the JoSS
-           pages for a search and the base are the same, we can use a shared
-           function.
+        pages for a search and the base are the same, we can use a shared
+        function.
         """
         # Handle pagination
         original_url = url
@@ -97,7 +97,7 @@ class BioToolsScraper(ScraperBase):
 
     def create(self, database=None, config_file=None):
         """After a scrape (whether we obtain latest or a search query) we
-           run create to create software repositories based on results.
+        run create to create software repositories based on results.
         """
         from rse.main import Encyclopedia
 

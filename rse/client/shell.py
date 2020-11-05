@@ -10,6 +10,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from rse.main import Encyclopedia
 from rse.defaults import RSE_SHELL
+import sys
 
 
 def main(args, extra):
@@ -20,16 +21,21 @@ def main(args, extra):
     # Provide shell if available
     shell = RSE_SHELL.lower()
     if shell in lookup:
-        return lookup[shell](args)
+        try:
+            return lookup[shell](args)
+        except ImportError:
+            pass
 
     # Otherwise present order of liklihood to have on system
     for shell in shells:
-        return lookup[shell](args)
+        try:
+            return lookup[shell](args)
+        except ImportError:
+            pass
 
 
 def ipython(args):
-    """give the user an ipython shell, optionally with an endpoint of choice.
-    """
+    """give the user an ipython shell, optionally with an endpoint of choice."""
     client = Encyclopedia(config_file=args.config_file)
     assert client
     from IPython import embed

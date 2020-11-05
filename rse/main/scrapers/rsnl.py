@@ -28,15 +28,15 @@ class RSNLScraper(ScraperBase):
 
     def latest(self, paginate=False, delay=0.0):
         """The scraper should expose a function to populate self.results with
-           some number of latest entries. Unlike a search, a latest scraper does
-           not by default paginate.
+        some number of latest entries. Unlike a search, a latest scraper does
+        not by default paginate.
         """
         url = "https://research-software.nl/api/software"
         return self.scrape(url, delay=delay)
 
     def search(self, query, paginate=True, delay=0.0):
         """The scraper should expose a function to populate self.results with
-           a listing based on matching a search criteria.
+        a listing based on matching a search criteria.
         """
         # Haven't figured out a way to search
         bot.warning(
@@ -46,8 +46,8 @@ class RSNLScraper(ScraperBase):
 
     def scrape(self, url, paginate=False, delay=0.0):
         """A shared function to scrape a set of repositories. Since the JoSS
-           pages for a search and the base are the same, we can use a shared
-           function.
+        pages for a search and the base are the same, we can use a shared
+        function.
         """
         response = requests.get(url, headers={"User-Agent": get_user_agent()})
         data = check_response(response) or []
@@ -71,7 +71,7 @@ class RSNLScraper(ScraperBase):
 
     def create(self, database=None, config_file=None):
         """After a scrape (whether we obtain latest or a search query) we
-           run create to create software repositories based on results.
+        run create to create software repositories based on results.
         """
         from rse.main import Encyclopedia
 

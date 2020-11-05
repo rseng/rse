@@ -20,14 +20,14 @@ bot = logging.getLogger("rse.defaults")
 
 
 def getenv(variable_key, default=None, required=False, silent=True):
-    """ attempt to get an environment variable. If the variable
-        is not found, None is returned.
+    """attempt to get an environment variable. If the variable
+    is not found, None is returned.
 
-        Arguments:
+    Arguments:
 
-         - variable_key (str) : the variable name
-         - required (bool) : exit with error if not found
-         - silent (bool) : Do not print debugging information
+     - variable_key (str) : the variable name
+     - required (bool) : exit with error if not found
+     - silent (bool) : Do not print debugging information
     """
     variable = os.environ.get(variable_key, default)
     if variable is None and required:

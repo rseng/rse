@@ -11,9 +11,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 def confirm(prompt, response=False):
     """Used to prompt the user for a yes or no response, and returns True/False.
-       This means we can use it like:
-       if confirm("Would you like to do the thing?"):
-          ....
+    This means we can use it like:
+    if confirm("Would you like to do the thing?"):
+       ....
     """
     prompt = "%s [%s]|%s: " % (prompt, "n", "y")
     while True:
@@ -31,13 +31,13 @@ def confirm(prompt, response=False):
 
 def choice_prompt(prompt, choices, choice_prefix=None, multiple=False):
     """Ask the user for a prompt, and only return when one of the requested
-       options is provided.
+    options is provided.
 
-       Parameters
-       ==========
-       prompt: the prompt to ask the user
-       choices: a list of choices that are valid.   
-       multiple: allow multiple responses (separated by spaces)
+    Parameters
+    ==========
+    prompt: the prompt to ask the user
+    choices: a list of choices that are valid.
+    multiple: allow multiple responses (separated by spaces)
     """
     choice = None
     print(prompt)

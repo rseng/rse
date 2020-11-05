@@ -26,8 +26,7 @@ class ZenodoParser(ParserBase):
         super().__init__(uid)
 
     def _set_uid(self, uid):
-        """Given some kind of Zenodo uri, parse it
-        """
+        """Given some kind of Zenodo uri, parse it"""
         match = re.search(self.matchstring, uid)
         if not match:
             raise RuntimeError(f"{uid} does match a Zenodo DOI.")
@@ -35,37 +34,35 @@ class ZenodoParser(ParserBase):
 
     def load_secrets(self):
         """load secrets, namely the access token, check if required and
-           exit if not provided
+        exit if not provided
         """
         self.token = self.get_setting("TOKEN")
 
     def get_url(self, data=None):
         """a common function for a parser to return the html url for the
-           upper level of metadata
+        upper level of metadata
         """
         data = data or self.data
         return data.get("links", {}).get("html")
 
     def get_avatar(self, data=None):
-        """a common function for a parser to return an image.
-        """
+        """a common function for a parser to return an image."""
         data = data or self.data
         return data.get("links", {}).get("badge")
 
     def get_description(self, data=None):
-        """a common function for a parser to return a description.
-        """
+        """a common function for a parser to return a description."""
         data = data or self.data
         return data.get("metadata", {}).get("description")
 
     def get_metadata(self, uri=None, require_repo=True):
         """Retrieve repository metadata. The common metadata (timestamp) is
-           added by the software repository parser, and here we need to
-           ensure that the url field is populated with a correct url.
+        added by the software repository parser, and here we need to
+        ensure that the url field is populated with a correct url.
 
-           Arguments:
-           uri (str) : a repository uri string to override one currently set
-           require_repo (bool) : require a repository to parse.
+        Arguments:
+        uri (str) : a repository uri string to override one currently set
+        require_repo (bool) : require a repository to parse.
         """
         from rse.main.parsers import get_parser
         from rse.utils.urls import repository_regex

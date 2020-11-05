@@ -18,15 +18,15 @@ bot = logging.getLogger("rse.main.database.sqlite")
 
 class SqliteDatabase(RelationalDatabase):
     """A SqliteDatabase writes to a rse.db file in $HOME/.rse. This is
-       the suggested database backend for QueueMe, as it doesn't require anything
-       beyond a filesystem and still allows for relational type queries.
+    the suggested database backend for QueueMe, as it doesn't require anything
+    beyond a filesystem and still allows for relational type queries.
     """
 
     database = "sqlite"
 
     def __init__(self, config_dir, config=None, **kwargs):
-        """init for the filesystem ensures that the base folder (named 
-           according to the studyid) exists.
+        """init for the filesystem ensures that the base folder (named
+        according to the studyid) exists.
         """
         database_file = kwargs.get("database_string", "rse.db") or "rse.db"
 

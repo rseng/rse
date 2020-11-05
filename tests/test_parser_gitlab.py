@@ -15,8 +15,7 @@ import pytest
 
 
 def test_parser_gitlab(tmp_path):
-    """Test the gitlab parser.
-    """
+    """Test the gitlab parser."""
     from rse.main.parsers import GitLabParser
 
     for repo in [

@@ -33,14 +33,14 @@ parser_regex = "github"
 
 class Encyclopedia:
     """An encyclopedia is one or more namespaces to store research
-       software. By default, we create a structure on the filesystem,
-       however an sqlite database (or other) can be used.
+    software. By default, we create a structure on the filesystem,
+    however an sqlite database (or other) can be used.
     """
 
     def __init__(self, config_file=None, database=None, generate=False):
         """create a software repository. We take a config file, which should
-           sit at the root of the repository, and then parse the subfolders
-           accordingly.
+        sit at the root of the repository, and then parse the subfolders
+        accordingly.
         """
         self.config = Config(config_file or RSE_CONFIG_FILE, generate=generate)
         self.config_dir = os.path.dirname(self.config.configfile)
@@ -48,12 +48,12 @@ class Encyclopedia:
 
     def initdb(self, database):
         """setup the rse home (where the config directory is stored) and the
-           database specification. If a database string is required (and not
-           provided) alert the user and exit on error).
+        database specification. If a database string is required (and not
+        provided) alert the user and exit on error).
 
-           Arguments:
-            - config_dir (str) : the configuration directory (home for rse)
-            - database (str) : a string to specify the database setup
+        Arguments:
+         - config_dir (str) : the configuration directory (home for rse)
+         - database (str) : a string to specify the database setup
         """
         self.database = (
             database
@@ -82,35 +82,32 @@ class Encyclopedia:
 
     def exists(self, uid):
         """based on a parser type and unique identifier, determine if software
-           exists in the database
+        exists in the database
         """
         parser = get_parser(uid, config=self.config)
         return self.db.exists(parser.uid)
 
     def list(self, name=None):
         """A wrapper to the database list_repos function. Optionally take
-           a whole parser name (e.g., github) or just a specific uid. No
-           parser indicates that we list everything.
+        a whole parser name (e.g., github) or just a specific uid. No
+        parser indicates that we list everything.
         """
         return self.db.list_repos(name)
 
     def list_criteria(self):
-        """Get a listing of criteria from the rse API
-        """
+        """Get a listing of criteria from the rse API"""
         if not hasattr(self, "criteria"):
             self.criteria = get_criteria()
         return self.criteria
 
     def list_taxonomy(self):
-        """Get a listing of a flattened taxonomy from the rse API
-        """
+        """Get a listing of a flattened taxonomy from the rse API"""
         if not hasattr(self, "taxonomy"):
             self.taxonomy = get_taxonomy()
         return self.taxonomy
 
     def bulk_add(self, filename):
-        """Given a filename with a single list of repos, add each
-        """
+        """Given a filename with a single list of repos, add each"""
         repos = []
         if os.path.exists(filename):
             for name in read_file(filename):
@@ -119,8 +116,7 @@ class Encyclopedia:
         return repos
 
     def bulk_update(self, filename, rewrite=False):
-        """Given a filename with a single list of repos, add each
-        """
+        """Given a filename with a single list of repos, add each"""
         repos = []
         if os.path.exists(filename):
             for name in read_file(filename):
@@ -132,8 +128,7 @@ class Encyclopedia:
         return repos
 
     def add(self, uid, quiet=False):
-        """A wrapper to add a repository to the software database.
-        """
+        """A wrapper to add a repository to the software database."""
         if not self.exists(uid):
             repo = self.db.add(uid)
             return repo
@@ -142,7 +137,7 @@ class Encyclopedia:
 
     def get(self, uid=None):
         """A wrapper to get a repo id from the database. If an id is not provided,
-           will return the last updated repo based on timestamp of file or database.
+        will return the last updated repo based on timestamp of file or database.
         """
         return self.db.get(uid)
 
@@ -151,7 +146,7 @@ class Encyclopedia:
 
     def clear(self, target=None, noprompt=False):
         """clear takes a target, and that can be a uid, parser, or none
-           We ask the user for confirmation.
+        We ask the user for confirmation.
         """
         # Case 1: no target indicates clearing all
         if not target:
@@ -178,8 +173,7 @@ class Encyclopedia:
             raise RuntimeError(f"Unrecognized {target} to clear")
 
     def update(self, uid, rewrite=False):
-        """Update an existing software repository.
-        """
+        """Update an existing software repository."""
         try:
             repo = self.get(uid)
             self.db.update(repo, rewrite=rewrite)
@@ -189,8 +183,7 @@ class Encyclopedia:
             bot.error(f"{uid} does not exist.")
 
     def label(self, uid, key, value, force=False):
-        """Update an existing software repository with a specific label.
-        """
+        """Update an existing software repository with a specific label."""
         try:
             repo = self.get(uid)
             self.db.label(repo, key, value, force=force)
@@ -205,8 +198,8 @@ class Encyclopedia:
 
     def search(self, query):
         """Search across commands and general metadata for a string of interest.
-           We use regular expressions (re.search) so they are supported.
-           Search is only available for non-filesystem databases.
+        We use regular expressions (re.search) so they are supported.
+        Search is only available for non-filesystem databases.
         """
         results = self.db.search(query)
         if results:
@@ -216,8 +209,7 @@ class Encyclopedia:
     # Topics
 
     def topics(self, pattern=None):
-        """return a list of unique topics, optionally matching a pattern
-        """
+        """return a list of unique topics, optionally matching a pattern"""
         topics = set()
         for name in self.list():
             repo = self.get(name[0])
@@ -237,8 +229,7 @@ class Encyclopedia:
         return sorted(list(topics))
 
     def repos_by_topics(self, topics):
-        """return a list of unique topics, optionally matching a pattern
-        """
+        """return a list of unique topics, optionally matching a pattern"""
         repos = []
         for name in self.list():
             repo = self.get(name[0])
@@ -252,7 +243,7 @@ class Encyclopedia:
 
     def save_criteria(self, repo):
         """Given a repository that can be a handle to a filesystem entry
-           or database, save the criteria
+        or database, save the criteria
         """
         # The filesystem database saves at the end
         if hasattr(repo, "save_criteria"):
@@ -264,7 +255,7 @@ class Encyclopedia:
 
     def save_taxonomy(self, repo, username, uids):
         """Given a repository that can be a handle to a filesystem entry
-           or database, save the criteria
+        or database, save the criteria
         """
         if hasattr(repo, "save_taxonomy"):
             repo.taxonomy[username] = uids
@@ -283,7 +274,7 @@ class Encyclopedia:
         include_empty=False,
     ):
         """analyze takes a repository and calculates a "final answer" based on user provided
-           thresholds
+        thresholds
         """
         results = []
         for repo in self.list():
@@ -303,7 +294,7 @@ class Encyclopedia:
         self, repo, cthresh=0.5, tthresh=1, taxonomy_uids=None, criteria_uids=None
     ):
         """analyze takes a repository and calculates a "final answer" based on user provided
-           thresholds
+        thresholds
         """
         # If taxonomy or criteria lists aren't defined, use all
         if not taxonomy_uids:
@@ -350,7 +341,7 @@ class Encyclopedia:
 
     def summary(self, repo=None):
         """Summarize metrics for the entire database if uid is not defined,
-           or one specific repository.
+        or one specific repository.
         """
         if repo is None:
             repos = self.list()
@@ -421,13 +412,13 @@ class Encyclopedia:
 
     def annotate(self, username, atype, unseen_only=True, repo=None, save=False):
         """Annotate the encyclopedia, either for criteria or taxonomy.
-           A username is required for the namespace.
- 
-           Arguments:
-            - username (str) : the user's GitHub username
-            - atype (str) : the annotation type
-            - unseen_only (bool): annotate only items not seen by username
-            - repo (str) : annotate a particular software repository
+        A username is required for the namespace.
+
+        Arguments:
+         - username (str) : the user's GitHub username
+         - atype (str) : the annotation type
+         - unseen_only (bool): annotate only items not seen by username
+         - repo (str) : annotate a particular software repository
         """
         # git config user.name
         if not username:
@@ -441,7 +432,7 @@ class Encyclopedia:
 
     def _import_annotation(self, input_file, username, stop_line="## Criteria"):
         """A general helper (private)  function to import an annotation, meaning
-           we parse a repository and return additional lines for parsing.
+        we parse a repository and return additional lines for parsing.
         """
         if not username or not input_file:
             raise RuntimeError(
@@ -471,9 +462,9 @@ class Encyclopedia:
 
     def import_criteria_annotation(self, input_file, username):
         """Given a text file that has a bullet list of (some checked) criteria
-           as might be generated in a GitHub issue, read in the file and the
-           username to do an annotation. If a user has already done an annotation,
-           his or her record is updated.
+        as might be generated in a GitHub issue, read in the file and the
+        username to do an annotation. If a user has already done an annotation,
+        his or her record is updated.
         """
         repo, lines = self._import_annotation(input_file, username)
 
@@ -492,9 +483,9 @@ class Encyclopedia:
 
     def import_taxonomy_annotation(self, input_file, username):
         """Given a text file that has a bullet list of (some checked) criteria
-           as might be generated in a GitHub issue, read in the file and the
-           username to do an annotation. If a user has already done an annotation,
-           his or her record is updated.
+        as might be generated in a GitHub issue, read in the file and the
+        username to do an annotation. If a user has already done an annotation,
+        his or her record is updated.
         """
         repo, lines = self._import_annotation(
             input_file, username, stop_line="## Taxonomy"
@@ -513,7 +504,7 @@ class Encyclopedia:
 
     def yield_criteria_annotation_repos(self, username, unseen_only=True, repo=None):
         """Given a username, repository, and preference for seen / unseen,
-           yield a repository to annotate.
+        yield a repository to annotate.
         """
         if repo is None:
             repos = self.list()
@@ -535,7 +526,7 @@ class Encyclopedia:
 
     def yield_taxonomy_annotation_repos(self, username, unseen_only=True, repo=None):
         """Given a username, repository, and preference for seen / unseen,
-           yield a repository to annotate.
+        yield a repository to annotate.
         """
         if repo is None:
             repos = self.list()
@@ -553,10 +544,10 @@ class Encyclopedia:
                 yield repo
 
     def annotate_criteria(self, username, unseen_only=True, repo=None, save=False):
-        """Annotate criteria, meaning we iterate over repos and criteria that 
-           match the user request, namely to annotate unseen only, or just
-           a particular repository. If the repository is specified, unseen_only
-           is assumed False.
+        """Annotate criteria, meaning we iterate over repos and criteria that
+        match the user request, namely to annotate unseen only, or just
+        a particular repository. If the repository is specified, unseen_only
+        is assumed False.
         """
         annotations = {}
         last = None
@@ -598,10 +589,10 @@ class Encyclopedia:
         return annotations
 
     def annotate_taxonomy(self, username, unseen_only=True, repo=None, save=False):
-        """Annotate taxonomy, meaning we iterate over repos and criteria that 
-           match the user request, namely to annotate unseen only, or just
-           a particular repository. If the repository is specified, unseen_only
-           is assumed False.
+        """Annotate taxonomy, meaning we iterate over repos and criteria that
+        match the user request, namely to annotate unseen only, or just
+        a particular repository. If the repository is specified, unseen_only
+        is assumed False.
         """
         annotations = {}
 
