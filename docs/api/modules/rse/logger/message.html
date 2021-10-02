@@ -1,72 +1,35 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>rse.logger.message &mdash; The Research Software Encyclopedia 11 documentation</title>
+      <link rel="stylesheet" href="../../../assets/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../assets/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../assets/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../../assets/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../assets/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../assets/documentation_options.js"></script>
         <script src="../../../assets/jquery.js"></script>
         <script src="../../../assets/underscore.js"></script>
         <script src="../../../assets/doctools.js"></script>
-        <script src="../../../assets/language_data.js"></script>
-    
-    <script type="text/javascript" src="../../../assets/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../assets/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../assets/pygments.css" type="text/css" />
+    <script src="../../../assets/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../../index.html" class="icon icon-home"> The Research Software Encyclopedia
-          
-
-          
-            
             <img src="../../../assets/logo-transparent.png" class="logo" alt="Logo"/>
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 0.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,81 +37,35 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../source/rse.html">rse package</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">The Research Software Encyclopedia</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
       <li>rse.logger.message</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for rse.logger.message</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 
@@ -230,8 +147,8 @@
 
 <div class="viewcode-block" id="RseMessage.useColor"><a class="viewcode-back" href="../../../source/rse.logger.html#rse.logger.message.RseMessage.useColor">[docs]</a>    <span class="k">def</span> <span class="nf">useColor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;useColor will determine if color should be added</span>
-<span class="sd">           to a print. Will check if being run in a terminal, and</span>
-<span class="sd">           if has support for asci</span>
+<span class="sd">        to a print. Will check if being run in a terminal, and</span>
+<span class="sd">        if has support for asci</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">COLORIZE</span> <span class="o">=</span> <span class="n">get_user_color_preference</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">COLORIZE</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -246,7 +163,7 @@
 
 <div class="viewcode-block" id="RseMessage.addColor"><a class="viewcode-back" href="../../../source/rse.logger.html#rse.logger.message.RseMessage.addColor">[docs]</a>    <span class="k">def</span> <span class="nf">addColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;addColor to the prompt (usually prefix) if terminal</span>
-<span class="sd">           supports, and specified to do so</span>
+<span class="sd">        supports, and specified to do so</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">colorize</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">level</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">:</span>
@@ -255,7 +172,7 @@
 
 <div class="viewcode-block" id="RseMessage.emitError"><a class="viewcode-back" href="../../../source/rse.logger.html#rse.logger.message.RseMessage.emitError">[docs]</a>    <span class="k">def</span> <span class="nf">emitError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;determine if a level should print to</span>
-<span class="sd">           stderr, includes all levels but INFO and QUIET</span>
+<span class="sd">        stderr, includes all levels but INFO and QUIET</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">[</span>
             <span class="n">ABORT</span><span class="p">,</span>
@@ -278,20 +195,19 @@
         <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="RseMessage.isEnabledFor"><a class="viewcode-back" href="../../../source/rse.logger.html#rse.logger.message.RseMessage.isEnabledFor">[docs]</a>    <span class="k">def</span> <span class="nf">isEnabledFor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">messageLevel</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;check if a messageLevel is enabled to emit a level</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;check if a messageLevel is enabled to emit a level&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">messageLevel</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="RseMessage.emit"><a class="viewcode-back" href="../../../source/rse.logger.html#rse.logger.message.RseMessage.emit">[docs]</a>    <span class="k">def</span> <span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;emit is the main function to print the message</span>
-<span class="sd">           optionally with a prefix</span>
+<span class="sd">        optionally with a prefix</span>
 
-<span class="sd">           Arguments:</span>
-<span class="sd">            - level (int) : the level of the message</span>
-<span class="sd">            - message (str) : the message to print</span>
-<span class="sd">            - prefix (str) : a prefix for the message</span>
+<span class="sd">        Arguments:</span>
+<span class="sd">         - level (int) : the level of the message</span>
+<span class="sd">         - message (str) : the message to print</span>
+<span class="sd">         - prefix (str) : a prefix for the message</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">color</span> <span class="o">=</span> <span class="n">level</span>
@@ -324,7 +240,7 @@
 
 <div class="viewcode-block" id="RseMessage.write"><a class="viewcode-back" href="../../../source/rse.logger.html#rse.logger.message.RseMessage.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;write will write a message to a stream,</span>
-<span class="sd">           first checking the encoding</span>
+<span class="sd">        first checking the encoding</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
             <span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
@@ -332,7 +248,7 @@
 
 <div class="viewcode-block" id="RseMessage.get_logs"><a class="viewcode-back" href="../../../source/rse.logger.html#rse.logger.message.RseMessage.get_logs">[docs]</a>    <span class="k">def</span> <span class="nf">get_logs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">join_newline</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;&#39;get_logs will return the complete history, joined by newline</span>
-<span class="sd">            (default) or as is.</span>
+<span class="sd">        (default) or as is.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">join_newline</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
@@ -350,12 +266,12 @@
         <span class="n">symbol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;create a terminal progress bar, default bar shows for verbose+</span>
-<span class="sd"> </span>
-<span class="sd">           Parameters</span>
-<span class="sd">           ==========</span>
-<span class="sd">           iteration: current iteration (Int)</span>
-<span class="sd">           total: total iterations (Int)</span>
-<span class="sd">           length: character length of bar (Int)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ==========</span>
+<span class="sd">        iteration: current iteration (Int)</span>
+<span class="sd">        total: total iterations (Int)</span>
+<span class="sd">        length: character length of bar (Int)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">==</span> <span class="n">QUIET</span><span class="p">:</span>
 
@@ -441,21 +357,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="s2">&quot;DEBUG&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RseMessage.is_quiet"><a class="viewcode-back" href="../../../source/rse.logger.html#rse.logger.message.RseMessage.is_quiet">[docs]</a>    <span class="k">def</span> <span class="nf">is_quiet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;is_quiet returns true if the level is under 1</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;is_quiet returns true if the level is under 1&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
     <span class="c1"># Terminal ------------------------------------------</span>
 
-<div class="viewcode-block" id="RseMessage.table"><a class="viewcode-back" href="../../../source/rse.logger.html#rse.logger.message.RseMessage.table">[docs]</a>    <span class="k">def</span> <span class="nf">table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">col_width</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;table will print a table of entries. If the rows is </span>
-<span class="sd">           a dictionary, the keys are interpreted as column names. if</span>
-<span class="sd">           not, a numbered list is used.</span>
+<div class="viewcode-block" id="RseMessage.table"><a class="viewcode-back" href="../../../source/rse.logger.html#rse.logger.message.RseMessage.table">[docs]</a>    <span class="k">def</span> <span class="nf">table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">col_width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;table will print a table of entries. If the rows is</span>
+<span class="sd">        a dictionary, the keys are interpreted as column names. if</span>
+<span class="sd">        not, a numbered list is used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">labels</span><span class="p">:</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
 
-        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rows</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
             <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rows</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
@@ -469,9 +385,9 @@
 
 <div class="viewcode-block" id="get_logging_level"><a class="viewcode-back" href="../../../source/rse.logger.html#rse.logger.message.get_logging_level">[docs]</a><span class="k">def</span> <span class="nf">get_logging_level</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;get_logging_level will configure a logging to standard out based on</span>
-<span class="sd">        selected level, which should be in an environment variable called</span>
-<span class="sd">        MESSAGELEVEL. if MESSAGELEVEL is not set, the maximum level</span>
-<span class="sd">        (5) is assumed (all messages).</span>
+<span class="sd">    selected level, which should be in an environment variable called</span>
+<span class="sd">    MESSAGELEVEL. if MESSAGELEVEL is not set, the maximum level</span>
+<span class="sd">    (5) is assumed (all messages).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">level</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;RSE_MESSAGELEVEL&quot;</span><span class="p">,</span> <span class="n">INFO</span><span class="p">)</span>
 
@@ -513,7 +429,7 @@
 
 <div class="viewcode-block" id="convert2boolean"><a class="viewcode-back" href="../../../source/rse.logger.html#rse.logger.message.convert2boolean">[docs]</a><span class="k">def</span> <span class="nf">convert2boolean</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;convert2boolean is used for environmental variables that must be</span>
-<span class="sd">       returned as boolean</span>
+<span class="sd">    returned as boolean</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">arg</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">)</span>
@@ -524,42 +440,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2020, Vanessa Sochat
-
-    </p>
+    <p>&#169; Copyright 2020, Vanessa Sochat.</p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

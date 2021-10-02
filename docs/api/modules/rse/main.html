@@ -1,72 +1,35 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>rse.main &mdash; The Research Software Encyclopedia 11 documentation</title>
+      <link rel="stylesheet" href="../../assets/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../assets/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../assets/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../assets/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../assets/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../assets/documentation_options.js"></script>
         <script src="../../assets/jquery.js"></script>
         <script src="../../assets/underscore.js"></script>
         <script src="../../assets/doctools.js"></script>
-        <script src="../../assets/language_data.js"></script>
-    
-    <script type="text/javascript" src="../../assets/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../assets/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../assets/pygments.css" type="text/css" />
+    <script src="../../assets/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html" class="icon icon-home"> The Research Software Encyclopedia
-          
-
-          
-            
             <img src="../../assets/logo-transparent.png" class="logo" alt="Logo"/>
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 0.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,81 +37,35 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../source/rse.html">rse package</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">The Research Software Encyclopedia</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html">Module code</a> &raquo;</li>
-        
       <li>rse.main</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for rse.main</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 
@@ -163,14 +80,18 @@
 <span class="kn">from</span> <span class="nn">rse.main.config</span> <span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span> <span class="nn">rse.defaults</span> <span class="kn">import</span> <span class="n">RSE_DATABASE</span><span class="p">,</span> <span class="n">RSE_PARSERS</span><span class="p">,</span> <span class="n">RSE_CONFIG_FILE</span>
 
-<span class="kn">from</span> <span class="nn">rse.exceptions</span> <span class="kn">import</span> <span class="n">RepoNotFoundError</span>
+<span class="kn">from</span> <span class="nn">rse.exceptions</span> <span class="kn">import</span> <span class="n">RepoNotFoundError</span><span class="p">,</span> <span class="n">RepoMetadataExistError</span>
 <span class="kn">from</span> <span class="nn">rse.main.database</span> <span class="kn">import</span> <span class="n">init_db</span>
-<span class="kn">from</span> <span class="nn">rse.utils.prompt</span> <span class="kn">import</span> <span class="n">confirm</span>
+<span class="kn">from</span> <span class="nn">rse.utils.prompt</span> <span class="kn">import</span> <span class="n">confirm</span><span class="p">,</span> <span class="n">choice_prompt</span>
 <span class="kn">from</span> <span class="nn">rse.utils.file</span> <span class="kn">import</span> <span class="n">read_file</span>
+<span class="kn">from</span> <span class="nn">rse.utils.command</span> <span class="kn">import</span> <span class="n">get_github_username</span>
+<span class="kn">from</span> <span class="nn">rse.utils.urls</span> <span class="kn">import</span> <span class="n">repository_regex</span>
 <span class="kn">from</span> <span class="nn">rse.main.parsers</span> <span class="kn">import</span> <span class="n">get_parser</span>
 <span class="kn">from</span> <span class="nn">rse.main.criteria</span> <span class="kn">import</span> <span class="n">get_criteria</span>
 <span class="kn">from</span> <span class="nn">rse.main.taxonomy</span> <span class="kn">import</span> <span class="n">get_taxonomy</span>
+<span class="kn">from</span> <span class="nn">rse.logger.message</span> <span class="kn">import</span> <span class="n">bot</span> <span class="k">as</span> <span class="n">message</span>
 
+<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
@@ -181,14 +102,14 @@
 
 <div class="viewcode-block" id="Encyclopedia"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia">[docs]</a><span class="k">class</span> <span class="nc">Encyclopedia</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;An encyclopedia is one or more namespaces to store research</span>
-<span class="sd">       software. By default, we create a structure on the filesystem,</span>
-<span class="sd">       however an sqlite database (or other) can be used.</span>
+<span class="sd">    software. By default, we create a structure on the filesystem,</span>
+<span class="sd">    however an sqlite database (or other) can be used.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">generate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;create a software repository. We take a config file, which should</span>
-<span class="sd">           sit at the root of the repository, and then parse the subfolders</span>
-<span class="sd">           accordingly.</span>
+<span class="sd">        sit at the root of the repository, and then parse the subfolders</span>
+<span class="sd">        accordingly.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">config_file</span> <span class="ow">or</span> <span class="n">RSE_CONFIG_FILE</span><span class="p">,</span> <span class="n">generate</span><span class="o">=</span><span class="n">generate</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">configfile</span><span class="p">)</span>
@@ -196,12 +117,12 @@
 
 <div class="viewcode-block" id="Encyclopedia.initdb"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.initdb">[docs]</a>    <span class="k">def</span> <span class="nf">initdb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;setup the rse home (where the config directory is stored) and the</span>
-<span class="sd">           database specification. If a database string is required (and not</span>
-<span class="sd">           provided) alert the user and exit on error).</span>
+<span class="sd">        database specification. If a database string is required (and not</span>
+<span class="sd">        provided) alert the user and exit on error).</span>
 
-<span class="sd">           Arguments:</span>
-<span class="sd">            - config_dir (str) : the configuration directory (home for rse)</span>
-<span class="sd">            - database (str) : a string to specify the database setup</span>
+<span class="sd">        Arguments:</span>
+<span class="sd">         - config_dir (str) : the configuration directory (home for rse)</span>
+<span class="sd">         - database (str) : a string to specify the database setup</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">database</span>
@@ -210,7 +131,7 @@
             <span class="ow">or</span> <span class="s2">&quot;filesystem&quot;</span>
         <span class="p">)</span>
         <span class="n">database_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span> <span class="s2">&quot;databaseconnect&quot;</span><span class="p">)</span>
-        <span class="n">bot</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Database: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Database: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
 
         <span class="c1"># Supported database options</span>
         <span class="n">valid</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> <span class="s2">&quot;postgresql&quot;</span><span class="p">,</span> <span class="s2">&quot;mysql+pymysql&quot;</span><span class="p">,</span> <span class="s2">&quot;filesystem&quot;</span><span class="p">)</span>
@@ -230,35 +151,32 @@
 
 <div class="viewcode-block" id="Encyclopedia.exists"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.exists">[docs]</a>    <span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;based on a parser type and unique identifier, determine if software</span>
-<span class="sd">           exists in the database</span>
+<span class="sd">        exists in the database</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Encyclopedia.list"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;A wrapper to the database list_repos function. Optionally take</span>
-<span class="sd">           a whole parser name (e.g., github) or just a specific uid. No</span>
-<span class="sd">           parser indicates that we list everything.</span>
+<span class="sd">        a whole parser name (e.g., github) or just a specific uid. No</span>
+<span class="sd">        parser indicates that we list everything.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">list_repos</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Encyclopedia.list_criteria"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.list_criteria">[docs]</a>    <span class="k">def</span> <span class="nf">list_criteria</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get a listing of criteria from the rse API</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Get a listing of criteria from the rse API&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;criteria&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">criteria</span> <span class="o">=</span> <span class="n">get_criteria</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">criteria</span></div>
 
 <div class="viewcode-block" id="Encyclopedia.list_taxonomy"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.list_taxonomy">[docs]</a>    <span class="k">def</span> <span class="nf">list_taxonomy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get a listing of a flattened taxonomy from the rse API</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Get a listing of a flattened taxonomy from the rse API&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;taxonomy&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">taxonomy</span> <span class="o">=</span> <span class="n">get_taxonomy</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">taxonomy</span></div>
 
 <div class="viewcode-block" id="Encyclopedia.bulk_add"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.bulk_add">[docs]</a>    <span class="k">def</span> <span class="nf">bulk_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Given a filename with a single list of repos, add each</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Given a filename with a single list of repos, add each&quot;&quot;&quot;</span>
         <span class="n">repos</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
@@ -266,22 +184,20 @@
                 <span class="n">repos</span> <span class="o">+=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span> <span class="ow">or</span> <span class="p">[]</span>
         <span class="k">return</span> <span class="n">repos</span></div>
 
-<div class="viewcode-block" id="Encyclopedia.bulk_update"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.bulk_update">[docs]</a>    <span class="k">def</span> <span class="nf">bulk_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Given a filename with a single list of repos, add each</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Encyclopedia.bulk_update"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.bulk_update">[docs]</a>    <span class="k">def</span> <span class="nf">bulk_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">rewrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given a filename with a single list of repos, add each&quot;&quot;&quot;</span>
         <span class="n">repos</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
                 <span class="n">uid</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="n">repos</span> <span class="o">+=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">uid</span><span class="p">)]</span>
+                    <span class="n">repos</span> <span class="o">+=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">rewrite</span><span class="o">=</span><span class="n">rewrite</span><span class="p">)]</span>
                 <span class="k">except</span> <span class="n">RepoNotFoundError</span><span class="p">:</span>
                     <span class="k">pass</span>
         <span class="k">return</span> <span class="n">repos</span></div>
 
 <div class="viewcode-block" id="Encyclopedia.add"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;A wrapper to add a repository to the software database.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;A wrapper to add a repository to the software database.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">uid</span><span class="p">):</span>
             <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">repo</span>
@@ -290,7 +206,7 @@
 
 <div class="viewcode-block" id="Encyclopedia.get"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;A wrapper to get a repo id from the database. If an id is not provided,</span>
-<span class="sd">           will return the last updated repo based on timestamp of file or database.</span>
+<span class="sd">        will return the last updated repo based on timestamp of file or database.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span></div>
 
@@ -299,7 +215,7 @@
 
 <div class="viewcode-block" id="Encyclopedia.clear"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">noprompt</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;clear takes a target, and that can be a uid, parser, or none</span>
-<span class="sd">           We ask the user for confirmation.</span>
+<span class="sd">        We ask the user for confirmation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Case 1: no target indicates clearing all</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">target</span><span class="p">:</span>
@@ -325,65 +241,496 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognized </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2"> to clear&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Encyclopedia.update"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Update an existing software repository.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Encyclopedia.update"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">rewrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update an existing software repository.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">rewrite</span><span class="o">=</span><span class="n">rewrite</span><span class="p">)</span>
             <span class="n">bot</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="si">}</span><span class="s2"> has been updated.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">repo</span>
         <span class="k">except</span> <span class="n">RepoNotFoundError</span><span class="p">:</span>
             <span class="n">bot</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Encyclopedia.search"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<div class="viewcode-block" id="Encyclopedia.label"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update an existing software repository with a specific label.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span>
+            <span class="n">bot</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="si">}</span><span class="s2"> has been updated.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">repo</span>
+        <span class="k">except</span> <span class="n">RepoMetadataExistError</span><span class="p">:</span>
+            <span class="n">bot</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="si">}</span><span class="s2"> already has value for </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">. Use --force to overwrite.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">RepoNotFoundError</span><span class="p">:</span>
+            <span class="n">bot</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Encyclopedia.search"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">taxonomy</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Search across commands and general metadata for a string of interest.</span>
-<span class="sd">           We use regular expressions (re.search) so they are supported.</span>
-<span class="sd">           Search is only available for non-filesystem databases.</span>
+<span class="sd">        We use regular expressions (re.search) so they are supported.</span>
+<span class="sd">        Search is only available for non-filesystem databases.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">taxonomy</span><span class="o">=</span><span class="n">taxonomy</span><span class="p">,</span> <span class="n">criteria</span><span class="o">=</span><span class="n">criteria</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">results</span>
-        <span class="n">bot</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No results matching </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div></div>
+        <span class="n">bot</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No results matching </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+    <span class="c1"># Topics</span>
+
+<div class="viewcode-block" id="Encyclopedia.topics"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.topics">[docs]</a>    <span class="k">def</span> <span class="nf">topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return a list of unique topics, optionally matching a pattern&quot;&quot;&quot;</span>
+        <span class="n">topics</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">():</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="c1"># Relational needs to load from string</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">data</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+            <span class="c1"># Get the list of topics, optionally filter by a pattern</span>
+            <span class="n">topiclist</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;topics&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="k">if</span> <span class="n">pattern</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">topiclist</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">topiclist</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">t</span><span class="p">)]</span>
+
+            <span class="c1"># Add to topics set</span>
+            <span class="p">[</span><span class="n">topics</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">topiclist</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">topics</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Encyclopedia.repos_by_topics"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.repos_by_topics">[docs]</a>    <span class="k">def</span> <span class="nf">repos_by_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topics</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return a list of unique topics, optionally matching a pattern&quot;&quot;&quot;</span>
+        <span class="n">repos</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">():</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">topiclist</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;topics&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">topics</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">topiclist</span><span class="p">)):</span>
+                <span class="n">repos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">repos</span><span class="p">)</span></div>
+
+    <span class="c1"># Save Handlers</span>
+
+<div class="viewcode-block" id="Encyclopedia.save_criteria"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.save_criteria">[docs]</a>    <span class="k">def</span> <span class="nf">save_criteria</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given a repository that can be a handle to a filesystem entry</span>
+<span class="sd">        or database, save the criteria</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># The filesystem database saves at the end</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="s2">&quot;save_criteria&quot;</span><span class="p">):</span>
+            <span class="n">repo</span><span class="o">.</span><span class="n">save_criteria</span><span class="p">()</span>
+
+        <span class="c1"># Relational saves the database item</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Encyclopedia.save_taxonomy"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.save_taxonomy">[docs]</a>    <span class="k">def</span> <span class="nf">save_taxonomy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">uids</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given a repository that can be a handle to a filesystem entry</span>
+<span class="sd">        or database, save the criteria</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="s2">&quot;save_taxonomy&quot;</span><span class="p">):</span>
+            <span class="n">repo</span><span class="o">.</span><span class="n">taxonomy</span><span class="p">[</span><span class="n">username</span><span class="p">]</span> <span class="o">=</span> <span class="n">uids</span>
+            <span class="n">repo</span><span class="o">.</span><span class="n">save_taxonomy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">repo</span><span class="o">.</span><span class="n">update_taxonomy</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">uids</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span></div>
+
+    <span class="c1"># Metrics</span>
+<div class="viewcode-block" id="Encyclopedia.analyze_bulk"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.analyze_bulk">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_bulk</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">cthresh</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">tthresh</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">taxonomy_uids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">criteria_uids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">include_empty</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;analyze takes a repository and calculates a &quot;final answer&quot; based on user provided</span>
+<span class="sd">        thresholds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">():</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span>
+                <span class="n">repo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">cthresh</span><span class="o">=</span><span class="n">cthresh</span><span class="p">,</span>
+                <span class="n">tthresh</span><span class="o">=</span><span class="n">tthresh</span><span class="p">,</span>
+                <span class="n">taxonomy_uids</span><span class="o">=</span><span class="n">taxonomy_uids</span><span class="p">,</span>
+                <span class="n">criteria_uids</span><span class="o">=</span><span class="n">criteria_uids</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;taxonomy&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;criteria&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">include_empty</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+<div class="viewcode-block" id="Encyclopedia.analyze"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">cthresh</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">tthresh</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">taxonomy_uids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">criteria_uids</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;analyze takes a repository and calculates a &quot;final answer&quot; based on user provided</span>
+<span class="sd">        thresholds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If taxonomy or criteria lists aren&#39;t defined, use all</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">taxonomy_uids</span><span class="p">:</span>
+            <span class="n">taxonomy_uids</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;uid&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_taxonomy</span><span class="p">()]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">criteria_uids</span><span class="p">:</span>
+            <span class="n">criteria_uids</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;uid&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_criteria</span><span class="p">()]</span>
+
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;repo&quot;</span><span class="p">:</span> <span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span> <span class="s2">&quot;criteria&quot;</span><span class="p">:</span> <span class="p">{},</span> <span class="s2">&quot;taxonomy&quot;</span><span class="p">:</span> <span class="p">{}}</span>
+
+        <span class="c1"># Calculate &quot;final&quot; answers for each criteria based on votes and threshold</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">votes</span> <span class="ow">in</span> <span class="n">repo</span><span class="o">.</span><span class="n">get_criteria</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Skip criteria if not important</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">criteria_uids</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">:</span>
+                <span class="n">counts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;yes&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+            <span class="k">for</span> <span class="n">username</span><span class="p">,</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">votes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">counts</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="n">response</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">counts</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;total&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Calculate final answers!</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">summary</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;yes&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;total&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">cthresh</span><span class="p">:</span>
+                <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;criteria&quot;</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;yes&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;criteria&quot;</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;no&quot;</span>
+
+        <span class="n">counts</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">username</span><span class="p">,</span> <span class="n">categories</span> <span class="ow">in</span> <span class="n">repo</span><span class="o">.</span><span class="n">get_taxonomy</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">:</span>
+                    <span class="n">counts</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">counts</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Include those above the requested threshold</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;=</span> <span class="n">tthresh</span><span class="p">:</span>
+                <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;taxonomy&quot;</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+
+        <span class="k">return</span> <span class="n">metrics</span></div>
+
+<div class="viewcode-block" id="Encyclopedia.summary"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Summarize metrics for the entire database if uid is not defined,</span>
+<span class="sd">        or one specific repository.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">repo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">repos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;repos&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">repos</span><span class="p">)}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">repos</span> <span class="o">=</span> <span class="p">[[</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">]]</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;repo&quot;</span><span class="p">:</span> <span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">}</span>
+
+        <span class="c1"># Add taxonomy and criteria items</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;taxonomy-count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_taxonomy</span><span class="p">())</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;criteria-count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_criteria</span><span class="p">())</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;users&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;taxonomy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;criteria&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Count annotations for</span>
+        <span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="n">repos</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">repo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">repo</span><span class="o">.</span><span class="n">criteria</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">repo</span><span class="o">.</span><span class="n">taxonomy</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Add repository to summary metrics</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;taxonomy&quot;</span><span class="p">][</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;criteria&quot;</span><span class="p">][</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="c1"># Derive all users that have annotated taxonomy/criteria</span>
+            <span class="n">users</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">votes</span> <span class="ow">in</span> <span class="n">repo</span><span class="o">.</span><span class="n">get_criteria</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="p">[</span><span class="n">users</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">votes</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;criteria&quot;</span><span class="p">][</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">]:</span>
+                    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;criteria&quot;</span><span class="p">][</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;yes&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+                <span class="k">for</span> <span class="n">vote</span> <span class="ow">in</span> <span class="n">votes</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;criteria&quot;</span><span class="p">][</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">][</span><span class="n">vote</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c1"># Update criteria annotations</span>
+            <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">user</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;users&quot;</span><span class="p">]:</span>
+                    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;users&quot;</span><span class="p">][</span><span class="n">user</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;criteria-annotations&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                        <span class="s2">&quot;taxonomy-annotations&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="p">}</span>
+                <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;users&quot;</span><span class="p">][</span><span class="n">user</span><span class="p">][</span><span class="s2">&quot;criteria-annotations&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c1"># Derive all users that have annotated taxonomy/criteria</span>
+            <span class="n">users</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">username</span><span class="p">,</span> <span class="n">categories</span> <span class="ow">in</span> <span class="n">repo</span><span class="o">.</span><span class="n">get_taxonomy</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">users</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;taxonomy&quot;</span><span class="p">][</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">]:</span>
+                        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;taxonomy&quot;</span><span class="p">][</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">][</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;taxonomy&quot;</span><span class="p">][</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">][</span><span class="n">category</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c1"># Don&#39;t add empty entries</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">repo</span><span class="o">.</span><span class="n">taxonomy</span> <span class="ow">and</span> <span class="n">repo</span><span class="o">.</span><span class="n">uid</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;taxonomy&quot;</span><span class="p">]:</span>
+                <span class="k">del</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;taxonomy&quot;</span><span class="p">][</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">repo</span><span class="o">.</span><span class="n">criteria</span> <span class="ow">and</span> <span class="n">repo</span><span class="o">.</span><span class="n">uid</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;criteria&quot;</span><span class="p">]:</span>
+                <span class="k">del</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;criteria&quot;</span><span class="p">][</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">]</span>
+
+        <span class="c1"># Add unique users</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;users-count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;users&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">metrics</span></div>
+
+    <span class="c1"># Annotation</span>
+
+<div class="viewcode-block" id="Encyclopedia.annotate"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.annotate">[docs]</a>    <span class="k">def</span> <span class="nf">annotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">atype</span><span class="p">,</span> <span class="n">unseen_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Annotate the encyclopedia, either for criteria or taxonomy.</span>
+<span class="sd">        A username is required for the namespace.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">         - username (str) : the user&#39;s GitHub username</span>
+<span class="sd">         - atype (str) : the annotation type</span>
+<span class="sd">         - unseen_only (bool): annotate only items not seen by username</span>
+<span class="sd">         - repo (str) : annotate a particular software repository</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># git config user.name</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">username</span><span class="p">:</span>
+            <span class="n">username</span> <span class="o">=</span> <span class="n">get_github_username</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">atype</span> <span class="o">==</span> <span class="s2">&quot;criteria&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotate_criteria</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">unseen_only</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">save</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">atype</span> <span class="o">==</span> <span class="s2">&quot;taxonomy&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotate_taxonomy</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">unseen_only</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">save</span><span class="p">)</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown annotation type, </span><span class="si">{</span><span class="n">atype</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_import_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">stop_line</span><span class="o">=</span><span class="s2">&quot;## Criteria&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A general helper (private)  function to import an annotation, meaning</span>
+<span class="sd">        we parse a repository and return additional lines for parsing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">username</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">input_file</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;A username and input file are required to import annotation criteria.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">input_file</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
+
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Find the repository name</span>
+        <span class="k">while</span> <span class="n">stop_line</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">repository_regex</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Retrieve the match</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;repository pattern not found in </span><span class="si">{</span><span class="n">input_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">reponame</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">reponame</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">repo</span><span class="p">,</span> <span class="n">lines</span>
+
+<div class="viewcode-block" id="Encyclopedia.import_criteria_annotation"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.import_criteria_annotation">[docs]</a>    <span class="k">def</span> <span class="nf">import_criteria_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given a text file that has a bullet list of (some checked) criteria</span>
+<span class="sd">        as might be generated in a GitHub issue, read in the file and the</span>
+<span class="sd">        username to do an annotation. If a user has already done an annotation,</span>
+<span class="sd">        his or her record is updated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">repo</span><span class="p">,</span> <span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_import_annotation</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
+
+        <span class="c1"># Now iterate through checklist, update</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="n">uid</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;criteria-&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s2">&quot;[x]&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">repo</span><span class="o">.</span><span class="n">update_criteria</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Updating </span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s2">-&gt;yes&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;\[]|\[ \]&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+                <span class="n">repo</span><span class="o">.</span><span class="n">update_criteria</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Updating </span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s2">-&gt;no&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Save the criteria</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_criteria</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Encyclopedia.import_taxonomy_annotation"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.import_taxonomy_annotation">[docs]</a>    <span class="k">def</span> <span class="nf">import_taxonomy_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given a text file that has a bullet list of (some checked) criteria</span>
+<span class="sd">        as might be generated in a GitHub issue, read in the file and the</span>
+<span class="sd">        username to do an annotation. If a user has already done an annotation,</span>
+<span class="sd">        his or her record is updated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">repo</span><span class="p">,</span> <span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_import_annotation</span><span class="p">(</span>
+            <span class="n">input_file</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">stop_line</span><span class="o">=</span><span class="s2">&quot;## Taxonomy&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Now iterate through checklist, update</span>
+        <span class="n">uids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;RSE-taxonomy&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span> <span class="ow">or</span> <span class="s2">&quot;[x]&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">uid</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">uid</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;RSE-taxonomy&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">uid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">uids</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="si">}</span><span class="s2"> adding </span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">uids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_taxonomy</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">uids</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Encyclopedia.yield_criteria_annotation_repos"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.yield_criteria_annotation_repos">[docs]</a>    <span class="k">def</span> <span class="nf">yield_criteria_annotation_repos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">unseen_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given a username, repository, and preference for seen / unseen,</span>
+<span class="sd">        yield a repository to annotate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">repo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">repos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">repos</span> <span class="o">=</span> <span class="p">[[</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">]]</span>
+            <span class="n">unseen_only</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># yield combinations that don&#39;t exist yet, repo first to save changes</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">repos</span><span class="p">:</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_criteria</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">unseen_only</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">repo</span><span class="o">.</span><span class="n">has_criteria_annotation</span><span class="p">(</span>
+                    <span class="n">item</span><span class="p">[</span><span class="s2">&quot;uid&quot;</span><span class="p">],</span> <span class="n">username</span>
+                <span class="p">):</span>
+                    <span class="k">yield</span> <span class="n">repo</span><span class="p">,</span> <span class="n">item</span>
+                <span class="k">elif</span> <span class="ow">not</span> <span class="n">unseen_only</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">repo</span><span class="p">,</span> <span class="n">item</span></div>
+
+<div class="viewcode-block" id="Encyclopedia.yield_taxonomy_annotation_repos"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.yield_taxonomy_annotation_repos">[docs]</a>    <span class="k">def</span> <span class="nf">yield_taxonomy_annotation_repos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">unseen_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given a username, repository, and preference for seen / unseen,</span>
+<span class="sd">        yield a repository to annotate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">repo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">repos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">repos</span> <span class="o">=</span> <span class="p">[[</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">]]</span>
+            <span class="n">unseen_only</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># yield combinations that don&#39;t exist yet, repo first to save changes</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">repos</span><span class="p">:</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">unseen_only</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">repo</span><span class="o">.</span><span class="n">has_taxonomy_annotation</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">repo</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">unseen_only</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">repo</span></div>
+
+<div class="viewcode-block" id="Encyclopedia.annotate_criteria"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.annotate_criteria">[docs]</a>    <span class="k">def</span> <span class="nf">annotate_criteria</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">unseen_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Annotate criteria, meaning we iterate over repos and criteria that</span>
+<span class="sd">        match the user request, namely to annotate unseen only, or just</span>
+<span class="sd">        a particular repository. If the repository is specified, unseen_only</span>
+<span class="sd">        is assumed False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">annotations</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">repo</span><span class="p">,</span> <span class="n">criteria</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">yield_criteria_annotation_repos</span><span class="p">(</span>
+            <span class="n">username</span><span class="p">,</span> <span class="n">unseen_only</span><span class="p">,</span> <span class="n">repo</span>
+        <span class="p">):</span>
+
+            <span class="c1"># Only print repository if not seen yet</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">last</span> <span class="ow">or</span> <span class="n">repo</span><span class="o">.</span><span class="n">uid</span> <span class="o">!=</span> <span class="n">last</span><span class="o">.</span><span class="n">uid</span><span class="p">:</span>
+
+                <span class="c1"># If we have a last repo, we need to save progress</span>
+                <span class="k">if</span> <span class="n">last</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">save</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">save_criteria</span><span class="p">(</span><span class="n">last</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">last</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">annotations</span><span class="p">[</span><span class="n">last</span><span class="o">.</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">last</span><span class="o">.</span><span class="n">criteria</span>
+
+                <span class="n">message</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">]:&quot;</span><span class="p">)</span>
+                <span class="n">last</span> <span class="o">=</span> <span class="n">repo</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">choice_prompt</span><span class="p">(</span>
+                <span class="n">criteria</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;skip&quot;</span><span class="p">],</span>
+                <span class="n">choice_prefix</span><span class="o">=</span><span class="s2">&quot;y/n or s to skip&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="c1"># The user can skip an answer if wanted</span>
+            <span class="k">if</span> <span class="n">response</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;skip&quot;</span><span class="p">]:</span>
+                <span class="k">continue</span>
+
+            <span class="n">repo</span><span class="o">.</span><span class="n">update_criteria</span><span class="p">(</span><span class="n">criteria</span><span class="p">[</span><span class="s2">&quot;uid&quot;</span><span class="p">],</span> <span class="n">username</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+        <span class="c1"># Save the last repository</span>
+        <span class="k">if</span> <span class="n">last</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">save</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_criteria</span><span class="p">(</span><span class="n">last</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">last</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">annotations</span><span class="p">[</span><span class="n">last</span><span class="o">.</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">last</span><span class="o">.</span><span class="n">criteria</span>
+        <span class="k">return</span> <span class="n">annotations</span></div>
+
+<div class="viewcode-block" id="Encyclopedia.annotate_taxonomy"><a class="viewcode-back" href="../../source/rse.main.html#rse.main.Encyclopedia.annotate_taxonomy">[docs]</a>    <span class="k">def</span> <span class="nf">annotate_taxonomy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">unseen_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Annotate taxonomy, meaning we iterate over repos and criteria that</span>
+<span class="sd">        match the user request, namely to annotate unseen only, or just</span>
+<span class="sd">        a particular repository. If the repository is specified, unseen_only</span>
+<span class="sd">        is assumed False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">annotations</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Retrieve the full taxonomy</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_taxonomy</span><span class="p">()</span>
+        <span class="n">choices</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">items</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;skip&quot;</span><span class="p">]</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;0:</span><span class="si">%s</span><span class="s2"> or s to skip&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">yield_taxonomy_annotation_repos</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">unseen_only</span><span class="p">,</span> <span class="n">repo</span><span class="p">):</span>
+
+            <span class="n">message</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">]:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;How would you categorize this software? [enter one or more numbers]&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
+                <span class="n">example</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;example&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">and</span> <span class="n">example</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">example</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">name</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">response</span> <span class="o">=</span> <span class="n">choice_prompt</span><span class="p">(</span>
+                <span class="s2">&quot;Please enter one or more numbers, separated by spaces&quot;</span><span class="p">,</span>
+                <span class="n">choices</span><span class="o">=</span><span class="n">choices</span><span class="p">,</span>
+                <span class="n">choice_prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span>
+                <span class="n">multiple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">response</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;skip&quot;</span><span class="p">]:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Get the unique ids</span>
+            <span class="n">uids</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">items</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)][</span><span class="s2">&quot;uid&quot;</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span>
+                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+            <span class="p">]</span>
+
+            <span class="c1"># Filesystem database we write filename to repository folder</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_taxonomy</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">uids</span><span class="p">)</span>
+            <span class="n">annotations</span><span class="p">[</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">taxonomy</span>
+
+        <span class="k">return</span> <span class="n">annotations</span></div></div>
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2020, Vanessa Sochat
-
-    </p>
+    <p>&#169; Copyright 2020, Vanessa Sochat.</p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

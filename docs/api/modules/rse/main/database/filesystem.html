@@ -1,72 +1,35 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>rse.main.database.filesystem &mdash; The Research Software Encyclopedia 11 documentation</title>
+      <link rel="stylesheet" href="../../../../assets/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../assets/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../assets/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../../../assets/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../assets/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../assets/documentation_options.js"></script>
         <script src="../../../../assets/jquery.js"></script>
         <script src="../../../../assets/underscore.js"></script>
         <script src="../../../../assets/doctools.js"></script>
-        <script src="../../../../assets/language_data.js"></script>
-    
-    <script type="text/javascript" src="../../../../assets/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../../assets/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../assets/pygments.css" type="text/css" />
+    <script src="../../../../assets/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../../../index.html" class="icon icon-home"> The Research Software Encyclopedia
-          
-
-          
-            
             <img src="../../../../assets/logo-transparent.png" class="logo" alt="Logo"/>
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 0.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,85 +37,37 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../source/rse.html">rse package</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../index.html">The Research Software Encyclopedia</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
-        
           <li><a href="../../main.html">rse.main</a> &raquo;</li>
-        
           <li><a href="../database.html">rse.main.database</a> &raquo;</li>
-        
       <li>rse.main.database.filesystem</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for rse.main.database.filesystem</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 
@@ -172,13 +87,16 @@
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">rse.utils.file</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">write_json</span><span class="p">,</span>
+    <span class="n">write_file</span><span class="p">,</span>
     <span class="n">mkdir_p</span><span class="p">,</span>
     <span class="n">read_json</span><span class="p">,</span>
+    <span class="n">read_file</span><span class="p">,</span>
     <span class="n">recursive_find</span><span class="p">,</span>
     <span class="n">get_latest_modified</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">rse.main.database.base</span> <span class="kn">import</span> <span class="n">Database</span>
 <span class="kn">from</span> <span class="nn">rse.main.parsers</span> <span class="kn">import</span> <span class="n">get_parser</span>
+<span class="kn">from</span> <span class="nn">rse.main.parsers.base</span> <span class="kn">import</span> <span class="n">ParserBase</span>
 <span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
@@ -189,21 +107,19 @@
 
 
 <div class="viewcode-block" id="FileSystemDatabase"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase">[docs]</a><span class="k">class</span> <span class="nc">FileSystemDatabase</span><span class="p">(</span><span class="n">Database</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A FileSystemDatabase writes raw json to files to a database.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;A FileSystemDatabase writes raw json to files to a database.&quot;&quot;&quot;</span>
 
     <span class="n">database</span> <span class="o">=</span> <span class="s2">&quot;filesystem&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dir</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;init for the filesystem ensures that the base folder (named </span>
-<span class="sd">           according to the studyid) exists.</span>
+        <span class="sd">&quot;&quot;&quot;init for the filesystem ensures that the base folder (named</span>
+<span class="sd">        according to the studyid) exists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_database</span><span class="p">(</span><span class="n">config_dir</span><span class="p">)</span>
 
 <div class="viewcode-block" id="FileSystemDatabase.create_database"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.create_database">[docs]</a>    <span class="k">def</span> <span class="nf">create_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dir</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create the database. The parent folder must exist.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Create the database. The parent folder must exist.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config_dir</span><span class="p">,</span> <span class="s2">&quot;database&quot;</span><span class="p">))</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config_dir</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">DirectoryNotFoundError</span><span class="p">(</span>
@@ -215,8 +131,7 @@
     <span class="c1"># Global</span>
 
 <div class="viewcode-block" id="FileSystemDatabase.clear"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;clear (delete) all software repositories.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;clear (delete) all software repositories.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">parser_dir</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_parsers</span><span class="p">(</span><span class="n">fullpath</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser_dir</span><span class="p">):</span>
                 <span class="n">bot</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Removing </span><span class="si">{</span><span class="n">parser_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -226,8 +141,7 @@
     <span class="c1"># Get, delete, etc. only require uid</span>
 
 <div class="viewcode-block" id="FileSystemDatabase.exists"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.exists">[docs]</a>    <span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Determine if a repo exists.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Determine if a repo exists.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">exact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -235,20 +149,24 @@
             <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="FileSystemDatabase.add"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Add a new software repository to the database.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Add a new software repository to the database.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">uid</span><span class="p">:</span>
             <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">()</span>
+
+            <span class="c1"># If it&#39;s a parser handoff</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ParserBase</span><span class="p">):</span>
+                <span class="n">parser</span> <span class="o">=</span> <span class="n">data</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">data</span>
+
             <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
-                <span class="n">bot</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s2"> was added to the the database.&quot;</span><span class="p">)</span>
+                <span class="n">bot</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="si">}</span><span class="s2"> was added to the the database.&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">SoftwareRepository</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">data_base</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_base</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">bot</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Please define a unique identifier to add.&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FileSystemDatabase.get_or_create"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.get_or_create">[docs]</a>    <span class="k">def</span> <span class="nf">get_or_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Determine if a repo exists.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Determine if a repo exists.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">exact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
@@ -257,8 +175,8 @@
 
 <div class="viewcode-block" id="FileSystemDatabase.get"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exact</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get a software repo based on a uid. If exact is not needed, we can</span>
-<span class="sd">           search for a match based on the partial uid.  If exact is False, </span>
-<span class="sd">           and a uid is not provided, get the last repository created.</span>
+<span class="sd">        search for a match based on the partial uid.  If exact is False,</span>
+<span class="sd">        and a uid is not provided, get the last repository created.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">uid</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">exact</span><span class="p">:</span>
             <span class="n">repos</span> <span class="o">=</span> <span class="n">get_latest_modified</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_base</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;metadata*.json&quot;</span><span class="p">)</span>
@@ -274,29 +192,84 @@
         <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="n">uid</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">SoftwareRepository</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">exists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">data_base</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_base</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FileSystemDatabase.update"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Update a repository by retrieving metadata, and then calling update </span>
-<span class="sd">           on the software repository to save it.</span>
+<div class="viewcode-block" id="FileSystemDatabase.update"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">rewrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update a repository by retrieving metadata, and then calling update</span>
+<span class="sd">        on the software repository to save it.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">repo</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+            <span class="k">if</span> <span class="n">rewrite</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">repo</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">updates</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FileSystemDatabase.search"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;A filesystem search can only support returning results with filenames</span>
+<div class="viewcode-block" id="FileSystemDatabase.label"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update a repository with a specific key/value pair.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">repo</span><span class="o">.</span><span class="n">data</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">force</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> is already defined for </span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="si">}</span><span class="s2">. Use --force to overwrite.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Adding key </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">repo</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span></div>
+
+<div class="viewcode-block" id="FileSystemDatabase.search"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">taxonomy</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">criteria</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A filesystem search can only support returning results with filenames.</span>
+<span class="sd">        For taxonomy and criteria items, we load them and search.</span>
+<span class="sd">        We organize results based on the query, taxonomy, and criteria</span>
+<span class="sd">        The results returned are separate (e.g., a single repo can appear</span>
+<span class="sd">        in more than one list).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">taxonomy_regex</span> <span class="o">=</span> <span class="s2">&quot;(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">taxonomy</span> <span class="ow">or</span> <span class="p">[])</span>
+        <span class="n">criteria_regex</span> <span class="o">=</span> <span class="s2">&quot;(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">criteria</span> <span class="ow">or</span> <span class="p">[])</span>
         <span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_repos</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">repo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
-                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">results</span></div>
+
+            <span class="k">if</span> <span class="n">query</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">repo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">query</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                        <span class="n">results</span><span class="p">[</span><span class="n">query</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+                    <span class="n">results</span><span class="p">[</span><span class="n">query</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">repo</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">taxonomy</span> <span class="ow">or</span> <span class="n">criteria</span><span class="p">:</span>
+                <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">repo</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="c1"># Add taxonomy items</span>
+            <span class="k">if</span> <span class="n">taxonomy</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">tags</span> <span class="ow">in</span> <span class="n">repo</span><span class="o">.</span><span class="n">load_taxonomy</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">taxonomy_regex</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                                <span class="n">results</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+                            <span class="n">results</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+
+            <span class="c1"># Add criteria items</span>
+            <span class="k">if</span> <span class="n">criteria</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">term</span><span class="p">,</span> <span class="n">annotations</span> <span class="ow">in</span> <span class="n">repo</span><span class="o">.</span><span class="n">load_criteria</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">annotation</span> <span class="ow">in</span> <span class="n">annotations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="n">annotation</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span> <span class="ow">and</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+                            <span class="n">criteria_regex</span><span class="p">,</span> <span class="n">term</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span>
+                        <span class="p">):</span>
+                            <span class="k">if</span> <span class="n">term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                                <span class="n">results</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+                            <span class="n">results</span><span class="p">[</span><span class="n">term</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+
+        <span class="n">final</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">final</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">listing</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">final</span></div>
 
 <div class="viewcode-block" id="FileSystemDatabase.delete_repo"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.delete_repo">[docs]</a>    <span class="k">def</span> <span class="nf">delete_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;delete a repo based on a specific identifier. </span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;delete a repo based on a specific identifier.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">uid</span><span class="p">):</span>
             <span class="n">repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+
+            <span class="c1"># Remove the directory if no other repos</span>
+            <span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">):</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
+
             <span class="n">bot</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s2"> has been removed.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span>
 
@@ -304,8 +277,7 @@
         <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="FileSystemDatabase.delete_parser"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.delete_parser">[docs]</a>    <span class="k">def</span> <span class="nf">delete_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;delete all repos for a parser, based on executor&#39;s name (str).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;delete all repos for a parser, based on executor&#39;s name (str).&quot;&quot;&quot;</span>
         <span class="n">parser_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_base</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parser_dir</span><span class="p">):</span>
             <span class="n">bot</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Executor </span><span class="si">{</span><span class="n">parser_dir</span><span class="si">}</span><span class="s2"> directory does not exist.&quot;</span><span class="p">)</span>
@@ -314,8 +286,7 @@
         <span class="k">return</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="FileSystemDatabase.iter_parsers"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.iter_parsers">[docs]</a>    <span class="k">def</span> <span class="nf">iter_parsers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullpath</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;list executors based on the subfolders in the base database folder.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;list executors based on the subfolders in the base database folder.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">contender</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_base</span><span class="p">):</span>
             <span class="n">contender</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_base</span><span class="p">,</span> <span class="n">contender</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">contender</span><span class="p">):</span>
@@ -326,8 +297,8 @@
 
 <div class="viewcode-block" id="FileSystemDatabase.list_repos"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.FileSystemDatabase.list_repos">[docs]</a>    <span class="k">def</span> <span class="nf">list_repos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;list software repositories, either under a particular parser name</span>
-<span class="sd">           or just under all parsers. This returns repos in rows to be printed</span>
-<span class="sd">           (or otherwise parsed).</span>
+<span class="sd">        or just under all parsers. This returns repos in rows to be printed</span>
+<span class="sd">        (or otherwise parsed).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">listpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_base</span>
         <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
@@ -345,27 +316,41 @@
 
 
 <div class="viewcode-block" id="SoftwareRepository"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository">[docs]</a><span class="k">class</span> <span class="nc">SoftwareRepository</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;A software repository is a filesystem representation of a repo. It can </span>
-<span class="sd">       take a uid, determine if the repo exists, and then interact with the </span>
-<span class="sd">       metadata for it. If the repo is instantiated without a unique id</span>
-<span class="sd">       it is assumed to not exist yet, otherwise it must already</span>
-<span class="sd">       exist.</span>
+    <span class="sd">&quot;&quot;&quot;A software repository is a filesystem representation of a repo. It can</span>
+<span class="sd">    take a uid, determine if the repo exists, and then interact with the</span>
+<span class="sd">    metadata for it. If the repo is instantiated without a unique id</span>
+<span class="sd">    it is assumed to not exist yet, otherwise it must already</span>
+<span class="sd">    exist.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">data_base</span><span class="p">,</span> <span class="n">exists</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;A SoftwareRepository holds some uid for a parser, and controls</span>
-<span class="sd">           interaction with the filesystem. </span>
+<span class="sd">        interaction with the filesystem.</span>
 
-<span class="sd">           Arguments:</span>
-<span class="sd">             parser (str)    : the parser</span>
-<span class="sd">             data_base (str) : the path where the database exists.</span>
-<span class="sd">             exists (bool)   : if True, must already exists (default is False)</span>
+<span class="sd">        Arguments:</span>
+<span class="sd">          parser (str)    : the parser</span>
+<span class="sd">          data_base (str) : the path where the database exists.</span>
+<span class="sd">          exists (bool)   : if True, must already exists (default is False)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uid</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">uid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">parser</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_base</span> <span class="o">=</span> <span class="n">data_base</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criteria</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taxonomy</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">exists</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">avatar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">get_avatar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">get_description</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -376,15 +361,24 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_base</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SoftwareRepository.update"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Update a data file. This means reading, updating, and writing.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Update a data file. This means reading, updating, and writing.&quot;&quot;&quot;</span>
         <span class="n">updates</span> <span class="o">=</span> <span class="n">updates</span> <span class="ow">or</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">updates</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
 
+<div class="viewcode-block" id="SoftwareRepository.update_criteria"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.update_criteria">[docs]</a>    <span class="k">def</span> <span class="nf">update_criteria</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update a criteria, meaning adding a True/False answer to the</span>
+<span class="sd">        unique id for the user. We are currently assuming that criteria</span>
+<span class="sd">        have yes/no responses, and True == yes, False == no.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">uid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">criteria</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">criteria</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">response</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">criteria</span><span class="p">[</span><span class="n">uid</span><span class="p">][</span><span class="n">username</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span></div>
+
 <div class="viewcode-block" id="SoftwareRepository.create"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">should_exist</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;create the filename if it doesn&#39;t exist, otherwise if it should (and</span>
-<span class="sd">           does not) exit on error.</span>
+<span class="sd">        does not) exit on error.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">should_exist</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">):</span>
@@ -393,7 +387,9 @@
                 <span class="n">contenders</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">*&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_base</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">))</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contenders</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
-                        <span class="s2">&quot;(</span><span class="si">%s</span><span class="s2">/|[.]json)&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_base</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">contenders</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="s2">&quot;(</span><span class="si">%s</span><span class="s2">/|[.]json)&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_base</span><span class="p">,</span>
+                        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="n">contenders</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                     <span class="p">)</span>
 
                 <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">contenders</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -401,6 +397,8 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">RepoNotFoundError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">taxonomy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_taxonomy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">criteria</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_criteria</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_dir</span><span class="p">):</span>
             <span class="n">mkdir_p</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_dir</span><span class="p">)</span>
@@ -416,62 +414,129 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="SoftwareRepository.export"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.export">[docs]</a>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;wrapper to expose the executor.export function</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;wrapper to expose the executor.export function&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">export</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="SoftwareRepository.save"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Save a json object (metadata.json) for the software repository.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Save a json object (metadata.json) for the software repository.&quot;&quot;&quot;</span>
         <span class="n">write_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SoftwareRepository.summary"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="SoftwareRepository.load"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Given a software uid, load data from filename.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Given a software uid, load data from filename.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">read_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span></div></div>
+            <span class="k">return</span> <span class="n">read_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SoftwareRepository.get_criteria"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.get_criteria">[docs]</a>    <span class="k">def</span> <span class="nf">get_criteria</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get loaded criteria&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">criteria</span></div>
+
+<div class="viewcode-block" id="SoftwareRepository.get_taxonomy"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.get_taxonomy">[docs]</a>    <span class="k">def</span> <span class="nf">get_taxonomy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get loaded taxonomy&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">taxonomy</span></div>
+
+<div class="viewcode-block" id="SoftwareRepository.load_criteria"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.load_criteria">[docs]</a>    <span class="k">def</span> <span class="nf">load_criteria</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given a repository directory, load criteria files if they exist&quot;&quot;&quot;</span>
+        <span class="n">criteria</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_dir</span><span class="si">}</span><span class="s2">/criteria*.tsv&quot;</span><span class="p">):</span>
+            <span class="n">uid</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;criteria-&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.tsv&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">uid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">criteria</span><span class="p">:</span>
+                <span class="n">criteria</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">row</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">username</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">criteria</span><span class="p">[</span><span class="n">uid</span><span class="p">][</span><span class="n">username</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span>
+        <span class="k">return</span> <span class="n">criteria</span></div>
+
+<div class="viewcode-block" id="SoftwareRepository.save_criteria"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.save_criteria">[docs]</a>    <span class="k">def</span> <span class="nf">save_criteria</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save criteria to file. Each file is named based on the criteria id,</span>
+<span class="sd">        and is a tab separated file that includes the username and response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">uid</span><span class="p">,</span> <span class="n">responses</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">criteria</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_dir</span><span class="p">,</span> <span class="s2">&quot;criteria-</span><span class="si">%s</span><span class="s2">.tsv&quot;</span> <span class="o">%</span> <span class="n">uid</span><span class="p">)</span>
+            <span class="c1"># Sort based on username</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">responses</span><span class="o">.</span><span class="n">items</span><span class="p">())]</span>
+            <span class="n">write_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
+            <span class="n">bot</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s2"> saved to </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SoftwareRepository.load_taxonomy"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.load_taxonomy">[docs]</a>    <span class="k">def</span> <span class="nf">load_taxonomy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given a repository directory, load taxonomy annotations if they exist</span>
+<span class="sd">        The taxonomy.tsv file should be a tab separated file with:</span>
+<span class="sd">        username category-unique-id. This means that we keep a record of</span>
+<span class="sd">        who has categorized what, and load this information into the</span>
+<span class="sd">        taxonomy dictionary (organized by the category-unique-id which</span>
+<span class="sd">        then has a total count and list of users).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">taxonomy</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">taxonomy_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_dir</span><span class="p">,</span> <span class="s2">&quot;taxonomy.tsv&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">taxonomy_file</span><span class="p">):</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="n">taxonomy_file</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">row</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">username</span><span class="p">,</span> <span class="n">uids</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">taxonomy</span><span class="p">[</span><span class="n">username</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">uids</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">taxonomy</span></div>
+
+<div class="viewcode-block" id="SoftwareRepository.save_taxonomy"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.save_taxonomy">[docs]</a>    <span class="k">def</span> <span class="nf">save_taxonomy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save taxonomy to file. Each file is named taxonomy.tsv,</span>
+<span class="sd">        and is a tab separated file that includes the username and response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_dir</span><span class="p">,</span> <span class="s2">&quot;taxonomy.tsv&quot;</span><span class="p">)</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">taxonomy</span><span class="o">.</span><span class="n">items</span><span class="p">())]</span>
+        <span class="n">write_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
+        <span class="n">bot</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="si">}</span><span class="s2"> saved to </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+    <span class="c1"># Annotation</span>
+
+<div class="viewcode-block" id="SoftwareRepository.has_criteria_annotation"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.has_criteria_annotation">[docs]</a>    <span class="k">def</span> <span class="nf">has_criteria_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determine if a repository has been annotated by a user.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">uid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">criteria</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">username</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">criteria</span><span class="p">[</span><span class="n">uid</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="SoftwareRepository.has_taxonomy_annotation"><a class="viewcode-back" href="../../../../source/rse.main.database.html#rse.main.database.filesystem.SoftwareRepository.has_taxonomy_annotation">[docs]</a>    <span class="k">def</span> <span class="nf">has_taxonomy_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determine if a repository has been annotated by a user.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">username</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">taxonomy</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div></div>
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2020, Vanessa Sochat
-
-    </p>
+    <p>&#169; Copyright 2020, Vanessa Sochat.</p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
