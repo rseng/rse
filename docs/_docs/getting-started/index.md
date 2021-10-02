@@ -16,6 +16,7 @@ your software repository.
 
  - [How does it work?](#how-does-it-work): How does rse work?
  - [Concepts](#concepts): What are common rse concepts?
+ - [Quick Start](#quick-start): to install, create, and add software to an RSEPedia database.
 
 ### Setup
 
@@ -27,7 +28,7 @@ your software repository.
  - [Commands](commands/) including run, re-run, list (ls), get, and others.
  - [Parsers](parsers/) know how to parse some remote software repository
  - [Scrapers](scrapers/) discover new software repositories via resource APIs.
- - [Dashboard](dashboard/): an annotation interface for criteria and taxonomy (under development)
+ - [Dashboard](dashboard/): an annotation interface for criteria and taxonomy
  - [Containers](containers/) for pre-built environments to use rse.
  - [API](api/) application programming interface to expose software, criteria, and taxonomy
  - [Annotation](annotation/) of criteria and taxonomy items for research software
@@ -112,6 +113,38 @@ $ pip install -e .[all]         # local install from repository
 $ pip install -e rse[all]       # install from pypi
 $ rse config --database sqlite
 ```
+
+<a id="#quick-start">
+## Quick Start
+
+A quick example of installing the software and creating a database of research software with two entries from GitHub might look like the following:
+
+```bash
+$ pip install rse[all]
+$ rse init
+$ rse add https://github.com/citation-file-format/cff-converter-python
+$ rse ls
+1  github/citation-file-format/cff-converter-python
+$ rse add https://gitlab.com/jspaaks/howfairis-livetest
+$ rse ls
+1  github/citation-file-format/cff-converter-python
+2  gitlab/jspaaks/howfairis-livetest
+$ tree database
+database
+├── github
+│   └── citation-file-format
+│       └── cff-converter-python
+│           └── metadata.json
+└── gitlab
+    └── jspaaks
+        └── howfairis-livetest
+            └── metadata.json
+$ cat database/github/citation-file-format/cff-converter-python/metadata.json 
+```
+
+And then you might want to look at [Annotation](annotation/) or criteria or taxonomy items,
+[Scrapers](scrapers/) to automate adding software to your database, or generating
+a [Dashboard](dashboard/) for others to explore.
 
 ## Licenses
 
