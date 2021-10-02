@@ -146,41 +146,9 @@ $ rse config --database postgresql
 and then export the rest via an environment variable:
 
 ```bash
-export QME_DATABASE_STRING=username:password@host/dbname
+export RSE_DATABASE_STRING=username:password@host/dbname
 ```
 
 which would work for both types.
-
-## Executor Parameters
-
-Each executor is allowed to define it's own parameters, and they can be
-set in the configuration file with `rse config --set`. The general format is:
-
-```bash
-$ rse config --set <executor> <key> <value>
-```
-
-For example, let's say we wanted to define the sacct format string for the slurm executor.
-We might do:
-
-```bash
-$ rse config --set slurm sacct_format jobid,jobname,partition,alloccpus,elapsed,state,exitcode
-Configuration saved with executor.slurm sacct_format jobid,jobname,partition,alloccpus,elapsed,state,exitcode
-```
-
-And this would result in the following config file (which you could also update by hand,
-if you so chose):
-
-```
-$ cat /home/vanessa/.rse/config.ini 
-[DEFAULT]
-database = sqlite
-databaseconnect = 
-
-[executor.shell]
-
-[executor.slurm]
-sacct_format = jobid,jobname,partition,alloccpus,elapsed,state,exitcode
-```
 
 If you want some help with your configuration, please don't be afraid to [reach out](https://github.com/{{ site.repo }}/issues). You might next want to see how [environment variables]({{ site.baseurl }}/getting-started/environment/) can further customize your usage of rse.
