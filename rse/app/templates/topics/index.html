@@ -74,7 +74,7 @@ label[for='checkbox-tagify-show-input'] + input:checked ~ textaragifyea{
 </nav>
 
 <main class="grid flex-grid">{% for repo in repos %}{% if repo.data.owner %}
-     <div onclick="window.open('{{ repo.data.html_url }}', '_blank');" class="card {% for topic in repo.topics %}{{ topic }} card-{{ topic }} {% endfor %}">
+     <div class="card {% for topic in repo.topics %}{{ topic }} card-{{ topic }} {% endfor %}">
           <p><a href="{{ repo.data.html_url }}" target="_blank">{{ repo.data.full_name }}</a></p><br>
           <a target="_blank" href="{{ url_prefix }}repository/{{ repo.uid }}/annotate-taxonomy">✏️ Taxonomy</a><br>
           <a target="_blank" href="{{ url_prefix }}repository/{{ repo.uid }}/annotate-criteria">✏️ Criteria</a></p>
