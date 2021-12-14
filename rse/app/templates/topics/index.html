@@ -74,10 +74,11 @@ label[for='checkbox-tagify-show-input'] + input:checked ~ textaragifyea{
 </nav>
 
 <main class="grid flex-grid">{% for repo in repos %}{% if repo.data.owner %}
-     <div onclick="window.open('{{ repo.data.html_url }}', '_blank');" class="card {% for topic in repo.topics %}{{ topic }} card-{{ topic }} {% endfor %}">
+     <div class="card {% for topic in repo.topics %}{{ topic }} card-{{ topic }} {% endfor %}">
           <p><a href="{{ repo.data.html_url }}" target="_blank">{{ repo.data.full_name }}</a></p><br>
           <a target="_blank" href="{{ url_prefix }}repository/{{ repo.uid }}/annotate-taxonomy">✏️ Taxonomy</a><br>
-          <a target="_blank" href="{{ url_prefix }}repository/{{ repo.uid }}/annotate-criteria">✏️ Criteria</a></p>
+          <a target="_blank" href="{{ url_prefix }}repository/{{ repo.uid }}/annotate-criteria">✏️ Criteria</a>
+          <a target="_blank" href="{{ repo.data.html_url }}">❤️ Code</a></p>
           {% if repo.description %}<p style="position:absolute; bottom:0px; right:0px; margin-bottom:0px"><span type="button" style="border-radius:10px" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="bottom" title="{{ repo.description }}">ℹ️</span></p>{% endif %}
           <p><a style="position:absolute; bottom:0px; left: 0px" href="{{ repo.data.owner.html_url }}" target="_blank"><img src="{{ repo.data.owner.avatar_url }}" width="30px"></a></p>
      </div>{% endif %}{% endfor %}
