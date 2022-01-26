@@ -291,3 +291,7 @@ article {
   background-color: var(--color-yellow);
 }
 
+
+tr {
+  background-color: white;
+}
