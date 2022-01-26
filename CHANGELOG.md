@@ -14,6 +14,7 @@ and **Merged pull requests**. Critical items to know are:
 The versions coincide with releases on pip.
 
 ## [0.0.x](https://github.com/rseng/rse/tree/master) (0.0.x)
+ - updating local index to be a data table (0.0.33)
  - move repository link to be part of card (0.0.32)
  - ipython should not be required for shell (0.0.31)
  - updating annotation interface to be better searched (0.0.30)
