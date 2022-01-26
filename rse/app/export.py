@@ -11,11 +11,12 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from rse.utils.urls import get_user_agent
 from rse.utils.file import mkdir_p, write_file, write_json
 from rse.defaults import RSE_URL_PREFIX
+import json
 import logging
-import shutil
 import os
-import sys
 import requests
+import shutil
+import sys
 import time
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -74,6 +75,12 @@ def export_web_static(export_dir, base_url, client, force=False):
     for repo in client.list():
         repo = client.get(repo[0])
         repo_path = os.path.join("repository", repo.uid)
+
+        if isinstance(repo.data, str):
+            repo.data = json.loads(data)
+
+        # Get the list of topics
+        topiclist = repo.data.get("topics", [])
         data.append(
             {
                 "uid": repo.uid,
@@ -81,6 +88,7 @@ def export_web_static(export_dir, base_url, client, force=False):
                 "rel": "%s%s" % (RSE_URL_PREFIX, repo_path),
                 "avatar": repo.avatar,
                 "description": repo.description,
+                "topics": topiclist,
             }
         )
         # Currently don't link to repository page

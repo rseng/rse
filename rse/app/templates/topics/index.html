@@ -22,14 +22,16 @@
 </header>
 
 <div class="container">
+<a class="button reset filter-reset" onclick="$('#software').DataTable().search('').draw()" style='float:right;padding-bottom:5px' href="#">reset</a></li>
+
 <table id="software"  class="table table-bordered" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th></th>
             <th>Repository</th>
             <th>Description</th>
             <th>✏️ Taxonomy</th>
             <th>✏️ Criteria</th>
+            <th>Topics</th>
         </tr>
   </thead>      
 </table>
@@ -43,13 +45,14 @@
 </script>
 <script>
 $(document).ready(function(){
+
 $.getJSON( "data.json", function( data ) {
 
 $('#software').DataTable( {
   data: data,
   pageLength: 50,
   columns: [
-    { data: "avatar", 
+    /*{ data: "avatar", 
       orderable: false, 
       render: function ( data, type, row ) { 
          if(!data.includes("None")) {
@@ -59,7 +62,7 @@ $('#software').DataTable( {
          }
       },
       targets: 0,
-    },
+    }, */
     { data: "uid",
       render: function ( data, type, row ) { return "<a href='" + row['url'] + "' target='_blank'>" +data +"</a>";},
       targets: 1,
@@ -71,6 +74,18 @@ $('#software').DataTable( {
     { data: null,
       render: function ( data, type, row ) { return "<a href='/software/repository/" + row['uid'] + "/annotate-taxonomy'>Annotate</a>";},       
      },
+    { data: "topics", 
+      render: function ( data, type, row ) { 
+         var topics = ""
+         if(data.length > 0) {
+           $.each(data, function(i, e){
+              topics += "<button onclick=$('#software').DataTable().search('"+ e +"').draw(); class='tag button btn btn-primary btn-xs'>" + e + "</button>";
+           })
+         }
+         return topics
+      },
+      targets: 0,
+    },
   ]
 });
 });
