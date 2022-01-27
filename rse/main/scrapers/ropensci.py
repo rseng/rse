@@ -48,7 +48,6 @@ class ROpenSciScraper(ScraperBase):
         parser = GitHubParser()
         repos = parser.get_org_repos("ropensci", paginate=paginate, delay=delay)
 
-        results = []
         for entry in repos:
 
             if not entry:
@@ -76,4 +75,3 @@ class ROpenSciScraper(ScraperBase):
             # Add results that don't exist
             if not client.exists(uid):
                 client.add(uid, data=result)
-                name = os.path.basename(uid)

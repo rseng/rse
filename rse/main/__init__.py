@@ -130,7 +130,7 @@ class Encyclopedia:
     def add(self, uid, quiet=False, data=None):
         """A wrapper to add a repository to the software database."""
         if not self.exists(uid):
-            repo = self.db.add(uid, data)
+            repo = self.db.add(uid, data=data)
             return repo
         if not quiet:
             bot.error(f"{uid} already exists in the database.")
