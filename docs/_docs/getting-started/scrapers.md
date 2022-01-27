@@ -33,6 +33,7 @@ and it includes links to repositories:
  - [bio.tools](#biotools)
  - [Hal Research Software Database](#hal)
  - [Research Software NL Dictionary](#researchsoftwarenl)
+ - [ROpenSci](#ropensci)
 
 
 <a id="joss">
@@ -234,4 +235,35 @@ scraper = get_named_scraper('rsnl')
 ```python
 from rse.main.scrapers import RSNLScraper
 scraper = RSNLScraper()
+```
+
+
+<a id="ropensci">
+### ROpenSci
+
+The [ROpenSci](https://github.com/ropensci/) GitHub organization includes peer
+reviewed software that renders to [https://docs.ropensci.org](https://docs.ropensci.org).
+The way we determine if a repository is a code repository is by way of the description
+URL being filled in to have that prefix.
+
+```bash
+$ rse scrape ropensci
+```
+
+To do a dry run:
+
+```bash
+$ rse scrape --dry-run ropensci
+```
+
+The [within python](#within-python) interaction is the same, except you need to
+select the ropensci named parser.
+
+```python
+from rse.main.scrapers import get_named_scraper
+scraper = get_named_scraper('ropensci')
+```
+```python
+from rse.main.scrapers import ROpenSciScraper
+scraper = ROpenSciScraper()
 ```

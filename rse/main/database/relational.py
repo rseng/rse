@@ -97,13 +97,15 @@ class RelationalDatabase(Database):
 
     # Add or Update requires executor
 
-    def add(self, uid):
+    def add(self, uid, data=None):
         """Create a new repo based on a uid that matches to a parser."""
         from rse.main.database.models import SoftwareRepository
 
         parser = get_parser(uid, config=self.config)
         if not self.exists(parser.uid):
-            data = parser.get_metadata()
+
+            if not data:
+                data = parser.get_metadata()
 
             # If it's a parser handoff
             if isinstance(data, ParserBase):

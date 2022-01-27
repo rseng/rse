@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 
-Copyright (C) 2020 Vanessa Sochat.
+Copyright (C) 2020-2022 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -32,3 +32,10 @@ def test_parser_github(tmp_path):
     data = parser.export()
     for key in ["timestamp", "url", "html_url"]:
         assert key in data
+        
+def test_org_repos(tmp_path):
+    """Test the github parser to retrieve org repos."""
+    from rse.main.parsers import GitHubParser
+    parser = GitHubParser()
+    data = parser.get_org_repos("ropensci", paginate=False)
+    assert len(data) == 100

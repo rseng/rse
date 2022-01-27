@@ -77,11 +77,12 @@ class FileSystemDatabase(Database):
         except:
             return False
 
-    def add(self, uid):
+    def add(self, uid, data=None):
         """Add a new software repository to the database."""
         if uid:
             parser = get_parser(uid, config=self.config)
-            data = parser.get_metadata()
+            if not data:
+                data = parser.get_metadata()
 
             # If it's a parser handoff
             if isinstance(data, ParserBase):

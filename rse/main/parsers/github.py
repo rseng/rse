@@ -9,8 +9,11 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 import logging
+import random
 import requests
+from time import sleep
 from rse.utils.urls import check_response
+from rse.utils.urls import get_user_agent, check_response, repository_regex
 
 from .base import ParserBase
 
@@ -52,6 +55,39 @@ class GitHubParser(ParserBase):
         data = data or self.data
         return data.get("description")
 
+    def get_org_repos(self, org, paginate=True, delay=None):
+        """
+        A helper function to get a listing of org repos.
+        """
+        self.load_secrets()
+        url = "https://api.github.com/orgs/%s/repos?per_page=100" % (org)
+        headers = {
+            "Accept": "application/vnd.github.symmetra-preview+json",
+            "User-Agent": get_user_agent(),
+        }
+        if self.token:
+            headers["Authorization"] = "token %s" % self.token
+
+        repos = []
+
+        # Start at 2, as 1 is implied to be the first
+        page = 2
+        original_url = url
+        while url is not None:
+            response = requests.get(url, headers=headers)
+            data = check_response(response)
+
+            # Reset the url to be None
+            url = None
+            if data and paginate:
+                url = original_url + "&page=%s" % page
+
+            repos = repos + data
+            page += 1
+            # Sleep for a random amount of time to give a rest!
+            sleep(delay or random.choice(range(1, 10)) * 0.1)
+        return repos
+
     def get_metadata(self, uri=None):
         """Retrieve repository metadata. The common metadata (timestamp) is
         added by the software repository parser, and here we need to
@@ -78,8 +114,22 @@ class GitHubParser(ParserBase):
         if data is None:
             return None
 
+        self.data = self.parse_github_repo(data)
+        return self.data
+
+    def parse_github_repo(self, repo):
+        """
+        Given an API response for a GitHub repository, parse a minimal set.
+        """
+        self.load_secrets()
+        headers = {
+            "Accept": "application/vnd.github.symmetra-preview+json",
+        }
+        if self.token:
+            headers["Authorization"] = "token %s" % self.token
+
         # Only save minimal set
-        self.data = {}
+        data = {}
         for key in [
             "name",
             "url",
@@ -99,20 +149,20 @@ class GitHubParser(ParserBase):
             "license",
             "subscribers_count",
         ]:
-            if key in data:
-                self.data[key] = data[key]
-        self.data["owner"] = {}
+            if key in repo:
+                data[key] = repo[key]
+        data["owner"] = {}
         for key in ["html_url", "avatar_url", "login", "type"]:
-            self.data["owner"][key] = data["owner"][key]
+            data["owner"][key] = repo["owner"][key]
 
         # Also try to get topics
         headers.update({"Accept": "application/vnd.github.mercy-preview+json"})
-        url = "%s/topics" % url
+        url = "%s/topics" % repo["url"]
         response = requests.get(url, headers=headers)
 
         # Successful query!
         topics = check_response(response)
         if topics is not None:
-            self.data["topics"] = topics.get("names", [])
+            data["topics"] = topics.get("names", [])
 
-        return self.data
+        return data
