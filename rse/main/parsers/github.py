@@ -12,8 +12,7 @@ import logging
 import random
 import requests
 from time import sleep
-from rse.utils.urls import check_response
-from rse.utils.urls import get_user_agent, check_response, repository_regex
+from rse.utils.urls import get_user_agent, check_response
 
 from .base import ParserBase
 

@@ -106,6 +106,8 @@ class RelationalDatabase(Database):
 
             if not data:
                 data = parser.get_metadata()
+            else:
+                parser.data = data
 
             # If it's a parser handoff
             if isinstance(data, ParserBase):

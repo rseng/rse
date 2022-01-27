@@ -8,13 +8,8 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.urls import get_user_agent, check_response, repository_regex
-from rse.main.parsers import get_parser, GitHubParser
+from rse.main.parsers import GitHubParser
 import logging
-import requests
-import random
-import re
-from time import sleep
 
 from .base import ScraperBase
 
