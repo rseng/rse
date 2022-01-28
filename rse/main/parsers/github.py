@@ -159,9 +159,15 @@ class GitHubParser(ParserBase):
         url = "%s/topics" % repo["url"]
         response = requests.get(url, headers=headers)
 
-        # Successful query!
+        # Add topics on successful query
         topics = check_response(response)
         if topics is not None:
             data["topics"] = topics.get("names", [])
+
+        # Add topics from another source
+        if "topics" not in data and "topics" in repo:
+            data["topics"] = repo["topics"]
+        elif "topics" in data and "topics" in repo:
+            data["topics"] += [x for x in repo["topics"] if x not in data["topics"]]
 
         return data

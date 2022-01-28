@@ -243,8 +243,17 @@ scraper = RSNLScraper()
 
 The [ROpenSci](https://github.com/ropensci/) GitHub organization includes peer
 reviewed software that renders to [https://docs.ropensci.org](https://docs.ropensci.org).
-The way we determine if a repository is a code repository is by way of the description
-URL being filled in to have that prefix.
+We do this by way of parsing the ROpenSci GitHub repository (e.g., to get the latest
+or full listing) and also comparing this to the [registry.json](https://github.com/ropensci/roregistry/blob/gh-pages/registry.json)
+file. This means that we:
+
+1. Start with the GitHub repository listing, and skip over any repos not in the registry.
+2. We update the metadata with topics and description (if not defined) from the registry.
+3. In the case of a full parsing (not looking for latest) we add any names from the registry not seen in GitHub (e.g., repositories in other organizations)
+4. In the case of a "latest" parsing we do not consider this list.
+
+This seems to do a fairly good job of capturing the bulk of ROpenSci repos!
+The "latest" scrape looks like this:
 
 ```bash
 $ rse scrape ropensci

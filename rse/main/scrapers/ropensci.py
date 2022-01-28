@@ -10,6 +10,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from rse.main.parsers import GitHubParser
 import logging
+import requests
 
 from .base import ScraperBase
 
@@ -35,26 +36,85 @@ class ROpenSciScraper(ScraperBase):
         """
         return self.scrape(paginate=paginate, delay=delay)
 
+    def read_registry(self):
+        """
+        Read the registry file to create a lookup of repos based on GitHub URL.
+        """
+        lookup = {}
+        response = requests.get(
+            "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/registry.json"
+        ).json()
+        for entry in response.get("packages", []):
+            # This is the GitHub URL
+            url = entry.get("github")
+            if not url:
+                continue
+            lookup[url] = entry
+        return lookup
+
+    def get_registry_topics(self, meta):
+        """
+        Given a metadata entry from the registry lookup, parse and return topics
+        """
+        topics = [x.strip() for x in meta.get("keywords", "").split(",") if x.strip()]
+        if meta.get("ropensci_category"):
+            topics += [meta.get("ropensci_category")]
+        return topics
+
     def scrape(self, paginate=False, delay=None):
         """A shared function to scrape a set of repositories. Since the JoSS
         pages for a search and the base are the same, we can use a shared
         function.
         """
+        # This serves as 1: a lookup, and 2: to find non ropensci repos!
+        lookup = self.read_registry()
+
+        # Full GitHub urls that we expect to find!
+        names = set(lookup.keys())
+
         parser = GitHubParser()
         repos = parser.get_org_repos("ropensci", paginate=paginate, delay=delay)
 
         for entry in repos:
 
-            if not entry:
-                continue
-
-            # We determine software release based on the homepage url
-            homepage = entry.get("homepage", "")
-            if not homepage or "https://docs.ropensci.org" not in homepage:
+            # We determine belonging based on the github url
+            if entry["html_url"] not in names:
                 bot.info("Skipping repository: %s" % entry["html_url"])
                 continue
-            bot.info("Found repository: %s" % entry["html_url"])
+
+            meta = lookup[entry["html_url"]]
+
+            # Get topics from R metadata
+            topics = self.get_registry_topics(meta)
+            names.remove(entry["html_url"])
+            if "topics" not in entry:
+                entry["topics"] = []
+            entry["topics"] += topics
+
+            # Add a description if missing
+            if not entry.get("description") and meta.get("description"):
+                entry["description"] = meta["description"]
+
+            bot.info("Adding repository: %s" % entry["html_url"])
             self.results.append(parser.parse_github_repo(entry))
+
+        # If paginate is True, we intend to add ALL repos, so check those still remaining
+        # E.g., there are repos in other orgs that won't be found above
+        if paginate and names:
+            for name in names:
+
+                parser = GitHubParser(uid=name)
+                # Topics will be added here!
+                entry = parser.get_metadata()
+                meta = lookup[name]
+
+                # Add a description if missing
+                if not entry.get("description") and meta.get("description"):
+                    entry["description"] = meta["description"]
+                entry["topics"] += self.get_registry_topics(meta)
+                bot.info("Adding repository: %s" % entry["html_url"])
+                self.results.append(entry)
+
         return self.results
 
     def create(self, database=None, config_file=None):

@@ -20,10 +20,10 @@ def main(args, extra):
         sys.exit(f"{args.scraper_name[0]} is not a known scraper.")
 
     # Either get latest entries, or based on search
-    # if args.query is not None:
-    results = scraper.search(args.query, delay=args.delay)
-    # else:
-    #    results = scraper.latest(delay=args.delay)
+    if args.query is not None:
+        results = scraper.search(args.query, delay=args.delay)
+    else:
+        results = scraper.latest(delay=args.delay)
     print("Found %s results" % len(results))
 
     # If we have results and it's not a dry run, create the repos
