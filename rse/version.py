@@ -10,7 +10,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 __version__ = "0.0.34"
 AUTHOR = "Vanessa Sochat"
-AUTHOR_EMAIL = "vsochat@stanford.edu"
+AUTHOR_EMAIL = "vsoch@users.noreply.github.io"
 NAME = "rse"
 PACKAGE_URL = "https://github.com/rseng/rse"
 KEYWORDS = "rse,software,research software,database,taxonomy"
