@@ -12,6 +12,7 @@ from .biotools import BioToolsScraper
 from .hal import HalScraper
 from .joss import JossScraper
 from .rsnl import RSNLScraper
+from .ropensci import ROpenSciScraper
 import re
 
 
@@ -26,6 +27,8 @@ def get_named_scraper(name, config=None):
         scraper = HalScraper()
     elif re.search("(researchsoftwarenl|rsnl)", name, re.IGNORECASE):
         scraper = RSNLScraper()
+    elif re.search("ropensci", name, re.IGNORECASE):
+        scraper = ROpenSciScraper()
 
     if not scraper:
         raise NotImplementedError(f"There is no matching scraper for {name}")

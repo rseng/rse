@@ -33,6 +33,7 @@ and it includes links to repositories:
  - [bio.tools](#biotools)
  - [Hal Research Software Database](#hal)
  - [Research Software NL Dictionary](#researchsoftwarenl)
+ - [ROpenSci](#ropensci)
 
 
 <a id="joss">
@@ -234,4 +235,44 @@ scraper = get_named_scraper('rsnl')
 ```python
 from rse.main.scrapers import RSNLScraper
 scraper = RSNLScraper()
+```
+
+
+<a id="ropensci">
+### ROpenSci
+
+The [ROpenSci](https://github.com/ropensci/) GitHub organization includes peer
+reviewed software that renders to [https://docs.ropensci.org](https://docs.ropensci.org).
+We do this by way of parsing the ROpenSci GitHub repository (e.g., to get the latest
+or full listing) and also comparing this to the [registry.json](https://github.com/ropensci/roregistry/blob/gh-pages/registry.json)
+file. This means that we:
+
+1. Start with the GitHub repository listing, and skip over any repos not in the registry.
+2. We update the metadata with topics and description (if not defined) from the registry.
+3. In the case of a full parsing (not looking for latest) we add any names from the registry not seen in GitHub (e.g., repositories in other organizations)
+4. In the case of a "latest" parsing we do not consider this list.
+
+This seems to do a fairly good job of capturing the bulk of ROpenSci repos!
+The "latest" scrape looks like this:
+
+```bash
+$ rse scrape ropensci
+```
+
+To do a dry run:
+
+```bash
+$ rse scrape --dry-run ropensci
+```
+
+The [within python](#within-python) interaction is the same, except you need to
+select the ropensci named parser.
+
+```python
+from rse.main.scrapers import get_named_scraper
+scraper = get_named_scraper('ropensci')
+```
+```python
+from rse.main.scrapers import ROpenSciScraper
+scraper = ROpenSciScraper()
 ```
