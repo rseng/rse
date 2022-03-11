@@ -14,7 +14,6 @@ import logging
 import requests
 import random
 import sys
-import re
 from time import sleep
 
 from .base import ScraperBase
@@ -34,7 +33,7 @@ class MolssiScraper(ScraperBase):
         return self.scrape(paginate=paginate, delay=delay)
 
     def search(self, query, paginate=True, delay=0.0):
-        results = self.scrape(paginate=paginate, delay=delay, query=query)
+        return self.scrape(paginate=paginate, delay=delay, query=query)
 
     def scrape(self, paginate=False, delay=None, query=""):
         """A shared function to scrape software from molssi."""
