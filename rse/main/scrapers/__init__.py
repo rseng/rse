@@ -11,6 +11,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from .biotools import BioToolsScraper
 from .hal import HalScraper
 from .joss import JossScraper
+from .molssi import MolssiScraper
 from .rsnl import RSNLScraper
 from .ropensci import ROpenSciScraper
 import re
@@ -29,6 +30,8 @@ def get_named_scraper(name, config=None):
         scraper = RSNLScraper()
     elif re.search("ropensci", name, re.IGNORECASE):
         scraper = ROpenSciScraper()
+    elif re.search("molssi", name, re.IGNORECASE):
+        scraper = MolssiScraper()
 
     if not scraper:
         raise NotImplementedError(f"There is no matching scraper for {name}")

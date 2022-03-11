@@ -34,6 +34,7 @@ and it includes links to repositories:
  - [Hal Research Software Database](#hal)
  - [Research Software NL Dictionary](#researchsoftwarenl)
  - [ROpenSci](#ropensci)
+ - [The Molecular Sciences Software Institute](#molssi)
 
 
 <a id="joss">
@@ -275,4 +276,29 @@ scraper = get_named_scraper('ropensci')
 ```python
 from rse.main.scrapers import ROpenSciScraper
 scraper = ROpenSciScraper()
+```
+
+<a id="molssi">
+### Molssi
+
+The Molecular Sciences Software Institute maintains a paginated listing of software for
+computational chemistry, or more generally, molecular science at [https://molssi.org/software-search/](https://molssi.org/software-search/)
+that is accessible via the scaper here. Examples of command line usage include:
+ 
+
+```bash
+$ rse scrape molssi
+$ rse scrape --dry-run molssi
+```
+
+The [within python](#within-python) interaction is the same, except you need to
+select the ropensci named parser.
+
+```python
+from rse.main.scrapers import get_named_scraper
+scraper = get_named_scraper('molssi')
+
+# or!
+from rse.main.scrapers import MolssiScraper
+scraper = MolssiScraperScraper()
 ```
