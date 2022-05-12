@@ -14,6 +14,7 @@ and **Merged pull requests**. Critical items to know are:
 The versions coincide with releases on pip.
 
 ## [0.0.x](https://github.com/rseng/rse/tree/master) (0.0.x)
+ - import bug (0.0.37)
  - adding imperial college london research software directory (0.0.36)
  - adding molssi scraper (0.0.35)
  - adding ropensci scraper (0.0.34)
