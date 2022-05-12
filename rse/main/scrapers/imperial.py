@@ -8,12 +8,11 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.urls import get_user_agent, check_response, repository_regex
+from rse.utils.urls import get_user_agent, repository_regex
 from rse.main.parsers import get_parser
 import logging
 import requests
 import re
-import time
 import csv
 
 from .base import ScraperBase
@@ -52,7 +51,7 @@ class ImperialCollegeLondonScraper(ScraperBase):
         # Api doesn't appear to have pagination
         response = requests.get(url, headers={"User-Agent": get_user_agent()})
         if response.status_code != 200:
-            sys.exit("Could not retrieve data from %s" % url)
+            logger.exit("Could not retrieve data from %s" % url)
 
         reader = csv.reader(response.text.split("\n"))
         parsed = [x for x in list(reader) if x]
