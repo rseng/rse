@@ -14,6 +14,7 @@ from .joss import JossScraper
 from .molssi import MolssiScraper
 from .rsnl import RSNLScraper
 from .ropensci import ROpenSciScraper
+from .imperial import ImperialCollegeLondonScraper
 import re
 
 
@@ -32,6 +33,8 @@ def get_named_scraper(name, config=None):
         scraper = ROpenSciScraper()
     elif re.search("molssi", name, re.IGNORECASE):
         scraper = MolssiScraper()
+    elif re.search("imperial", name, re.IGNORECASE):
+        scraper = ImperialCollegeLondonScraper()
 
     if not scraper:
         raise NotImplementedError(f"There is no matching scraper for {name}")

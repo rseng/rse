@@ -31,7 +31,8 @@ class HalScraper(ScraperBase):
         super().__init__(query)
 
     def latest(self, paginate=False, delay=0.0):
-        """populate self.results with some number of latest entries. Unlike
+        """
+        populate self.results with some number of latest entries. Unlike
         a search, a latest scraper does not by default paginate. Hal will by
         default return all entries, so the user is required to define a number
         for latest.
@@ -40,8 +41,9 @@ class HalScraper(ScraperBase):
         return self.scrape(url, delay=delay)
 
     def search(self, query, paginate=True, delay=0.0):
-        """populate self.results with a listing based on matching a search criteria.
-        we search the description.
+        """
+        populate self.results with a listing based on matching a search criteria.
+        We search the description.
         """
         url = (
             "http://api.archives-ouvertes.fr/search/?q=%s&fq=docType_s:(SOFTWARE)&wt=json"
@@ -50,9 +52,8 @@ class HalScraper(ScraperBase):
         return self.scrape(url, delay=delay)
 
     def scrape(self, url, paginate=False, delay=0.0):
-        """A shared function to scrape a set of repositories. Since the JoSS
-        pages for a search and the base are the same, we can use a shared
-        function.
+        """
+        A shared function to scrape a set of repositories.
         """
         # Api doesn't appear to have pagination
         response = requests.get(url, headers={"User-Agent": get_user_agent()})
@@ -75,7 +76,8 @@ class HalScraper(ScraperBase):
         return self.results
 
     def create(self, database=None, config_file=None):
-        """After a scrape (whether we obtain latest or a search query) we
+        """
+        After a scrape (whether we obtain latest or a search query) we
         run create to create software repositories based on results.
         """
         from rse.main import Encyclopedia
