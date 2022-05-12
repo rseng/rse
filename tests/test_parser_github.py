@@ -32,10 +32,12 @@ def test_parser_github(tmp_path):
     data = parser.export()
     for key in ["timestamp", "url", "html_url"]:
         assert key in data
-        
+
+
 def test_org_repos(tmp_path):
     """Test the github parser to retrieve org repos."""
     from rse.main.parsers import GitHubParser
+
     parser = GitHubParser()
     data = parser.get_org_repos("ropensci", paginate=False)
     assert len(data) == 100
