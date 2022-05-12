@@ -35,6 +35,7 @@ and it includes links to repositories:
  - [Research Software NL Dictionary](#researchsoftwarenl)
  - [ROpenSci](#ropensci)
  - [The Molecular Sciences Software Institute](#molssi)
+ - [The Imperial College London Research Software Directory](#imperial)
 
 
 <a id="joss">
