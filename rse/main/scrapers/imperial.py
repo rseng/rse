@@ -14,42 +14,36 @@ import logging
 import requests
 import re
 import time
+import csv
 
 from .base import ScraperBase
 
-bot = logging.getLogger("rse.main.scrapers.hal")
+bot = logging.getLogger("rse.main.scrapers.imperial")
 
 # Allow the regex to have newline at end
 repository_regex = repository_regex.strip("$")
 
+csv_url = "https://raw.githubusercontent.com/ImperialCollegeLondon/research-software-directory/main/repos.csv"
 
-class HalScraper(ScraperBase):
 
-    name = "hal"
+class ImperialCollegeLondonScraper(ScraperBase):
+
+    name = "imperial"
 
     def __init__(self, query=None, **kwargs):
         super().__init__(query)
 
     def latest(self, paginate=False, delay=0.0):
         """
-        populate self.results with some number of latest entries. Unlike
-        a search, a latest scraper does not by default paginate. Hal will by
-        default return all entries, so the user is required to define a number
-        for latest.
+        Populate self.results with some number of latest entries.
         """
-        url = "https://api.archives-ouvertes.fr/search/?q=github&fq=docType_s:(SOFTWARE)&wt=json"
-        return self.scrape(url, delay=delay)
+        return self.scrape(csv_url, delay=delay)
 
     def search(self, query, paginate=True, delay=0.0):
         """
-        populate self.results with a listing based on matching a search criteria.
-        We search the description.
+        Populate self.results with a listing based on matching a search criteria.
         """
-        url = (
-            "http://api.archives-ouvertes.fr/search/?q=%s&fq=docType_s:(SOFTWARE)&wt=json"
-            % query
-        )
-        return self.scrape(url, delay=delay)
+        return self.scrape(csv_url, delay=delay)
 
     def scrape(self, url, paginate=False, delay=0.0):
         """
@@ -57,21 +51,27 @@ class HalScraper(ScraperBase):
         """
         # Api doesn't appear to have pagination
         response = requests.get(url, headers={"User-Agent": get_user_agent()})
-        data = check_response(response)
+        if response.status_code != 200:
+            sys.exit("Could not retrieve data from %s" % url)
 
-        for entry in data.get("response", {}).get("docs", []):
-            page_url = entry["uri_s"]
-            response = requests.get(page_url, headers={"User-Agent": get_user_agent()})
+        reader = csv.reader(response.text.split("\n"))
+        parsed = [x for x in list(reader) if x]
+        headers = parsed.pop(0)
+
+        # Lookup based on index
+        headers = {k: i for i, k in enumerate(headers)}
+        for row in parsed:
+            repo = row[headers["url"]]
+            match = re.search(repository_regex, repo, re.IGNORECASE)
             repo_url = None
-            if response.status_code == 200:
-                match = re.search(repository_regex, response.text, re.IGNORECASE)
-                if match:
-                    repo_url = match.group()
+            if match:
+                repo_url = match.group()
 
             if repo_url:
+                meta = {k: row[i] for k, i in headers.items()}
+                entry = {k: v for k, v in meta.items() if v}
                 bot.info("Found repository: %s" % repo_url)
-                self.results.append(repo_url)
-            time.sleep(delay)
+                self.results.append(entry)
 
         return self.results
 
@@ -83,9 +83,13 @@ class HalScraper(ScraperBase):
         from rse.main import Encyclopedia
 
         client = Encyclopedia(config_file=config_file, database=database)
-        for repo_id in self.results:
-            repo = get_parser(repo_id)
+        for entry in self.results:
+            repo = get_parser(entry["url"])
 
             # Add results that don't exist
             if not client.exists(repo.uid):
                 client.add(repo.uid)
+                for k, v in entry.items():
+                    if k == "url" or not v:
+                        continue
+                client.label(repo.uid, k, v, force=True)

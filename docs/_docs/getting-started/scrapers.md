@@ -292,7 +292,7 @@ $ rse scrape --dry-run molssi
 ```
 
 The [within python](#within-python) interaction is the same, except you need to
-select the ropensci named parser.
+select the molssi named parser.
 
 ```python
 from rse.main.scrapers import get_named_scraper
@@ -301,4 +301,28 @@ scraper = get_named_scraper('molssi')
 # or!
 from rse.main.scrapers import MolssiScraper
 scraper = MolssiScraperScraper()
+```
+
+<a id="imperial">
+### Imperial College London Research Software Directory
+
+You can browse the directory [here](https://imperialcollegelondon.github.io/research-software-directory/)!
+Note that if you want to use this as a Jekyll template (without relying on Alogia) @vsoch
+has prepared a template [here](https://github.com/vsoch/search). 
+
+```bash
+$ rse scrape imperial
+$ rse scrape --dry-run imperial
+```
+
+The [within python](#within-python) interaction is the same, except you need to
+select the right named parser.
+
+```python
+from rse.main.scrapers import get_named_scraper
+scraper = get_named_scraper('imperial')
+
+# or!
+from rse.main.scrapers import ImperialCollegeLondonScraper
+scraper = ImperialCollegeLondonScraper()
 ```
