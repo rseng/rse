@@ -6,6 +6,8 @@ Gemfile.lock
 _site
 .env
 
+# Software example
+rse/main/export/jekyll/_software/
 # C extensions
 *.so
 .docs/_build
