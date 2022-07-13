@@ -149,7 +149,7 @@ def export_web_static(export_dir, base_url, client, force=False):
         # Url might have a prefix
         response = requests.get(url, headers={"User-Agent": get_user_agent()})
         if response.status_code == 200:
-            write_file(outfile, response.text)
+            write_file(response.text, outfile)
         else:
             print(f"Issue parsing {url}")
 

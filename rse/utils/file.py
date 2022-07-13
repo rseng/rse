@@ -53,8 +53,10 @@ def read_file(filename, readlines=True):
     return content
 
 
-def write_file(filename, content):
-    """Write some text content to a file"""
+def write_file(content, filename):
+    """
+    Write some text content to a file
+    """
     with open(filename, "w") as fd:
         fd.write(content)
 

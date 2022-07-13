@@ -146,7 +146,7 @@ def get_parser():
         dest="export_type",
         help="Type to export (defaults to repos.txt list)",
         default="repos-txt",
-        choices=["repos-txt", "static-web"],
+        choices=["repos-txt", "static-web", "jekyll-web"],
     )
     export.add_argument(
         "--force",

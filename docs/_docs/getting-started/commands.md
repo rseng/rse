@@ -16,7 +16,7 @@ your software database.
  - [Update](#update): update metadata for a single repository or all repositories
  - [Label](#label) a software repository with custom metadata
  - [List](#list) all software or software specific to a parser
- - [Export](#export) list of software, or static interface
+ - [Export](#export) list of software, or static interface (with or without annotation)
 
  - [Clear](#clear) a software repository, all under a parser, or the entire database.
  - [Search](#search) across your software to find a particular one.
@@ -290,7 +290,7 @@ $ rse export
 ```
 
 The `--type` is a variable that can be changed to indicate an export of a static
-interface, which will start the web server, and then query endpoints to export
+interface, which (if you want annotations) will start the web server, and then query endpoints to export
 static files to some folder of interest. You're also required to indicate a path.
 
 ```bash
@@ -303,6 +303,16 @@ it first and then run, but if you want to overwrite without removal, just add `-
 ```bash
 $ rse export --type static-web --force docs/
 ```
+
+To export a static Jekyll interface (without annotation) you can do:
+
+
+```bash
+$ rse export --type jekyll-web docs/
+```
+
+Make sure the directory does not exist the first time you export! For times after
+that, only the inner `_repos` collection will be updated with your current software database.
 
 
 <a id="clear">
