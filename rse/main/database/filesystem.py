@@ -396,7 +396,7 @@ class SoftwareRepository:
             filename = os.path.join(self.parser_dir, "criteria-%s.tsv" % uid)
             # Sort based on username
             rows = ["%s\t%s" % (k, v) for k, v in sorted(responses.items())]
-            write_file(filename, "\n".join(rows))
+            write_file("\n".join(rows), filename)
             bot.debug(f"{uid} saved to {filename}")
 
     def load_taxonomy(self):
@@ -425,7 +425,7 @@ class SoftwareRepository:
         """
         filename = os.path.join(self.parser_dir, "taxonomy.tsv")
         rows = ["%s\t%s" % (k, ",".join(v)) for k, v in sorted(self.taxonomy.items())]
-        write_file(filename, "\n".join(rows))
+        write_file("\n".join(rows), filename)
         bot.debug(f"{self.uid} saved to {filename}")
 
     # Annotation

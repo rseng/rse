@@ -31,8 +31,12 @@ def main(args, extra):
 
         # We just want the unique id, the first result
         repos = [x[0] for x in client.list()]
-        write_file(args.path, "\n".join(repos))
+        write_file("\n".join(repos), args.path)
         bot.info(f"Wrote {len(repos)} to {args.path}")
+
+    # Static jekyll site (no annotation)
+    elif args.export_type == "jekyll-web":
+        client.export(args.path)
 
     # Static web export from flask to a directory
     elif args.export_type == "static-web":
