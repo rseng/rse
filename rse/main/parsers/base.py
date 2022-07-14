@@ -156,11 +156,6 @@ class ParserBase:
         for k, v in self._export_common().items():
             if v:
                 data[k] = v
-        if "avatar" not in data:
-            import IPython
-
-            IPython.embed()
-            sys.exit()
         return data
 
     def get_metadata(self, uri, **kwargs):
