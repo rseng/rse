@@ -26,6 +26,7 @@ from rse.utils.file import (
 from rse.main.database.base import Database
 from rse.main.parsers import get_parser
 from rse.main.parsers.base import ParserBase
+from rse.utils.strings import update_nonempty
 from glob import glob
 import logging
 import shutil
@@ -311,9 +312,9 @@ class SoftwareRepository:
         """
         updates = updates or {}
         if "data" in self.data:
-            self.data["data"].update(updates)
+            self.data["data"] = update_nonempty(updates, self.data["data"])
         else:
-            self.data.update(updates)
+            self.data = update_nonempty(updates, self.data)
         self.save()
 
     def update_criteria(self, uid, username, response):

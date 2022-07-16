@@ -17,6 +17,7 @@ from rse.exceptions import (
 from rse.main.database.base import Database
 from rse.main.parsers import get_parser
 from rse.main.parsers.base import ParserBase
+from rse.utils.strings import update_nonempty
 
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -150,9 +151,9 @@ class RelationalDatabase(Database):
             if repo.data and not rewrite:
                 data = json.loads(repo.data)
             if "data" in data:
-                data.update(updates)
+                data["data"] = update_nonempty(updates, data["data"])
             else:
-                data["data"].update(updates)
+                data = update_nonempty(updates, data)
             repo.data = json.dumps(data)
             self.session.add(repo)
             self.session.commit()
