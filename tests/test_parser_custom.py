@@ -14,6 +14,7 @@ import pytest
 @pytest.mark.parametrize(
     "title, uid",
     [
+        ["Research / Acoustic Indices", "custom/research/acoustic-indices"],
         ["Acoustic Indices", "custom/acoustic-indices"],
         ["Adobe audition", "custom/adobe-audition"],
         ["Anabat insight", "custom/anabat-insight"],

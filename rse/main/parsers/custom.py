@@ -11,6 +11,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from .base import ParserBase
 import rse.defaults
 import logging
+import os
 import re
 
 bot = logging.getLogger("rse.main.parsers.custom")
@@ -30,7 +31,11 @@ class CustomParser(ParserBase):
         """
         Set the uid
         """
-        return re.sub("[.: ]", "-", uid).lower().strip("-")
+        # Split by os sep and cleanup
+        parts = []
+        for part in uid.split(os.sep):
+            parts.append(re.sub("[.: ]", "-", part).lower().strip("-"))
+        return os.sep.join(parts)
 
     def set_metadata(self, **kwargs):
         for field in ["url", "title", "description"]:

@@ -329,9 +329,27 @@ $ rse import --type <type> <param1> ... <paramN>
 Generally, any imported source of information must have some kind of unique identifier that can distinguish
 the record, and alert the rse software if the record already exists, and if so, if it needs to be updated.
 Since the rse software typically uses a github or gitlab (or other version control) identifier for this purpose,
-if you have records that don't provide such an identifier, then the record will be stored under a custom namespace (TBA).
+if you have records that don't provide such an identifier, then the record will be stored under a custom namespace, with
+an identifier determined by the title. By default, the namespace is "custom" and you can change it by exporting
+`RSE_CUSTOM_DATABASE_DIR`, for example:
 
-And each importer is described in more detail below.
+```bash
+export RSE_CUSTOM_DATABASE_DIR=research
+```
+
+Since we cannot guarantee that titles are unique this management will be up to you.
+As a set of examples, here are how titles might be translated into uids and paths in a filesystem database:
+
+| Title | Identifer | Path |
+|-------|-----------|------|
+|Research / Acoustic Indices | custom/research/acoustic-indices | database/custom/research/acoustic-indices |
+|Acoustic Indices | custom/acoustic-indices | database/custom/acoustic-indices |
+|Adobe Audition | custom/adobe-audition | database/custom/adobe-audition |
+|Animal Sound Identifier | custom/animal-sound-identifier | database/custom/animal-sound-identifier |
+|ANIMAL-SPOT | custom/animal-spot | database/custom/animal-spot |
+|ARTWARP| custom/artwarp | database/custom/artwarp |
+
+If you find a title that doesn't parse well, please [open an issue](https://github.com/rseng/rse). Each importer is described in more detail below.
 
 <a id="import-google-spreadsheet">
 ### Google Sheet
