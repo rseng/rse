@@ -137,7 +137,8 @@ class ParserBase:
         return res
 
     def get_url(self, data):
-        """a common function for a parser to return the html url for the
+        """
+        a common function for a parser to return the html url for the
         upper level of metadata
         """
         raise NotImplementedError
@@ -218,7 +219,7 @@ class ParserBase:
         parser = "parser.%s" % self.name
 
         # Parsers instantiated separate from database won't have config
-        if not hasattr(self, "config"):
+        if not hasattr(self, "config") or not self.config:
             return default
         if parser not in self.config.config:
             return default

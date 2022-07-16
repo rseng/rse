@@ -25,17 +25,22 @@ class GitHubParser(ParserBase):
     matchstring = "github"
 
     def _set_uid(self, uid):
-        """Given some kind of GitHub url, parse the uid"""
+        """
+        Given some kind of GitHub url, parse the uid
+        """
         uid = uid.replace(":", "/")
         owner, repo = uid.replace(".git", "").split("/")[-2:]
         return "{}/{}".format(owner, repo)
 
     def load_secrets(self):
-        """load secrets, namely the GitHub token"""
+        """
+        load secrets, namely the GitHub token
+        """
         self.token = self.get_setting("TOKEN")
 
     def get_url(self, data=None):
-        """a common function for a parser to return the html url for the
+        """
+        a common function for a parser to return the html url for the
         upper level of metadata
         """
         data = data or self.data
@@ -49,7 +54,9 @@ class GitHubParser(ParserBase):
         return data.get("owner", {}).get("avatar_url", "")
 
     def get_description(self, data=None):
-        """a common function for a parser to return a description."""
+        """
+        a common function for a parser to return a description.
+        """
         data = data or self.data
         return data.get("description")
 
@@ -87,7 +94,8 @@ class GitHubParser(ParserBase):
         return repos
 
     def get_metadata(self, uri=None):
-        """Retrieve repository metadata. The common metadata (timestamp) is
+        """
+        Retrieve repository metadata. The common metadata (timestamp) is
         added by the software repository parser, and here we need to
         ensure that the url field is populated with a correct url.
 

@@ -22,7 +22,9 @@ Base = declarative_base()
 
 
 class SoftwareRepository(Base):
-    """A software repository."""
+    """
+    A software repository.
+    """
 
     __tablename__ = "software_repository"
     uid = Column(String(150), primary_key=True)
@@ -56,7 +58,9 @@ class SoftwareRepository(Base):
         return self.parser.get_description(data)
 
     def load(self):
-        """loading a software repository means exporting as json"""
+        """
+        loading a software repository means exporting as json
+        """
         data = {"parser": self.parser_name, "uid": self.uid, "data": {}}
 
         if self.data:
@@ -65,15 +69,21 @@ class SoftwareRepository(Base):
         return data
 
     def get_criteria(self):
-        """load criteria into a dictionary"""
+        """
+        load criteria into a dictionary
+        """
         return json.loads(self.criteria or "{}")
 
     def get_taxonomy(self):
-        """load taxonomy into a dictionary"""
+        """
+        load taxonomy into a dictionary
+        """
         return json.loads(self.taxonomy or "{}")
 
     def update_criteria(self, uid, username, response):
-        """Given a username and unique id update criteria"""
+        """
+        Given a username and unique id update criteria
+        """
         criteria = self.get_criteria()
 
         if uid not in criteria:
@@ -83,7 +93,9 @@ class SoftwareRepository(Base):
             self.criteria = json.dumps(criteria)
 
     def update_taxonomy(self, username, uids):
-        """Given a username and unique id update taxonomy items"""
+        """
+        Given a username and unique id update taxonomy items
+        """
         taxonomy = self.get_taxonomy()
 
         if username not in taxonomy:
@@ -91,7 +103,9 @@ class SoftwareRepository(Base):
         self.taxonomy = json.dumps(taxonomy)
 
     def export(self):
-        """Export removes the outer wrapper, and just returns the data"""
+        """
+        Export removes the outer wrapper, and just returns the data
+        """
         return self.load().get("data", {})
 
     def __repr__(self):
@@ -100,7 +114,9 @@ class SoftwareRepository(Base):
     # Annotation
 
     def has_criteria_annotation(self, uid, username):
-        """Determine if a repository has been annotated by a user."""
+        """
+        Determine if a repository has been annotated by a user.
+        """
         if not self.criteria:
             return False
         criteria = json.loads(self.criteria)
@@ -111,7 +127,9 @@ class SoftwareRepository(Base):
         return True
 
     def has_taxonomy_annotation(self, username):
-        """Determine if a repository has been annotated by a user."""
+        """
+        Determine if a repository has been annotated by a user.
+        """
         if not self.taxonomy:
             return False
         taxonomy = json.loads(self.taxonomy)

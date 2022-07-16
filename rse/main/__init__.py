@@ -190,13 +190,13 @@ class Encyclopedia:
         else:
             raise RuntimeError(f"Unrecognized {target} to clear")
 
-    def update(self, uid, rewrite=False):
+    def update(self, uid, rewrite=False, data=None):
         """
         Update an existing software repository.
         """
         try:
             repo = self.get(uid)
-            self.db.update(repo, rewrite=rewrite)
+            self.db.update(repo, rewrite=rewrite, data=data)
             bot.info(f"{repo.uid} has been updated.")
             return repo
         except RepoNotFoundError:

@@ -17,6 +17,7 @@ from rse.exceptions import (
 from rse.main.database.base import Database
 from rse.main.parsers import get_parser
 from rse.main.parsers.base import ParserBase
+from rse.utils.strings import update_nonempty
 
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -29,14 +30,16 @@ bot = logging.getLogger("rse.main.database.relational")
 
 
 class RelationalDatabase(Database):
-    """A RelationalDatabase is a more robust relational datbase (to sqlite).
+    """
+    A RelationalDatabase is a more robust relational datbase (to sqlite).
     Since the global database property can be any of postgresql, mysql+pysq;,
     it is defined on init. The sqlite database also uses this class, but defines
     a custom init function to handle the rse.db file.
     """
 
     def __init__(self, config_dir, config=None, **kwargs):
-        """init for the filesystem ensures that the base folder (named
+        """
+        init for the filesystem ensures that the base folder (named
         according to the studyid) exists.
         """
         self.database = kwargs.get("database")
@@ -50,7 +53,8 @@ class RelationalDatabase(Database):
         self.create_database()
 
     def create_database(self):
-        """create the databsae based on the string, whether it's relational or
+        """
+        create the databsae based on the string, whether it's relational or
         sqlite. self.db must be defined.
         """
         from rse.main.database.models import Base
@@ -66,7 +70,9 @@ class RelationalDatabase(Database):
     # Global
 
     def exists(self, uid):
-        """Determine if a repo exists."""
+        """
+        Determine if a repo exists.
+        """
         from rse.main.database.models import SoftwareRepository
 
         parser = get_parser(uid, config=self.config)
@@ -76,7 +82,9 @@ class RelationalDatabase(Database):
         return repo is not None
 
     def get_or_create(self, uid):
-        """Determine if a repo exists."""
+        """
+        Determine if a repo exists.
+        """
         from rse.main.database.models import SoftwareRepository
 
         parser = get_parser(uid, config=self.config)
@@ -88,7 +96,9 @@ class RelationalDatabase(Database):
         return repo
 
     def clear(self):
-        """clear (delete) all repos. This could be improved to cascade instead."""
+        """
+        clear (delete) all repos. This could be improved to cascade instead.
+        """
         from rse.main.database.models import SoftwareRepository
 
         SoftwareRepository.query.delete()
@@ -98,7 +108,9 @@ class RelationalDatabase(Database):
     # Add or Update requires executor
 
     def add(self, uid, data=None):
-        """Create a new repo based on a uid that matches to a parser."""
+        """
+        Create a new repo based on a uid that matches to a parser.
+        """
         from rse.main.database.models import SoftwareRepository
 
         parser = get_parser(uid, config=self.config)
@@ -124,10 +136,12 @@ class RelationalDatabase(Database):
                 repo.parser = parser
                 return repo
 
-    def update(self, repo, updates=None, rewrite=False):
-        """update a repo with a json dictionary."""
+    def update(self, repo, updates=None, rewrite=False, data=None):
+        """
+        update a repo with a json dictionary.
+        """
         # Return of None indicates non-success
-        data = repo.parser.get_metadata()
+        data = data or repo.parser.get_metadata()
         if data:
             updates = updates or {}
             updates.update(repo.parser.export())
@@ -136,14 +150,19 @@ class RelationalDatabase(Database):
             data = {}
             if repo.data and not rewrite:
                 data = json.loads(repo.data)
-            data.update(updates)
+            if "data" in data:
+                data["data"] = update_nonempty(updates, data["data"])
+            else:
+                data = update_nonempty(updates, data)
             repo.data = json.dumps(data)
             self.session.add(repo)
             self.session.commit()
             return repo
 
     def label(self, repo, key, value, force=False):
-        """Update a repository with a specific key/value pair."""
+        """
+        Update a repository with a specific key/value pair.
+        """
         data = {}
         if repo.data:
             data = json.loads(repo.data)
@@ -162,7 +181,8 @@ class RelationalDatabase(Database):
     # Get, delete, etc. only require uid
 
     def get(self, uid=None):
-        """Get a repo based on a uid. Exits on error if doesn't exist. If
+        """
+        Get a repo based on a uid. Exits on error if doesn't exist. If
         a uid is not provided, get the last updated repository.
         """
         from rse.main.database.models import SoftwareRepository
@@ -201,7 +221,9 @@ class RelationalDatabase(Database):
         return repo
 
     def delete_repo(self, uid):
-        """delete a repo based on a specific repo id."""
+        """
+        delete a repo based on a specific repo id.
+        """
         from rse.main.database.models import SoftwareRepository
 
         repo = self.get(uid)
@@ -214,7 +236,9 @@ class RelationalDatabase(Database):
         return True
 
     def delete_parser(self, name):
-        """delete all repos for a parser, based on parser's name (str)."""
+        """
+        delete all repos for a parser, based on parser's name (str).
+        """
         from rse.main.database.models import SoftwareRepository
 
         deleted_items = False
@@ -227,7 +251,8 @@ class RelationalDatabase(Database):
         return deleted_items
 
     def list_repos(self, name=None):
-        """list repos, either under a particular parser name (if provided)
+        """
+        list repos, either under a particular parser name (if provided)
         or just the parsers.
         """
         from rse.main.database.models import SoftwareRepository
@@ -245,7 +270,9 @@ class RelationalDatabase(Database):
         return rows
 
     def search(self, query, taxonomy=None, criteria=None):
-        """Search across the database for a particular query."""
+        """
+        Search across the database for a particular query.
+        """
         from rse.main.database.models import SoftwareRepository
 
         # We will return a lookup of results

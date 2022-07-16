@@ -10,6 +10,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from rse.utils.urls import get_user_agent
 from rse.main.parsers import CustomParser, get_parser
+from rse.utils.strings import update_nonempty
 import logging
 import requests
 import csv
@@ -62,18 +63,22 @@ class GoogleSheetImporter(ScraperBase):
                     bot.exit(f"Sheet {url} is missing required field {required}.")
 
             for row in rows:
-                repo = {value: row[i] for i, value in enumerate(header)}
+                repo = {value: row[i] for i, value in enumerate(header) if value}
                 complete = True
                 for required in ["title", "url", "description"]:
                     if not repo[required]:
                         complete = False
                 if not complete:
                     continue
+
+                # If we have topics, ensure to parse
+                if "tags" in repo:
+                    repo["tags"] = [x.strip() for x in repo["tags"].split(",")]
                 bot.info("Found software record: %s" % repo["url"])
                 self.results.append(repo)
         return self.results
 
-    def create(self, database=None, config_file=None):
+    def create(self, database=None, config_file=None, update=False):
         """
         After a scrape (whether we obtain latest or a search query) we
         run create to create software repositories based on results.
@@ -87,6 +92,8 @@ class GoogleSheetImporter(ScraperBase):
             # If a repository is added that isn't represented
             try:
                 repo = get_parser(uid)
+                data = repo.get_metadata()
+                result = update_nonempty(result, data)
 
             # Or as custom entry
             except NotImplementedError:
@@ -99,5 +106,9 @@ class GoogleSheetImporter(ScraperBase):
                 )
 
             # Add results that don't exist
-            if not client.exists(repo.uid):
+            exists = client.exists(repo.uid)
+            if not exists:
                 client.add(repo.uid, data=result)
+            elif exists and update:
+                # rewrite defaults to false
+                client.update(repo.uid, data=result)

@@ -178,6 +178,13 @@ def get_parser():
         default=False,
         action="store_true",
     )
+    imp.add_argument(
+        "-u",
+        "--update",
+        help="Given the record exists, update it.",
+        default=False,
+        action="store_true",
+    )
 
     # Metrics
     summary = subparsers.add_parser(
