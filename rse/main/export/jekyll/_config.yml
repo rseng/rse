@@ -8,6 +8,12 @@ description: "Research Software Database"
 baseurl: "/software" #important: start with /
 url: ""
 
+# Number of tags to show in cloud
+min_tag_count: 1
+
+# Change color above this upper range
+tag_threshold: 10
+
 # Customize template
 logo: assets/img/logo/logo-transparent.svg
 url: "https://rseng.github.io/rse"

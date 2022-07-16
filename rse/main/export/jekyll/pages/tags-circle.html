@@ -42,30 +42,18 @@ d3.json("{{ site.baseurl }}/api/data.json", raw => {
   data = []
   children = {}
   $.each(raw, function(i, e) {
-
-      // Add known parsers
-      if (!(e['parser'] in children)) {
-         children[e['parser']] = {}
-      }
       $.each(e['topics'], function(ii, topic) {
-          if (!(topic in children[e['parser']])) {
-               children[e['parser']][topic] = 0
+          if (!(topic in children)) {
+               children[topic] = 0
           }
-           children[e['parser']][topic] += 1
+          children[topic] += 1
       })
   })
 
- // TODO parse that data into this:
- $.each(children, function(parser, e) {
-
-    // name is the parser
-    $.each(e, function(tag, count) {
-
-        // Don't include singletons! TODO need to scale this
-        if (count > 1) {
-            data.push({"word": tag, "size": count, "parser": parser})
-        }
-    })
+ $.each(children, function(tag, count) {
+    if (count >= {{ site.min_tag_count }}) {
+        data.push({"word": tag, "size": count})
+    }
   })
     
   color.domain(d3.extent(data, d => +d.size))
@@ -91,10 +79,10 @@ d3.json("{{ site.baseurl }}/api/data.json", raw => {
   leaf.append('text')
     .attr("fill", d => d3.hsl(color(d.data.size)).darker(2.6))
     .text(d => {
-    if (d.data.size > 10) {
-      return d.data.word
-    } else if (d.data.size > 5) {
+    if (d.data.size > {{ site.tag_threshold }}) {
       return format(d.data.size)
+    } else if (d.data.size >= {{ site.min_tag_count }}) {
+      return d.data.word
     }
   })
     .attr('y', 5)
