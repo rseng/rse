@@ -349,7 +349,7 @@ As a set of examples, here are how titles might be translated into uids and path
 |ANIMAL-SPOT | custom/animal-spot | database/custom/animal-spot |
 |ARTWARP| custom/artwarp | database/custom/artwarp |
 
-If you find a title that doesn't parse well, please [open an issue](https://github.com/rseng/rse). Each importer is described in more detail below.
+If you find a title that doesn't parse well or would like to request a new kind of import, please [open an issue](https://github.com/rseng/rse). Each importer is described in more detail below.
 
 <a id="import-google-spreadsheet">
 ### Google Sheet
@@ -380,7 +380,8 @@ $ rse init .
 INFO:rse.main.config:Generating configuration file rse.ini
 ```
 We can then run the import:
-```
+
+```bash
 $ rse import --type google-sheet "https://docs.google.com/spreadsheets/d/e/2PACX-1vTsPmEWUg8Tr1ZoYTcQ0kTdsCrVskQveSuwfdEHaktHtQG693O4DHQrZotoFd5dXCLAciykAYNf-RSz/pub?gid=0&single=true&output=csv"
 ```
 
@@ -417,7 +418,7 @@ And if you just want to do a dry run, add `--dry-run` to the above.
 
 > Note: from a developer standpoint, although "import" is its own command, it is represented under "scrapers" in the code, as an import is another format of a scrape.
 
-Finally, to update the organization of where custom entries are added. you can update `RSE_CUSTOM_DATABASE_DIR` in your rse/defaults.py, or via the environment `export RSE_CUSTOM_DATABASE_DIR=research`.
+As a reminder, to update the organization of where custom entries are added. you can update `RSE_CUSTOM_DATABASE_DIR` in your rse/defaults.py, or via the environment `export RSE_CUSTOM_DATABASE_DIR=research`.
 
 <a id="clear">
 ## Clear
