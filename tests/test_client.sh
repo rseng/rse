@@ -68,6 +68,10 @@ echo
 echo "#### Testing [filesystem] rse summary github.com/singularityhub/sregistry"
 runTest 0 $output rse --config_file $config/rse.ini summary github.com/singularityhub/sregistry
 
+echo 
+echo "#### Testing [filesystem] rse import google-sheet <sheet>"
+runTest 0 $output rse --config_file $config/rse.ini import --type google-sheet "https://docs.google.com/spreadsheets/d/e/2PACX-1vTsPmEWUg8Tr1ZoYTcQ0kTdsCrVskQveSuwfdEHaktHtQG693O4DHQrZotoFd5dXCLAciykAYNf-RSz/pub?gid=0&single=true&output=csv"
+
 echo
 echo "#### Testing [sqlite] rse config to use sqlite"
 runTest 0 $output rse --config_file $config/rse.ini config --database sqlite

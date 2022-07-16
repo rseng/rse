@@ -23,9 +23,6 @@ class GitLabParser(ParserBase):
     name = "gitlab"
     matchstring = "gitlab"
 
-    def __init__(self, uid=None, **kwargs):
-        super().__init__(uid)
-
     def _set_uid(self, uid):
         """Given some kind of GitLab url, parse the uid"""
         uid = uid.replace(":", "/")

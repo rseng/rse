@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 
 Copyright (C) 2020-2022 Vanessa Sochat.
@@ -9,13 +8,11 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-import os
-import sys
-import pytest
-
 
 def test_parser_zenodo(tmp_path):
-    """Test the zenodo parser."""
+    """
+    Test the zenodo parser.
+    """
     from rse.main.parsers import ZenodoParser
 
     for repo in [

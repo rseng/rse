@@ -87,7 +87,7 @@ class ParserBase:
 
     name = "base"
 
-    def __init__(self, uid=None):
+    def __init__(self, uid=None, **kwargs):
         """
         set a unique id that includes parser name (type) and unique identifier)
         """
@@ -102,7 +102,9 @@ class ParserBase:
         Given a unique resource identifier, set it for the parser
         """
         uid = self._set_uid(uid)
-        self.uid = "%s/%s" % (self.name, uid)
+        if not uid.startswith(self.name):
+            uid = "%s%s%s" % (self.name, os.sep, uid)
+        self.uid = uid
 
     def _set_uid(self, uid):
         """Given a uri from the user, parse the consistent identifier (e.g.,

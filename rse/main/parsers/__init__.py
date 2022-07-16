@@ -11,6 +11,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from .github import GitHubParser
 from .gitlab import GitLabParser
 from .zenodo import ZenodoParser
+from .custom import CustomParser
 import re
 
 
@@ -25,7 +26,9 @@ def matches(Parser, uri):
 
 
 def get_parser(uri, config=None):
-    """get parser will return the correct parser depending on a uri"""
+    """
+    get parser will return the correct parser depending on a uri
+    """
     parser = None
     if matches(GitHubParser, uri):
         parser = GitHubParser(uri)
@@ -33,7 +36,8 @@ def get_parser(uri, config=None):
         parser = GitLabParser(uri)
     if matches(ZenodoParser, uri):
         parser = ZenodoParser(uri)
-
+    if matches(CustomParser, uri):
+        parser = CustomParser(uri)
     if not parser:
         raise NotImplementedError(f"There is no matching parser for {uri}")
     parser.config = config
