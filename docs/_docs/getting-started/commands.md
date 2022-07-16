@@ -354,7 +354,7 @@ If you find a title that doesn't parse well or would like to request a new kind 
 <a id="import-google-spreadsheet">
 ### Google Sheet
 
-It might 
+It might be the case that you want to have software input from a form, and then input via a Google sheet.
 We provide an [example template sheet](https://docs.google.com/spreadsheets/d/1ZW2kOsBOfSpRSH_9Efvz-ytn7dQ2m1DmYDBdIVNGY4c/edit?usp=sharing) that you could provide to `rse import` with the `google-sheet` and path to it's exported csv. For your
 spreadsheet, the following fields are required:
 
