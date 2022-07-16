@@ -83,6 +83,35 @@ If you set an environment level that is not one of the choices, it will default
 to using info. If you provide an inccorect value to `--log_level` you will be asked
 to run the command again and choose from the valid choices.
 
+### RSE_CUSTOM_DATABASE_DIR
+
+Given that you add a software entry not known to a parser (e.g., from a custom URL)
+this is the subfolder in the database to organize under. If not set, it defaults to "custom."
+For example, this is the default
+
+```bash
+├── database
+│   ├── custom
+│   ├── github
+│   └── gitlab
+└── rse.ini
+```
+
+And after a change:
+
+```bash
+export RSE_CUSTOM_DATABASE_DIR=research
+```
+And then it would be changed to:
+
+```bash
+├── database
+│   ├── github
+│   ├── gitlab
+│   └── research
+└── rse.ini
+```
+
 ### RSE_API_ENDPOINT
 
 The endpoint to retrieve the taxonomy and criteria from. Defaults to `https://rseng.github.io/rseng/api`.

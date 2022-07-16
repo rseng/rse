@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 
 Copyright (C) 2020-2022 Vanessa Sochat.
@@ -9,13 +8,11 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-import os
-import sys
-import pytest
-
 
 def test_parser_github(tmp_path):
-    """Test the github parser."""
+    """
+    Test the github parser.
+    """
     from rse.main.parsers import GitHubParser
 
     for repo in [
@@ -35,7 +32,9 @@ def test_parser_github(tmp_path):
 
 
 def test_org_repos(tmp_path):
-    """Test the github parser to retrieve org repos."""
+    """
+    Test the github parser to retrieve org repos.
+    """
     from rse.main.parsers import GitHubParser
 
     parser = GitHubParser()

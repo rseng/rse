@@ -202,12 +202,15 @@ class Encyclopedia:
         except RepoNotFoundError:
             bot.error(f"{uid} does not exist.")
 
-    def label(self, uid, key, value, force=False):
-        """Update an existing software repository with a specific label."""
+    def label(self, uid, key, value, force=False, quiet=False):
+        """
+        Update an existing software repository with a specific label.
+        """
         try:
             repo = self.get(uid)
             self.db.label(repo, key, value, force=force)
-            bot.info(f"{repo.uid} has been updated.")
+            if not quiet:
+                bot.info(f"{repo.uid} has been updated.")
             return repo
         except RepoMetadataExistError:
             bot.error(

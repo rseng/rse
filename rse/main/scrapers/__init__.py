@@ -15,7 +15,22 @@ from .molssi import MolssiScraper
 from .rsnl import RSNLScraper
 from .ropensci import ROpenSciScraper
 from .imperial import ImperialCollegeLondonScraper
+from .googlesheet import GoogleSheetImporter
 import re
+import sys
+
+
+def get_importer(name):
+    """
+    Get an importer by name. Designed to support additional ones.
+    An importer is technically a kind of scraper.
+    """
+    importer = None
+    if name.lower() == "google-sheet":
+        importer = GoogleSheetImporter()
+    if not importer:
+        sys.exit(f"Importer {name} is not known.")
+    return importer
 
 
 def get_named_scraper(name, config=None):

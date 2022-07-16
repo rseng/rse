@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 
 Copyright (C) 2020-2022 Vanessa Sochat.
@@ -10,13 +9,14 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 import os
-import sys
 import pytest
 
 
 @pytest.mark.parametrize("database", ["filesystem", "sqlite"])
 def test_parsers_filesystem(tmp_path, database):
-    """test each parser with the filesystem database."""
+    """
+    test each parser with the filesystem database.
+    """
     from rse.main import Encyclopedia
 
     config_dir = os.path.join(str(tmp_path), "software")

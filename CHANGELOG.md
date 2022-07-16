@@ -15,6 +15,7 @@ The versions coincide with releases on pip.
 
 ## [0.0.x](https://github.com/rseng/rse/tree/master) (0.0.x)
  - adding custom jekyll exporter for static site (0.0.38)
+   - support for custom parser and import from Google Sheet
  - import bug (0.0.37)
  - adding imperial college london research software directory (0.0.36)
  - adding molssi scraper (0.0.35)

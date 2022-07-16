@@ -24,9 +24,6 @@ class GitHubParser(ParserBase):
     name = "github"
     matchstring = "github"
 
-    def __init__(self, uid=None, **kwargs):
-        super().__init__(uid)
-
     def _set_uid(self, uid):
         """Given some kind of GitHub url, parse the uid"""
         uid = uid.replace(":", "/")

@@ -22,9 +22,6 @@ class ZenodoParser(ParserBase):
     name = "zenodo"
     matchstring = "^10[.][0-9]{4}/zenodo[.][0-9]{7}$"
 
-    def __init__(self, uid=None, **kwargs):
-        super().__init__(uid)
-
     def _set_uid(self, uid):
         """Given some kind of Zenodo uri, parse it"""
         match = re.search(self.matchstring, uid)

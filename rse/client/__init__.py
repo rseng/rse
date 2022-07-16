@@ -161,6 +161,24 @@ def get_parser():
         default="repos.txt",
     )
 
+    # Import
+    imp = subparsers.add_parser("import", help="Import from a known source.")
+    imp.add_argument(
+        "--type",
+        dest="import_type",
+        help="Type to import (defaults to google-sheet)",
+        default="google-sheet",
+        choices=["google-sheet"],
+    )
+
+    imp.add_argument(
+        "--dry-run",
+        dest="dry_run",
+        help="Dump import output to the terminal, but don't create new repos.",
+        default=False,
+        action="store_true",
+    )
+
     # Metrics
     summary = subparsers.add_parser(
         "summary", help="View summary metrics for all repositories."
@@ -347,6 +365,7 @@ def get_parser():
         config,
         exists,
         export,
+        imp,
         get,
         init,
         label,
@@ -464,6 +483,8 @@ def main():
         from .export import main
     if args.command == "generate-key":
         from .generate import main
+    if args.command == "import":
+        from .imp import main
     if args.command == "label":
         from .label import main
     if args.command == "update":

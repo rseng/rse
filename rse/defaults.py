@@ -43,6 +43,7 @@ RSE_NPROC = multiprocessing.cpu_count()
 RSE_WORKERS = int(getenv("RSE_WORKERS", RSE_NPROC * 2 + 1))
 RSE_SHELL = getenv("RSE_SHELL", "ipython")
 RSE_CONFIG_FILE = getenv("RSE_CONFIG_FILE", "rse.ini")
+RSE_CUSTOM_DATABASE_DIR = getenv("RSE_CUSTOM_DATABASE_DIR", "custom")
 
 # Default database is filesystem
 RSE_DATABASE = getenv("RSE_DATABASE")

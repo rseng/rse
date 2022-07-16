@@ -96,7 +96,8 @@ class JossScraper(ScraperBase):
         return self.results
 
     def create(self, database=None, config_file=None):
-        """After a scrape (whether we obtain latest or a search query) we
+        """
+        After a scrape (whether we obtain latest or a search query) we
         run create to create software repositories based on results.
         """
         from rse.main import Encyclopedia

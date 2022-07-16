@@ -17,6 +17,7 @@ your software database.
  - [Label](#label) a software repository with custom metadata
  - [List](#list) all software or software specific to a parser
  - [Export](#export) list of software, or static interface (with or without annotation)
+ - [Import](#import) import software from a known source (e.g., Google Sheet)
 
  - [Clear](#clear) a software repository, all under a parser, or the entire database.
  - [Search](#search) across your software to find a particular one.
@@ -314,6 +315,91 @@ $ rse export --type jekyll-web docs/
 Make sure the directory does not exist the first time you export! For times after
 that, only the inner `_repos` collection will be updated with your current software database.
 
+<a id="import">
+## Import
+
+
+The import command can be used to take a remote source of data (e.g., a Google Spreadsheet exposed as a comma
+separated value export) and add to your database. The following syntax is used for import:
+
+```bash
+$ rse import --type <type> <param1> ... <paramN>
+```
+
+Generally, any imported source of information must have some kind of unique identifier that can distinguish
+the record, and alert the rse software if the record already exists, and if so, if it needs to be updated.
+Since the rse software typically uses a github or gitlab (or other version control) identifier for this purpose,
+if you have records that don't provide such an identifier, then the record will be stored under a custom namespace (TBA).
+
+And each importer is described in more detail below.
+
+<a id="import-google-spreadsheet">
+### Google Sheet
+
+It might 
+We provide an [example template sheet](https://docs.google.com/spreadsheets/d/1ZW2kOsBOfSpRSH_9Efvz-ytn7dQ2m1DmYDBdIVNGY4c/edit?usp=sharing) that you could provide to `rse import` with the `google-sheet` and path to it's exported csv. For your
+spreadsheet, the following fields are required:
+
+ - Title: A human-friendly title to describe the software. If the Url doesn't have a version control address, this will be parsed for a unique identifier.
+ - Url: A link to GitHub, GitLab, or another online resource (this will be parsed looking for a unique identifier)
+ - Description: The description of the software project
+ 
+All other fields will be treated as custom data fields to add to the data. Once you have your data sheet, you'll want to make
+sure to generate a public link to export csv. You can do that via:
+
+```
+Share -> Publish to Web -> Form Responses 1 (or the sheet name in first dropdown) -> Comma-separated value (csv) (second dropdown)
+```
+
+[Here is an example](https://docs.google.com/spreadsheets/d/e/2PACX-1vTsPmEWUg8Tr1ZoYTcQ0kTdsCrVskQveSuwfdEHaktHtQG693O4DHQrZotoFd5dXCLAciykAYNf-RSz/pub?gid=0&single=true&output=csv) from that same sheet.
+
+Then to run the import, let's say we create a new rse.ini database first:
+
+```bash
+$ mkdir bioacousics
+$ cd bioacousics
+$ rse init .
+INFO:rse.main.config:Generating configuration file rse.ini
+```
+We can then run the import:
+```
+$ rse import --type google-sheet "https://docs.google.com/spreadsheets/d/e/2PACX-1vTsPmEWUg8Tr1ZoYTcQ0kTdsCrVskQveSuwfdEHaktHtQG693O4DHQrZotoFd5dXCLAciykAYNf-RSz/pub?gid=0&single=true&output=csv"
+```
+
+**Important** The sheet URL is provided in quotes.
+
+The resulting structure will look like the following:
+
+```bash
+database/
+├── custom
+│   ├── adobe-audition
+│   │   └── metadata.json
+│   ├── anabat-insight
+│   │   └── metadata.json
+│   ├── animal-sound-identifier
+│   │   └── metadata.json
+│   ├── artwarp
+│   │   └── metadata.json
+│   └── audacity
+│       └── metadata.json
+└── github
+    ├── ChristianBergler
+    │   └── ANIMAL-SPOT
+    │       └── metadata.json
+    ├── nwolek
+    │   └── audiomoth-scripts
+    │       └── metadata.json
+    └── patriceguyot
+        └── Acoustic_Indices
+            └── metadata.json
+```
+
+And if you just want to do a dry run, add `--dry-run` to the above.
+
+> Note: from a developer standpoint, although "import" is its own command, it is represented under "scrapers" in the code, as an import is another format of a scrape.
+
+Finally, to update the organization of where custom entries are added. you can update `RSE_CUSTOM_DATABASE_DIR` in your rse/defaults.py, or via the environment `export RSE_CUSTOM_DATABASE_DIR=research`.
 
 <a id="clear">
 ## Clear
@@ -346,7 +432,6 @@ INFO:rse.main.database.filesystem:Removing /home/vanessa/Desktop/Code/rseng/soft
 
 Each time you'll be asked for a confirmation first, in case the command was 
 run in error.
-
 
 
 <a id="search">
