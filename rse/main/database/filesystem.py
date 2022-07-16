@@ -125,11 +125,13 @@ class FileSystemDatabase(Database):
         parser = get_parser(uid, config=self.config)
         return SoftwareRepository(parser, exists=True, data_base=self.data_base)
 
-    def update(self, repo, rewrite=False):
-        """Update a repository by retrieving metadata, and then calling update
-        on the software repository to save it.
+    def update(self, repo, rewrite=False, data=None):
         """
-        data = repo.parser.get_metadata()
+        Update a repository by retrieving metadata, and then calling update
+        on the software repository to save it. If data is provided, we assume
+        that a custom import is providing it.
+        """
+        data = data or repo.parser.get_metadata()
         if data:
             if rewrite:
                 self.add(repo.uid)
@@ -137,7 +139,9 @@ class FileSystemDatabase(Database):
                 repo.update(updates=data)
 
     def label(self, repo, key, value, force=False):
-        """Update a repository with a specific key/value pair."""
+        """
+        Update a repository with a specific key/value pair.
+        """
         if key in repo.data and not force:
             raise RuntimeError(
                 f"{key} is already defined for {repo.uid}. Use --force to overwrite."
@@ -146,7 +150,8 @@ class FileSystemDatabase(Database):
         repo.update({key: value})
 
     def search(self, query, taxonomy=None, criteria=None):
-        """A filesystem search can only support returning results with filenames.
+        """
+        A filesystem search can only support returning results with filenames.
         For taxonomy and criteria items, we load them and search.
         We organize results based on the query, taxonomy, and criteria
         The results returned are separate (e.g., a single repo can appear
@@ -193,7 +198,9 @@ class FileSystemDatabase(Database):
         return final
 
     def delete_repo(self, uid):
-        """delete a repo based on a specific identifier."""
+        """
+        delete a repo based on a specific identifier.
+        """
         if self.exists(uid):
             repo = self.get(uid)
             os.remove(repo.filename)
@@ -210,7 +217,9 @@ class FileSystemDatabase(Database):
         return False
 
     def delete_parser(self, name):
-        """delete all repos for a parser, based on executor's name (str)."""
+        """
+        delete all repos for a parser, based on executor's name (str).
+        """
         parser_dir = os.path.join(self.data_base, name)
         if not os.path.exists(parser_dir):
             bot.info(f"Executor {parser_dir} directory does not exist.")
@@ -229,7 +238,8 @@ class FileSystemDatabase(Database):
                     yield contender
 
     def list_repos(self, name=None):
-        """list software repositories, either under a particular parser name
+        """
+        list software repositories, either under a particular parser name
         or just under all parsers. This returns repos in rows to be printed
         (or otherwise parsed).
         """
@@ -249,7 +259,8 @@ class FileSystemDatabase(Database):
 
 
 class SoftwareRepository:
-    """A software repository is a filesystem representation of a repo. It can
+    """
+    A software repository is a filesystem representation of a repo. It can
     take a uid, determine if the repo exists, and then interact with the
     metadata for it. If the repo is instantiated without a unique id
     it is assumed to not exist yet, otherwise it must already
@@ -257,7 +268,8 @@ class SoftwareRepository:
     """
 
     def __init__(self, parser, data_base, exists=False):
-        """A SoftwareRepository holds some uid for a parser, and controls
+        """
+        A SoftwareRepository holds some uid for a parser, and controls
         interaction with the filesystem.
 
         Arguments:
@@ -294,13 +306,19 @@ class SoftwareRepository:
         return os.path.join(self.data_base, self.parser.uid)
 
     def update(self, updates=None):
-        """Update a data file. This means reading, updating, and writing."""
+        """
+        Update a data file. This means reading, updating, and writing.
+        """
         updates = updates or {}
-        self.data.update(updates)
+        if "data" in self.data:
+            self.data["data"].update(updates)
+        else:
+            self.data.update(updates)
         self.save()
 
     def update_criteria(self, uid, username, response):
-        """Update a criteria, meaning adding a True/False answer to the
+        """
+        Update a criteria, meaning adding a True/False answer to the
         unique id for the user. We are currently assuming that criteria
         have yes/no responses, and True == yes, False == no.
         """
@@ -310,7 +328,8 @@ class SoftwareRepository:
             self.criteria[uid][username] = response
 
     def create(self, should_exist=False):
-        """create the filename if it doesn't exist, otherwise if it should (and
+        """
+        create the filename if it doesn't exist, otherwise if it should (and
         does not) exit on error.
         """
         if should_exist:
@@ -347,31 +366,43 @@ class SoftwareRepository:
             self.save()
 
     def export(self):
-        """wrapper to expose the executor.export function"""
+        """
+        wrapper to expose the executor.export function
+        """
         return self.parser.export()
 
     def save(self):
-        """Save a json object (metadata.json) for the software repository."""
+        """
+        Save a json object (metadata.json) for the software repository.
+        """
         write_json(self.data, self.filename)
 
     def summary(self):
         return self.parser.summary()
 
     def load(self):
-        """Given a software uid, load data from filename."""
+        """
+        Given a software uid, load data from filename.
+        """
         if os.path.exists(self.filename):
             return read_json(self.filename)
 
     def get_criteria(self):
-        """Get loaded criteria"""
+        """
+        Get loaded criteria
+        """
         return self.criteria
 
     def get_taxonomy(self):
-        """Get loaded taxonomy"""
+        """
+        Get loaded taxonomy
+        """
         return self.taxonomy
 
     def load_criteria(self):
-        """Given a repository directory, load criteria files if they exist"""
+        """
+        Given a repository directory, load criteria files if they exist
+        """
         criteria = {}
         for filename in glob(f"{self.parser_dir}/criteria*.tsv"):
             uid = (
@@ -389,7 +420,8 @@ class SoftwareRepository:
         return criteria
 
     def save_criteria(self):
-        """Save criteria to file. Each file is named based on the criteria id,
+        """
+        Save criteria to file. Each file is named based on the criteria id,
         and is a tab separated file that includes the username and response.
         """
         for uid, responses in self.criteria.items():
@@ -400,7 +432,8 @@ class SoftwareRepository:
             bot.debug(f"{uid} saved to {filename}")
 
     def load_taxonomy(self):
-        """Given a repository directory, load taxonomy annotations if they exist
+        """
+        Given a repository directory, load taxonomy annotations if they exist
         The taxonomy.tsv file should be a tab separated file with:
         username category-unique-id. This means that we keep a record of
         who has categorized what, and load this information into the
@@ -420,7 +453,8 @@ class SoftwareRepository:
         return taxonomy
 
     def save_taxonomy(self):
-        """Save taxonomy to file. Each file is named taxonomy.tsv,
+        """
+        Save taxonomy to file. Each file is named taxonomy.tsv,
         and is a tab separated file that includes the username and response.
         """
         filename = os.path.join(self.parser_dir, "taxonomy.tsv")
@@ -431,7 +465,9 @@ class SoftwareRepository:
     # Annotation
 
     def has_criteria_annotation(self, uid, username):
-        """Determine if a repository has been annotated by a user."""
+        """
+        Determine if a repository has been annotated by a user.
+        """
         if uid not in self.criteria:
             return False
         if username not in self.criteria[uid]:
@@ -439,7 +475,9 @@ class SoftwareRepository:
         return True
 
     def has_taxonomy_annotation(self, username):
-        """Determine if a repository has been annotated by a user."""
+        """
+        Determine if a repository has been annotated by a user.
+        """
         if username not in self.taxonomy:
             return False
         return True

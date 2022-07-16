@@ -26,4 +26,6 @@ def main(args, extra):
 
     # If we have results and it's not a dry run, create the repos
     if results and not args.dry_run:
-        importer.create(database=args.database, config_file=args.config_file)
+        importer.create(
+            database=args.database, config_file=args.config_file, update=args.update
+        )

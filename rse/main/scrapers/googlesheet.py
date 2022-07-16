@@ -69,11 +69,15 @@ class GoogleSheetImporter(ScraperBase):
                         complete = False
                 if not complete:
                     continue
+
+                # If we have topics, ensure to parse
+                if "tags" in repo:
+                    repo["tags"] = [x.strip() for x in repo["tags"].split(",")]
                 bot.info("Found software record: %s" % repo["url"])
                 self.results.append(repo)
         return self.results
 
-    def create(self, database=None, config_file=None):
+    def create(self, database=None, config_file=None, update=False):
         """
         After a scrape (whether we obtain latest or a search query) we
         run create to create software repositories based on results.
@@ -99,5 +103,9 @@ class GoogleSheetImporter(ScraperBase):
                 )
 
             # Add results that don't exist
-            if not client.exists(repo.uid):
+            exists = client.exists(repo.uid)
+            if not exists:
                 client.add(repo.uid, data=result)
+            elif exists and update:
+                # rewrite defaults to false
+                client.update(repo.uid, data=result)

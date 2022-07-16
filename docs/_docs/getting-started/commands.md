@@ -313,7 +313,7 @@ $ rse export --type jekyll-web docs/
 ```
 
 Make sure the directory does not exist the first time you export! For times after
-that, only the inner `_repos` collection will be updated with your current software database.
+that, only the inner `_software` collection will be updated with your current software database.
 
 <a id="import">
 ## Import
@@ -358,10 +358,11 @@ It might be the case that you want to have software input from a form, and then 
 We provide an [example template sheet](https://docs.google.com/spreadsheets/d/1ZW2kOsBOfSpRSH_9Efvz-ytn7dQ2m1DmYDBdIVNGY4c/edit?usp=sharing) that you could provide to `rse import` with the `google-sheet` and path to it's exported csv. For your
 spreadsheet, the following fields are required:
 
- - Title: A human-friendly title to describe the software. If the Url doesn't have a version control address, this will be parsed for a unique identifier.
- - Url: A link to GitHub, GitLab, or another online resource (this will be parsed looking for a unique identifier)
- - Description: The description of the software project
- 
+ - Title: (required) A human-friendly title to describe the software. If the Url doesn't have a version control address, this will be parsed for a unique identifier.
+ - Url: (required) A link to GitHub, GitLab, or another online resource (this will be parsed looking for a unique identifier)
+ - Description: (required) The description of the software project
+ - Tags: (optional) A list of tags, comma separated, to parse into the metadata.
+
 All other fields will be treated as custom data fields to add to the data. Once you have your data sheet, you'll want to make
 sure to generate a public link to export csv. You can do that via:
 

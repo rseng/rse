@@ -1,7 +1,3 @@
-* Rseng version:
-* Python version:
-* Operating System:
-
 ### Description
 
 Describe what you were trying to get done.
