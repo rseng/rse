@@ -36,7 +36,7 @@ and it includes links to repositories:
  - [ROpenSci](#ropensci)
  - [The Molecular Sciences Software Institute](#molssi)
  - [The Imperial College London Research Software Directory](#imperial)
-
+ - [Astrophysics Source Code Library](#ascl)
 
 <a id="joss">
 ### Journal of Open Source Software
@@ -327,3 +327,16 @@ scraper = get_named_scraper('imperial')
 from rse.main.scrapers import ImperialCollegeLondonScraper
 scraper = ImperialCollegeLondonScraper()
 ```
+
+<a id="ascl">
+### Astrophysics Source Code Library
+
+You an browse the software in the library at [https://ascl.net/code/all](https://ascl.net/code/all).
+
+```bash
+$ rse scrape ascl
+$ rse scrape --dry-run ascl
+```
+
+And you can get a named scraper as shown in the other examples above.
+

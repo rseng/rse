@@ -8,6 +8,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
+from .ascl import AsclScraper
 from .biotools import BioToolsScraper
 from .hal import HalScraper
 from .joss import JossScraper
@@ -18,6 +19,17 @@ from .imperial import ImperialCollegeLondonScraper
 from .googlesheet import GoogleSheetImporter
 import re
 import sys
+
+scrapers = [
+    AsclScraper,
+    BioToolsScraper,
+    HalScraper,
+    JossScraper,
+    MolssiScraper,
+    RSNLScraper,
+    ROpenSciScraper,
+    ImperialCollegeLondonScraper,
+]
 
 
 def get_importer(name):
@@ -34,22 +46,14 @@ def get_importer(name):
 
 
 def get_named_scraper(name, config=None):
-    """get a named scraper, meaning determining based on name"""
+    """
+    Get a named scraper, meaning determining based on name
+    """
     scraper = None
-    if re.search("(joss|journal of open source software)", name, re.IGNORECASE):
-        scraper = JossScraper()
-    elif re.search("(biotool|bio[.]tool)", name, re.IGNORECASE):
-        scraper = BioToolsScraper()
-    elif re.search("hal", name, re.IGNORECASE):
-        scraper = HalScraper()
-    elif re.search("(researchsoftwarenl|rsnl)", name, re.IGNORECASE):
-        scraper = RSNLScraper()
-    elif re.search("ropensci", name, re.IGNORECASE):
-        scraper = ROpenSciScraper()
-    elif re.search("molssi", name, re.IGNORECASE):
-        scraper = MolssiScraper()
-    elif re.search("imperial", name, re.IGNORECASE):
-        scraper = ImperialCollegeLondonScraper()
+    for ScraperClass in scrapers:
+        if re.search(ScraperClass.matchstring, name, re.IGNORECASE):
+            scraper = ScraperClass()
+            break
 
     if not scraper:
         raise NotImplementedError(f"There is no matching scraper for {name}")

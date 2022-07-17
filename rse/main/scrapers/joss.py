@@ -25,6 +25,7 @@ bot = logging.getLogger("rse.main.scrapers.joss")
 class JossScraper(ScraperBase):
 
     name = "joss"
+    matchstring = "(joss|journal of open source software)"
 
     def __init__(self, query=None, **kwargs):
         super().__init__(query)

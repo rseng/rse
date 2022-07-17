@@ -29,6 +29,7 @@ def get_parser(uri, config=None):
     """
     get parser will return the correct parser depending on a uri
     """
+    uri = uri.strip("/")
     parser = None
     if matches(GitHubParser, uri):
         parser = GitHubParser(uri)

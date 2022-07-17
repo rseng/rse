@@ -24,6 +24,7 @@ bot = logging.getLogger("rse.main.scrapers.molssi")
 class MolssiScraper(ScraperBase):
 
     name = "molssi"
+    matchstring = "molssi"
 
     def __init__(self, query=None, **kwargs):
         super().__init__(query)
@@ -36,7 +37,9 @@ class MolssiScraper(ScraperBase):
         return self.scrape(paginate=paginate, delay=delay, query=query)
 
     def scrape(self, paginate=False, delay=None, query=""):
-        """A shared function to scrape software from molssi."""
+        """
+        A shared function to scrape software from molssi.
+        """
         url = "%s/search" % self.baseurl
         try:
             from bs4 import BeautifulSoup
@@ -135,7 +138,8 @@ class MolssiScraper(ScraperBase):
         return self.results
 
     def create(self, database=None, config_file=None):
-        """After a scrape (whether we obtain latest or a search query) we
+        """
+        After a scrape (whether we obtain latest or a search query) we
         run create to create software repositories based on results.
         """
         from rse.main import Encyclopedia

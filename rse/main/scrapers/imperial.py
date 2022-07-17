@@ -29,6 +29,7 @@ csv_url = "https://raw.githubusercontent.com/ImperialCollegeLondon/research-soft
 class ImperialCollegeLondonScraper(ScraperBase):
 
     name = "imperial"
+    matchstring = "imperial"
 
     def __init__(self, query=None, **kwargs):
         super().__init__(query)

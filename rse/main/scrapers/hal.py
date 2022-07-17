@@ -26,6 +26,7 @@ repository_regex = repository_regex.strip("$")
 class HalScraper(ScraperBase):
 
     name = "hal"
+    matchstring = "hal"
 
     def __init__(self, query=None, **kwargs):
         super().__init__(query)
