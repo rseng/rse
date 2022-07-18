@@ -24,6 +24,7 @@ bot = logging.getLogger("rse.main.scrapers.biotools")
 class BioToolsScraper(ScraperBase):
 
     name = "biotools"
+    matchstring = "(biotool|bio[.]tool)"
 
     def __init__(self, query=None, **kwargs):
         super().__init__(query)

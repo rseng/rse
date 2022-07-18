@@ -20,6 +20,7 @@ bot = logging.getLogger("rse.main.scrapers.ropensci")
 class ROpenSciScraper(ScraperBase):
 
     name = "ropensci"
+    matchstring = "ropensci"
 
     def __init__(self, query=None, **kwargs):
         super().__init__(query)
@@ -62,7 +63,8 @@ class ROpenSciScraper(ScraperBase):
         return topics
 
     def scrape(self, paginate=False, delay=None):
-        """A shared function to scrape a set of repositories. Since the JoSS
+        """
+        A shared function to scrape a set of repositories. Since the JoSS
         pages for a search and the base are the same, we can use a shared
         function.
         """

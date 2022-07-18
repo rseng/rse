@@ -14,6 +14,7 @@ and **Merged pull requests**. Critical items to know are:
 The versions coincide with releases on pip.
 
 ## [0.0.x](https://github.com/rseng/rse/tree/master) (0.0.x)
+ - additional scrapers from https://scicodes.net/, ascl (0.0.39)
  - adding custom jekyll exporter for static site (0.0.38)
    - support for custom parser and import from Google Sheet
    - custom topics from sheets in column "tags" and comma separated

@@ -25,7 +25,8 @@ bot = logging.getLogger("rse.app.export")
 
 
 def export_web_static(export_dir, base_url, client, force=False):
-    """Export a running web interface to a folder. If the folder exists, the
+    """
+    Export a running web interface to a folder. If the folder exists, the
     user must use force. This should be run via:
         rse export --type static-web [export_dir]
     If the user manually starts the server, the user needs to do:
@@ -80,7 +81,9 @@ def export_web_static(export_dir, base_url, client, force=False):
             repo.data = json.loads(data)
 
         # Get the list of topics
-        topiclist = repo.data.get("topics", [])
+        topiclist = repo.data.get("topics", []) or repo.data.get("data", {}).get(
+            "topics", []
+        )
         data.append(
             {
                 "uid": repo.uid,

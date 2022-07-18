@@ -9,7 +9,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 
-__version__ = "0.0.38"
+__version__ = "0.0.39"
 AUTHOR = "Vanessa Sochat"
 AUTHOR_EMAIL = "vsoch@users.noreply.github.io"
 NAME = "rse"
