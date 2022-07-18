@@ -265,7 +265,7 @@ class Encyclopedia:
                 data = json.loads(data)
 
             # Get the list of topics, optionally filter by a pattern
-            topiclist = data.get("topics", [])
+            topiclist = data.get("topics", []) or data.get("data", {}).get("topics", [])
             if pattern is not None:
                 topiclist = [t for t in topiclist if re.search(pattern, t)]
 
@@ -280,7 +280,8 @@ class Encyclopedia:
         repos = []
         for name in self.list():
             repo = self.get(name[0])
-            topiclist = repo.parser.get_metadata().get("topics", [])
+            data = repo.parser.get_metadata()
+            topiclist = data.get("topics", []) or data.get("data", {}).get("topics", [])
             if set(topics).intersection(set(topiclist)):
                 repos.append(repo.uid)
 
