@@ -135,6 +135,23 @@ class AsclScraper(ScraperBase):
                 if "Next" in link.text:
                     return self.baseurl + link.attrs["href"]
 
+    def clean_uid(self, uid):
+        """
+        Try to clean a GitHub URL i a blob/tree is provided.
+        """
+        if "tree" in uid:
+            uid = uid.split("tree", 1)[0]
+        elif "blob" in uid:
+            uid = uid.split("blob", 1)[0]
+
+        # Do we have a GitHub pages address?
+        if "github.io" in uid:
+            uid = "github/%s/%s" % (
+                uid.split(".")[0],
+                [x for x in uid.split("/") if x][-1],
+            )
+        return uid
+
     def create(self, database=None, config_file=None):
         """
         After a scrape (whether we obtain latest or a search query) we
@@ -145,22 +162,12 @@ class AsclScraper(ScraperBase):
         client = Encyclopedia(config_file=config_file, database=database)
         for result in self.results:
             uid = result["url"].split("//")[-1]
-            if "tree" in uid:
-                uid = uid.split("tree", 1)[0]
-            elif "blob" in uid:
-                uid = uid.split("blob", 1)[0]
-
-            # Do we have a GitHub pages address?
-            if "github.io" in uid:
-                uid = "github/%s/%s" % (
-                    uid.split(".")[0],
-                    [x for x in uid.split("/") if x][-1],
-                )
 
             # If a repository is added that isn't represented
             try:
+                uid = self.clean_uid(uid)
                 repo = get_parser(uid)
-            except NotImplementedError as exc:
+            except Exception as exc:
                 bot.warning(exc)
                 continue
 
@@ -172,4 +179,4 @@ class AsclScraper(ScraperBase):
 
             # Some software is 404
             except:
-                print(result)
+                bot.error("Issue parsing {result}")
