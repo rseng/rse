@@ -179,4 +179,4 @@ class AsclScraper(ScraperBase):
 
             # Some software is 404
             except:
-                bot.error("Issue parsing {result}")
+                bot.error(f"Issue parsing {result}")
