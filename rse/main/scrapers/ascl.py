@@ -135,24 +135,7 @@ class AsclScraper(ScraperBase):
                 if "Next" in link.text:
                     return self.baseurl + link.attrs["href"]
 
-    def clean_uid(self, uid):
-        """
-        Try to clean a GitHub URL i a blob/tree is provided.
-        """
-        if "tree" in uid:
-            uid = uid.split("tree", 1)[0]
-        elif "blob" in uid:
-            uid = uid.split("blob", 1)[0]
-
-        # Do we have a GitHub pages address?
-        if "github.io" in uid:
-            uid = "github/%s/%s" % (
-                uid.split(".")[0],
-                [x for x in uid.split("/") if x][-1],
-            )
-        return uid
-
-    def create(self, database=None, config_file=None):
+    def create(self, database=None, config_file=None, **kwargs):
         """
         After a scrape (whether we obtain latest or a search query) we
         run create to create software repositories based on results.

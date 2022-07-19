@@ -311,10 +311,10 @@ class SoftwareRepository:
         Update a data file. This means reading, updating, and writing.
         """
         updates = updates or {}
-        if "data" in self.data:
+        if "data" in (self.data or {}):
             self.data["data"] = update_nonempty(updates, self.data["data"])
         else:
-            self.data = update_nonempty(updates, self.data)
+            self.data = update_nonempty(updates, self.data or {})
         self.save()
 
     def update_criteria(self, uid, username, response):

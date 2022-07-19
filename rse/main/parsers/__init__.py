@@ -25,7 +25,7 @@ def matches(Parser, uri):
     return not re.search(Parser.matchstring, uri) == None
 
 
-def get_parser(uri, config=None):
+def get_parser(uri, config=None, allow_custom=True):
     """
     get parser will return the correct parser depending on a uri
     """
@@ -39,7 +39,9 @@ def get_parser(uri, config=None):
         parser = ZenodoParser(uri)
     if matches(CustomParser, uri):
         parser = CustomParser(uri)
-    if not parser:
+    if not parser and allow_custom:
+        parser = CustomParser(uri)
+    elif not parser:
         raise NotImplementedError(f"There is no matching parser for {uri}")
     parser.config = config
     return parser

@@ -143,6 +143,10 @@ class ParserBase:
         """
         raise NotImplementedError
 
+    def get_avatar(self, data=None):
+        data = data or self.data
+        return data.get("avatar")
+
     def get_description(self, data):
         """
         a common function for a parser to return a description.

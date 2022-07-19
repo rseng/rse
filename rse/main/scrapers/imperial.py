@@ -77,7 +77,10 @@ class ImperialCollegeLondonScraper(ScraperBase):
 
         return self.results
 
-    def create(self, database=None, config_file=None):
+    # TODO finish prasing software 9repos and docs)
+    # fix here so that each scraper accepts update, possibly uses common function
+    # TODO open pr for software
+    def create(self, database=None, config_file=None, **kwargs):
         """
         After a scrape (whether we obtain latest or a search query) we
         run create to create software repositories based on results.
