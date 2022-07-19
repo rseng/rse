@@ -78,13 +78,7 @@ d3.json("{{ site.baseurl }}/api/data.json", raw => {
 
   leaf.append('text')
     .attr("fill", d => d3.hsl(color(d.data.size)).darker(2.6))
-    .text(d => {
-    if (d.data.size > {{ site.tag_threshold }}) {
-      return format(d.data.size)
-    } else if (d.data.size >= {{ site.min_tag_count }}) {
-      return d.data.word
-    }
-  })
+    .text(d => {return d.data.word})
     .attr('y', 5)
 
   leaf.append('title')

@@ -59,12 +59,14 @@ class JekyllExporter(Exporter):
 
             # Flatten data to be on one level
             if "data" in repo:
-                data = repo["data"]
-                del repo["data"]
-                for k, v in data.items():
+                for k, v in repo["data"].items():
                     if isinstance(v, str):
                         v = re.sub("(\n|\r)", " ", v)
-                    repo[k] = v
+
+                    # update repo to have one level of data on the top
+                    if v:
+                        repo[k] = v
+                del repo["data"]
 
             # Render the "rest" as all key value pairs
             rest = ""
@@ -72,7 +74,8 @@ class JekyllExporter(Exporter):
                 if not isinstance(v, str):
                     rest += f"{k}: {json.dumps(v)}\n"
                 else:
-                    v = v.replace('"', "")
+                    for char, replace in [('"', "")]:
+                        v = v.replace(char, replace)
                     rest += f'{k}: "{v}"\n'
 
             template = markdown_template % (rest.strip("\n"), datetime.now())
