@@ -45,6 +45,23 @@ class ScraperBase:
         """
         raise NotImplementedError
 
+    def clean_uid(self, uid):
+        """
+        Try to clean a GitHub URL i a blob/tree is provided.
+        """
+        if "tree" in uid:
+            uid = uid.split("tree", 1)[0]
+        elif "blob" in uid:
+            uid = uid.split("blob", 1)[0]
+
+        # Do we have a GitHub pages address?
+        if "github.io" in uid:
+            uid = "github/%s/%s" % (
+                uid.split(".")[0],
+                [x for x in uid.split("/") if x][-1],
+            )
+        return uid
+
     def get_setting(self, key, default=None):
         """
         Get a setting, meaning that we first check the environment, then

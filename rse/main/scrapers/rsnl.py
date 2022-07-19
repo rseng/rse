@@ -73,7 +73,7 @@ class RSNLScraper(ScraperBase):
 
         return self.results
 
-    def create(self, database=None, config_file=None):
+    def create(self, database=None, config_file=None, **kwargs):
         """
         After a scrape (whether we obtain latest or a search query) we
         run create to create software repositories based on results.

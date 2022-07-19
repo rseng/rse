@@ -29,14 +29,15 @@ but still capture metadata that we need.
 The following scrapers are planned for development, depending on if an API is available,
 and it includes links to repositories:
 
+ - [Astrophysics Source Code Library](#ascl)
  - [The Journal of Open Source Software (JoSS)](#joss)
+ - [BioGrids by Harvard Medical School](#biogrids)
  - [bio.tools](#biotools)
  - [Hal Research Software Database](#hal)
  - [Research Software NL Dictionary](#researchsoftwarenl)
  - [ROpenSci](#ropensci)
  - [The Molecular Sciences Software Institute](#molssi)
  - [The Imperial College London Research Software Directory](#imperial)
- - [Astrophysics Source Code Library](#ascl)
 
 <a id="joss">
 ### Journal of Open Source Software
@@ -331,7 +332,7 @@ scraper = ImperialCollegeLondonScraper()
 <a id="ascl">
 ### Astrophysics Source Code Library
 
-You an browse the software in the library at [https://ascl.net/code/all](https://ascl.net/code/all).
+You can browse the software in the library at [https://ascl.net/code/all](https://ascl.net/code/all).
 
 ```bash
 $ rse scrape ascl
@@ -340,3 +341,13 @@ $ rse scrape --dry-run ascl
 
 And you can get a named scraper as shown in the other examples above.
 
+<a id="biogrids">
+### BioGrids by Harvard Medical School
+
+You can browse the software [here](https://biogrids.org/software/). This is the first
+scraper that allows adding under the custom namespace, e.g., `custom/biogrids`.
+
+```bash
+$ rse scrape biogrids
+$ rse scrape --dry-run biogrids
+```

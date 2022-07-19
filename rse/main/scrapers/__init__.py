@@ -9,26 +9,29 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 from .ascl import AsclScraper
+from .biogrids import BioGridsScraper
 from .biotools import BioToolsScraper
+from .googlesheet import GoogleSheetImporter
 from .hal import HalScraper
+from .imperial import ImperialCollegeLondonScraper
 from .joss import JossScraper
 from .molssi import MolssiScraper
 from .rsnl import RSNLScraper
 from .ropensci import ROpenSciScraper
-from .imperial import ImperialCollegeLondonScraper
-from .googlesheet import GoogleSheetImporter
+
 import re
 import sys
 
 scrapers = [
     AsclScraper,
+    BioGridsScraper,
     BioToolsScraper,
     HalScraper,
+    ImperialCollegeLondonScraper,
     JossScraper,
     MolssiScraper,
     RSNLScraper,
     ROpenSciScraper,
-    ImperialCollegeLondonScraper,
 ]
 
 
