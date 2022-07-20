@@ -31,7 +31,7 @@ class GitHubParser(ParserBase):
         uid = uid.replace(":", "/")
         owner, repo = uid.replace(".git", "").split("/")[-2:]
         return "{}/{}".format(owner, repo)
-        
+
     def load_secrets(self):
         """
         load secrets, namely the GitHub token
