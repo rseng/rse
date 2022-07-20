@@ -8,13 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.main.parsers import CustomParser, get_parser
+from rse.main.parsers import get_parser
 from rse.utils.strings import update_nonempty
-from rse.logger import bot
 import logging
-import requests
-import sys
-import os
 import re
 
 from .base import ScraperBase
