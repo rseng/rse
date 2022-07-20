@@ -8,12 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.urls import get_user_agent
 from rse.main.parsers import CustomParser, get_parser
 from rse.utils.strings import update_nonempty
 import logging
-import requests
-import sys
 import os
 
 from .base import ScraperBase
@@ -38,23 +35,9 @@ class BioGridsScraper(ScraperBase):
 
     def scrape(self, paginate=False, delay=None, query=""):
         """
-        A shared function to scrape software from molssi.
+        A shared function to scrape software from biogrids.
         """
-        try:
-            from bs4 import BeautifulSoup
-        except ImportError:
-            sys.exit("BeautifulSoup is required. pip install rse[scraper].")
-
-        # Sort so newest first (latest)
-        url = self.baseurl
-
-        # This page has all entries
-        response = requests.get(url, headers={"User-Agent": get_user_agent()})
-        if response.status_code != 200:
-            sys.exit("Unable to retrieve biogrids listing")
-
-        soup = BeautifulSoup(response.text, "html.parser")
-
+        soup = self.soupify(self.baseurl)
         contenders = soup.find_all(
             "tr", {"itemtype": "http://schema.org/SoftwareApplication"}
         )
@@ -117,17 +100,16 @@ class BioGridsScraper(ScraperBase):
             # If a repository is added that isn't represented
             try:
                 uid = self.clean_uid(uid)
+                repo = get_parser(uid, allow_custom=False)
 
                 # Test to see if singular GitHub or Gitlab
-                test_uid = uid.replace(":", "/")
                 if (
-                    ("github" in test_uid or "gitlab" in test_uid)
-                    and test_uid.count("/") != 2
-                    or ".html" in test_uid
+                    ("github" in repo.uid or "gitlab" in repo.uid)
+                    and repo.uid.count("/") != 2
+                    or ".html" in repo.uid
                 ):
                     continue
 
-                repo = get_parser(uid, allow_custom=False)
                 data = repo.get_metadata() or {}
                 result = update_nonempty(result, data)
 
