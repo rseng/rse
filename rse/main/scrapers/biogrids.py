@@ -120,9 +120,11 @@ class BioGridsScraper(ScraperBase):
 
                 # Test to see if singular GitHub or Gitlab
                 test_uid = uid.replace(":", "/")
-                if ("github" in test_uid or "gitlab" in test_uid) and test_uid.count(
-                    "/"
-                ) != 2:
+                if (
+                    ("github" in test_uid or "gitlab" in test_uid)
+                    and test_uid.count("/") != 2
+                    or ".html" in test_uid
+                ):
                     continue
 
                 repo = get_parser(uid, allow_custom=False)
