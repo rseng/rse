@@ -8,12 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.urls import get_user_agent
 from rse.main.parsers import get_parser
 import logging
-import requests
 import random
-import sys
 import re
 from time import sleep
 
@@ -45,10 +42,7 @@ class AsclScraper(ScraperBase):
         url = "%s/code/all/limit/250/dir/desc/order/date" % self.baseurl
 
         while url:
-            response = requests.get(url, headers={"User-Agent": get_user_agent()})
-            if response.status_code != 200:
-                sys.exit("Unable to retrieve ASCL listing")
-            next = self._parse_page(response)
+            next = self._parse_page(url)
             # Sleep for a random amount of time to give a rest!
             sleep(delay or random.choice(range(1, 10)) * 0.1)
             if paginate and next:
@@ -58,17 +52,15 @@ class AsclScraper(ScraperBase):
 
         return self.results
 
-    def _parse_page(self, response):
+    def _parse_page(self, url):
         """
         Parse records from a single page
         """
-        try:
-            from bs4 import BeautifulSoup
-            import bs4
-        except ImportError:
-            sys.exit("BeautifulSoup is required. pip install rse[scraper].")
+        soup = self.soupify(url)
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        # By here we've imported bs4 in the soupify function, it exists.
+        import bs4
+
         contenders = soup.find_all("div", {"class": "item"})
         for contender in contenders:
 
@@ -104,12 +96,8 @@ class AsclScraper(ScraperBase):
 
                     # Go to the detail page
                     detail_url = "%s/%s" % (self.baseurl, title.attrs["href"])
-                    response = requests.get(
-                        detail_url, headers={"User-Agent": get_user_agent()}
-                    )
-                    if response.status_code != 200:
-                        continue
-                    details = BeautifulSoup(response.text, "html.parser")
+                    details = self.soupify(detail_url)
+
                     links = details.find_all("dd")
                     for link in links:
                         ahref = link.find_next("a")

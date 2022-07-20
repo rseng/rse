@@ -8,7 +8,10 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
+from rse.utils.urls import get_user_agent
 import os
+import requests
+import sys
 
 
 class ScraperBase:
@@ -61,6 +64,23 @@ class ScraperBase:
                 [x for x in uid.split("/") if x][-1],
             )
         return uid
+
+    def soupify(self, url, data=None, content_type="html.parser"):
+        """
+        Return url parsed with beautiful soup.
+        """
+        try:
+            from bs4 import BeautifulSoup
+        except ImportError:
+            sys.exit("BeautifulSoup is required. pip install rse[scraper].")
+
+        response = requests.get(
+            url, data=data, headers={"User-Agent": get_user_agent()}
+        )
+        if response.status_code != 200:
+            sys.exit(f"Unable to retrieve {self.name} listing")
+
+        return BeautifulSoup(response.text, content_type)
 
     def get_setting(self, key, default=None):
         """

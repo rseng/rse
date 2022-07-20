@@ -8,12 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.urls import get_user_agent
 from rse.main.parsers import get_parser
 import logging
-import requests
 import random
-import sys
 import re
 from time import sleep
 
@@ -31,7 +28,8 @@ class JossScraper(ScraperBase):
         super().__init__(query)
 
     def latest(self, paginate=False, delay=0.0):
-        """The scraper should expose a function to populate self.results with
+        """
+        The scraper should expose a function to populate self.results with
         some number of latest entries. Unlike a search, a latest scraper does
         not by default paginate. The user needs to interact directly with
         the Python client to do a scrape for all papers in JoSS.
@@ -40,27 +38,22 @@ class JossScraper(ScraperBase):
         return self.scrape(url, paginate=paginate, delay=delay)
 
     def search(self, query, paginate=True, delay=0.0):
-        """The scraper should expose a function to populate self.results with
+        """
+        The scraper should expose a function to populate self.results with
         a listing based on matching a search criteria.
         """
         url = "https://joss.theoj.org/papers/search?q=%s" % query
         return self.scrape(url, paginate=paginate, delay=delay)
 
     def scrape(self, url, paginate=False, delay=None):
-        """A shared function to scrape a set of repositories. Since the JoSS
+        """
+        A shared function to scrape a set of repositories. Since the JoSS
         pages for a search and the base are the same, we can use a shared
         function.
         """
-        try:
-            from bs4 import BeautifulSoup
-        except ImportError:
-            sys.exit("BeautifulSoup is required. pip install rse[scraper].")
-
         # Handle pagination
         while url is not None:
-
-            response = requests.get(url, headers={"User-Agent": get_user_agent()})
-            soup = BeautifulSoup(response.text, "html.parser")
+            soup = self.soupify(url)
             url = None
             for link in soup.find_all("link", href=True):
 
@@ -77,10 +70,7 @@ class JossScraper(ScraperBase):
                 if re.search(
                     "https://joss.theoj.org/papers/10.[0-9]{5}/joss.[0-9]{5}", paper_url
                 ):
-                    response = requests.get(
-                        paper_url, headers={"User-Agent": get_user_agent()}
-                    )
-                    paper_soup = BeautifulSoup(response.text, "html5lib")
+                    paper_soup = self.soupify(paper_url, content_type="html5lib")
 
                     # Find links that we need
                     repo = {}

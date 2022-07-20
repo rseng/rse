@@ -14,6 +14,7 @@ and **Merged pull requests**. Critical items to know are:
 The versions coincide with releases on pip.
 
 ## [0.0.x](https://github.com/rseng/rse/tree/master) (0.0.x)
+ - Adding debian-med scraper (0.0.43)
  - Bug in biogrids to output github.com URI (0.0.42)
  - Template style bug fixes (0.0.41)
  - Adding biogrids scraper (0.0.40)

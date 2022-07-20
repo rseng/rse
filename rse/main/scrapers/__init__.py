@@ -11,6 +11,7 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 from .ascl import AsclScraper
 from .biogrids import BioGridsScraper
 from .biotools import BioToolsScraper
+from .debian import DebianMedScraper
 from .googlesheet import GoogleSheetImporter
 from .hal import HalScraper
 from .imperial import ImperialCollegeLondonScraper
@@ -26,6 +27,7 @@ scrapers = [
     AsclScraper,
     BioGridsScraper,
     BioToolsScraper,
+    DebianMedScraper,
     HalScraper,
     ImperialCollegeLondonScraper,
     JossScraper,

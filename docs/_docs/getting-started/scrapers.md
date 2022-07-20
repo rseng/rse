@@ -33,6 +33,7 @@ and it includes links to repositories:
  - [The Journal of Open Source Software (JoSS)](#joss)
  - [BioGrids by Harvard Medical School](#biogrids)
  - [bio.tools](#biotools)
+ - [Debian Med](#debian)
  - [Hal Research Software Database](#hal)
  - [Research Software NL Dictionary](#researchsoftwarenl)
  - [ROpenSci](#ropensci)
@@ -350,4 +351,14 @@ scraper that allows adding under the custom namespace, e.g., `custom/biogrids`.
 ```bash
 $ rse scrape biogrids
 $ rse scrape --dry-run biogrids
+```
+
+<a id="debian">
+### Debian Med
+
+You can browse Debian Med categories and software [here](https://blends.debian.org/med/tasks).
+
+```bash
+$ rse scrape debian
+$ rse scrape --dry-run debian
 ```
