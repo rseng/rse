@@ -8,10 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.main.parsers import CustomParser, get_parser
+from rse.main.parsers import get_parser
 from rse.utils.strings import update_nonempty
 import logging
-import os
 
 from .base import ScraperBase
 
@@ -111,23 +110,12 @@ class BioGridsScraper(ScraperBase):
                     continue
 
                 data = repo.get_metadata() or {}
+                if not data:
+                    continue
                 result = update_nonempty(result, data)
 
-            # Or as custom entry in namespace of scraper
             except NotImplementedError:
-
-                # Don't parse GitHub or Gitlab partial URls
-                if "github" in uid or "gitlab" in uid:
-                    continue
-
-                # Base UID based on title
-                uid = "biogrids%s%s" % (os.sep, result["title"])
-                repo = CustomParser(uid)
-                repo.set_metadata(
-                    title=result.get("title"),
-                    url=result["url"],
-                    description=result.get("description"),
-                )
+                continue
 
             # Add results that don't exist
             exists = client.exists(repo.uid)

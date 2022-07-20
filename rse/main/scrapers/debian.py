@@ -115,7 +115,8 @@ class DebianMedScraper(ScraperBase):
                     continue
 
             # Don't allow custom for the time being
-            except NotImplementedError:
+            except Exception as exc:
+                bot.warning(exc)
                 continue
 
             # Add results that don't exist
@@ -126,6 +127,8 @@ class DebianMedScraper(ScraperBase):
                 continue
 
             data = repo.get_metadata() or {}
+            if not data:
+                continue
             result = update_nonempty(result, data)
 
             if not exists:
