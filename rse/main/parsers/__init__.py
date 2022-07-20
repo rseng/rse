@@ -21,7 +21,7 @@ def matches(Parser, uri):
     """
     if not hasattr(Parser, "matchstring"):
         raise NotImplementedError(f"{Parser.name} is missing a matchstring attribute.")
-
+    
     return not re.search(Parser.matchstring, uri) == None
 
 
