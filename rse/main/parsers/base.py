@@ -8,14 +8,14 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.file import read_file
-
-from datetime import datetime
 import copy
-import os
 import json
-import tempfile
+import os
 import subprocess
+import tempfile
+from datetime import datetime
+
+from rse.utils.file import read_file
 
 
 class Capturing:

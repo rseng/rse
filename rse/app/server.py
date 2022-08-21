@@ -8,14 +8,14 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from flask_socketio import SocketIO
-from flask import Flask
-
-from rse.logger import bot
-from rse.defaults import RSE_HOSTNAME
-
 import logging
 import os
+
+from flask import Flask
+from flask_socketio import SocketIO
+
+from rse.defaults import RSE_HOSTNAME
+from rse.logger import bot
 
 
 class ResearchSoftwareServer(Flask):
@@ -29,8 +29,8 @@ app.config.from_object("rse.app.config")
 # turn the flask app into a socketio app
 socketio = SocketIO(app, async_mode=None, logger=True, engineio_logger=True)
 
-from rse.app.views import *
 from rse.app.api import *
+from rse.app.views import *
 
 
 def start(

@@ -8,12 +8,12 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.logger import RSE_LOG_LEVEL
-from rse.exceptions import MissingEnvironmentVariable
 import logging
 import multiprocessing
 import os
 
+from rse.exceptions import MissingEnvironmentVariable
+from rse.logger import RSE_LOG_LEVEL
 
 logging.basicConfig(level=getattr(logging, RSE_LOG_LEVEL))
 bot = logging.getLogger("rse.defaults")

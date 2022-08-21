@@ -2,16 +2,15 @@ __author__ = "Vanessa Sochat"
 __copyright__ = "Copyright 2021-2022, Vanessa Sochat"
 __license__ = "MPL 2.0"
 
-import os
-import shutil
-import re
 import json
-
-from rse.logger.message import bot
-from rse.utils.file import write_file
+import logging
+import os
+import re
+import shutil
+import sys
 from datetime import datetime
 
-import logging
+from rse.utils.file import write_file
 
 logger = logging.getLogger("rse.main")
 here = os.path.abspath(os.path.dirname(__file__))
@@ -29,7 +28,7 @@ def get_exporter(name):
     """
     if name.lower() == "jekyll":
         return JekyllExporter
-    bot.exit(f"Exporter {name} is not known.")
+    sys.exit(f"Exporter {name} is not known.")
 
 
 class Exporter:

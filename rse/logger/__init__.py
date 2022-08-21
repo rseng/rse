@@ -1,4 +1,5 @@
 import os
+
 from .message import bot
 
 # Shared logging import for both client and default.py (for headless)

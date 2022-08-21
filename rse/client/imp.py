@@ -8,10 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.main.scrapers import get_importer
-import logging
+import sys
 
-bot = logging.getLogger("rse.client")
+from rse.main.scrapers import get_importer
 
 
 def main(args, extra):
@@ -19,7 +18,7 @@ def main(args, extra):
     try:
         importer = get_importer(args.import_type)
     except:
-        bot.exit(f"{args.import_type} is not a known importer.")
+        sys.exit(f"{args.import_type} is not a known importer.")
 
     results = importer.scrape(extra)
     print("Found %s results" % len(results))

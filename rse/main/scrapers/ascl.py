@@ -8,11 +8,12 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.main.parsers import get_parser
 import logging
 import random
 import re
 from time import sleep
+
+from rse.main.parsers import get_parser
 
 from .base import ScraperBase
 

@@ -8,23 +8,22 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
+import json
+import logging
+
+from sqlalchemy import create_engine, desc, or_
+from sqlalchemy.orm import scoped_session, sessionmaker
+
 from rse.exceptions import (
     MissingDatabaseString,
-    NoReposError,
     MultipleReposExistError,
+    NoReposError,
     RepoNotFoundError,
 )
 from rse.main.database.base import Database
 from rse.main.parsers import get_parser
 from rse.main.parsers.base import ParserBase
 from rse.utils.strings import update_nonempty
-
-from sqlalchemy import create_engine, desc
-from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy import or_
-
-import logging
-import json
 
 bot = logging.getLogger("rse.main.database.relational")
 

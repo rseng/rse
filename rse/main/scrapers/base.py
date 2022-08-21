@@ -8,10 +8,12 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.urls import get_user_agent
 import os
-import requests
 import sys
+
+import requests
+
+from rse.utils.urls import get_user_agent
 
 
 class ScraperBase:

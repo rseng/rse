@@ -8,11 +8,11 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from flask import render_template
-from rse.app.server import app
-from rse.defaults import RSE_URL_PREFIX, RSE_HOST
-
 import flask
+from flask import render_template
+
+from rse.app.server import app
+from rse.defaults import RSE_HOST, RSE_URL_PREFIX
 
 ## Main Index View
 

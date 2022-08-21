@@ -8,13 +8,16 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.urls import get_user_agent
+import csv
+import logging
+import sys
+from io import StringIO
+
+import requests
+
 from rse.main.parsers import CustomParser, get_parser
 from rse.utils.strings import update_nonempty
-import logging
-import requests
-import csv
-from io import StringIO
+from rse.utils.urls import get_user_agent
 
 from .base import ScraperBase
 
@@ -48,19 +51,19 @@ class GoogleSheetImporter(ScraperBase):
         for url in args:
             response = requests.get(url, headers={"User-Agent": get_user_agent()})
             if response.status_code != 200:
-                bot.exit(f"Issue parsing {url}: {response.text}")
+                sys.exit(f"Issue parsing {url}: {response.text}")
 
             # Parse csv
             f = StringIO(response.text)
             reader = csv.reader(f, delimiter=",")
             rows = [x for x in reader if x]
             if not rows:
-                bot.exit(f"Sheet {url} does not have any rows.")
+                sys.exit(f"Sheet {url} does not have any rows.")
 
             header = [x.lower() for x in rows.pop(0)]
             for required in ["title", "url", "description"]:
                 if required not in header:
-                    bot.exit(f"Sheet {url} is missing required field {required}.")
+                    sys.exit(f"Sheet {url} is missing required field {required}.")
 
             for row in rows:
                 repo = {value: row[i] for i, value in enumerate(header) if value}

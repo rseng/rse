@@ -9,9 +9,10 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 import flask
-from flask_restful import Resource, Api
+from flask_restful import Api, Resource
+
 from rse.app.server import app
-from rse.defaults import RSE_URL_PREFIX, RSE_HOST
+from rse.defaults import RSE_HOST, RSE_URL_PREFIX
 
 
 def list_repos(parser=None):

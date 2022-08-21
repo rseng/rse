@@ -8,8 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.main.scrapers import get_named_scraper
 import sys
+
+from rse.main.scrapers import get_named_scraper
 
 
 def main(args, extra):

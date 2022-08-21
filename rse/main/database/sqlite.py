@@ -8,10 +8,10 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.main.database.relational import RelationalDatabase
-
 import logging
 import os
+
+from rse.main.database.relational import RelationalDatabase
 
 bot = logging.getLogger("rse.main.database.sqlite")
 

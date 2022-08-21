@@ -8,13 +8,15 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.urls import get_user_agent, repository_regex
-from rse.main.parsers import get_parser
-import logging
-import requests
-import sys
-import re
 import csv
+import logging
+import re
+import sys
+
+import requests
+
+from rse.main.parsers import get_parser
+from rse.utils.urls import get_user_agent, repository_regex
 
 from .base import ScraperBase
 

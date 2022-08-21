@@ -10,9 +10,11 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import logging
 import random
-import requests
 from time import sleep
-from rse.utils.urls import get_user_agent, check_response
+
+import requests
+
+from rse.utils.urls import check_response, get_user_agent
 
 from .base import ParserBase
 

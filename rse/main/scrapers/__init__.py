@@ -8,6 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
+import re
+import sys
+
 from .ascl import AsclScraper
 from .biogrids import BioGridsScraper
 from .biotools import BioToolsScraper
@@ -17,11 +20,8 @@ from .hal import HalScraper
 from .imperial import ImperialCollegeLondonScraper
 from .joss import JossScraper
 from .molssi import MolssiScraper
-from .rsnl import RSNLScraper
 from .ropensci import ROpenSciScraper
-
-import re
-import sys
+from .rsnl import RSNLScraper
 
 scrapers = [
     AsclScraper,
