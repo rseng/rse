@@ -51,7 +51,7 @@ class GoogleSheetImporter(ScraperBase):
         for url in args:
             response = requests.get(url, headers={"User-Agent": get_user_agent()})
             if response.status_code != 200:
-                sys.exit(f"Issue parsing {url}: {response.text}")
+                sys.exit(f"Issue parsing {url}: {response.reason}")
 
             # Parse csv
             f = StringIO(response.text)

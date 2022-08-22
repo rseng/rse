@@ -25,7 +25,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 bot = logging.getLogger("rse.app.export")
 
-example_generate = """#!/bin/bash
+example_generate = """
 export RSE_HOST=https://rseng.github.io
 export RSE_URL_PREFIX=/software/
 export RSE_CONFIG_FILE=rse.ini
