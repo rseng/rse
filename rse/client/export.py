@@ -56,6 +56,7 @@ def main(args, extra):
             base_url="http://%s:%s" % (args.host, args.port),
             force=args.force,
             client=client,
+            p=p,
         )
 
         # Ensure that it stops!

@@ -34,7 +34,7 @@ rse export --type static-web docs/
 """
 
 
-def export_web_static(export_dir, base_url, client, force=False):
+def export_web_static(export_dir, base_url, client, force=False, p=None):
     """
     Export a running web interface to a folder. If the folder exists, the
     user must use force. This should be run via:
@@ -54,6 +54,10 @@ def export_web_static(export_dir, base_url, client, force=False):
     print(f"Starting export for {base_url}")
     time.sleep(2)
 
+    def kill():
+        if p:
+            p.kill()
+
     # Ensure that the server is running
     try:
         requests.head(base_url).status_code == 200
@@ -64,12 +68,14 @@ def export_web_static(export_dir, base_url, client, force=False):
         return
 
     if not RSE_HOST or not RSE_URL_PREFIX:
+        kill()
         sys.exit(
             "Missing environment variables! Here is an example:\n%s" % example_generate
         )
 
     # Output directory cannot exist if force
     if os.path.exists(export_dir) and not force:
+        kill()
         sys.exit(f"{export_dir} exists, use --force to overwrite.")
 
     # Create export directory if it doesn't exist
