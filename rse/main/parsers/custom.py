@@ -8,13 +8,13 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from .base import ParserBase
-import rse.defaults
-import logging
 import os
 import re
+import sys
 
-bot = logging.getLogger("rse.main.parsers.custom")
+import rse.defaults
+
+from .base import ParserBase
 
 
 class CustomParser(ParserBase):
@@ -40,7 +40,7 @@ class CustomParser(ParserBase):
     def set_metadata(self, **kwargs):
         for field in ["url", "title", "description"]:
             if field not in kwargs:
-                bot.exit(f"Missing field {field} for custom parser {self.uid}")
+                sys.exit(f"Missing field {field} for custom parser {self.uid}")
             self.data[field] = kwargs[field]
         for key, value in kwargs.items():
             if key not in self.data:

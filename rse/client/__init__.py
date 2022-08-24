@@ -10,13 +10,14 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.logger import RSE_LOG_LEVEL, RSE_LOG_LEVELS
-from rse.defaults import RSE_CONFIG_FILE
-import rse
 import argparse
-import sys
 import logging
 import os
+import sys
+
+import rse
+from rse.defaults import RSE_CONFIG_FILE
+from rse.logger import RSE_LOG_LEVEL, RSE_LOG_LEVELS
 
 
 def get_parser():

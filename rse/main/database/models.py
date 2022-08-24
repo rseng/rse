@@ -10,7 +10,6 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import json
 
-
 try:
     from sqlalchemy import Column, DateTime, String, Text, func
     from sqlalchemy.ext.declarative import declarative_base

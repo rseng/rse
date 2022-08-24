@@ -8,13 +8,15 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.urls import get_user_agent
-from rse.main.parsers import get_parser
 import logging
-import requests
 import random
 import sys
 from time import sleep
+
+import requests
+
+from rse.main.parsers import get_parser
+from rse.utils.urls import get_user_agent
 
 from .base import ScraperBase
 
@@ -42,8 +44,8 @@ class MolssiScraper(ScraperBase):
         """
         url = "%s/search" % self.baseurl
         try:
-            from bs4 import BeautifulSoup
             import bs4
+            from bs4 import BeautifulSoup
         except ImportError:
             sys.exit("BeautifulSoup is required. pip install rse[scraper].")
 

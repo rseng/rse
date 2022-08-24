@@ -8,10 +8,12 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.defaults import RSE_API_ENDPOINT
-import requests
 import logging
 import sys
+
+import requests
+
+from rse.defaults import RSE_API_ENDPOINT
 
 bot = logging.getLogger("rse.main.taxonomy")
 parser_regex = "github"

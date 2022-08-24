@@ -8,11 +8,12 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.exceptions import DatabaseStringFormatError, MissingDatabaseString
-from rse.main.config import Config
 import logging
 import os
 import re
+
+from rse.exceptions import DatabaseStringFormatError, MissingDatabaseString
+from rse.main.config import Config
 
 
 def main(args, extra):

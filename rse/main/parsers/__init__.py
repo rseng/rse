@@ -8,11 +8,12 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
+import re
+
+from .custom import CustomParser
 from .github import GitHubParser
 from .gitlab import GitLabParser
 from .zenodo import ZenodoParser
-from .custom import CustomParser
-import re
 
 
 def matches(Parser, uri):

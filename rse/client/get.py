@@ -8,10 +8,11 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.main import Encyclopedia
-from rse.exceptions import RepoNotFoundError, NoReposError
 import json
 import logging
+
+from rse.exceptions import NoReposError, RepoNotFoundError
+from rse.main import Encyclopedia
 
 bot = logging.getLogger("rse.client")
 

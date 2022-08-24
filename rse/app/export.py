@@ -8,23 +8,33 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.urls import get_user_agent
-from rse.utils.file import mkdir_p, write_file, write_json
-from rse.defaults import RSE_URL_PREFIX
 import json
 import logging
 import os
-import requests
 import shutil
 import sys
 import time
+
+import requests
+
+from rse.defaults import RSE_HOST, RSE_URL_PREFIX
+from rse.utils.file import mkdir_p, write_file, write_json
+from rse.utils.urls import get_user_agent
 
 here = os.path.abspath(os.path.dirname(__file__))
 
 bot = logging.getLogger("rse.app.export")
 
+example_generate = """
+export RSE_HOST=https://rseng.github.io
+export RSE_URL_PREFIX=/software/
+export RSE_CONFIG_FILE=rse.ini
+rse export --type repos-txt repos.txt --force
+rse export --type static-web docs/
+"""
 
-def export_web_static(export_dir, base_url, client, force=False):
+
+def export_web_static(export_dir, base_url, client, force=False, p=None):
     """
     Export a running web interface to a folder. If the folder exists, the
     user must use force. This should be run via:
@@ -44,6 +54,10 @@ def export_web_static(export_dir, base_url, client, force=False):
     print(f"Starting export for {base_url}")
     time.sleep(2)
 
+    def kill():
+        if p:
+            p.kill()
+
     # Ensure that the server is running
     try:
         requests.head(base_url).status_code == 200
@@ -53,8 +67,15 @@ def export_web_static(export_dir, base_url, client, force=False):
         )
         return
 
+    if not RSE_HOST or not RSE_URL_PREFIX:
+        kill()
+        sys.exit(
+            "Missing environment variables! Here is an example:\n%s" % example_generate
+        )
+
     # Output directory cannot exist if force
     if os.path.exists(export_dir) and not force:
+        kill()
         sys.exit(f"{export_dir} exists, use --force to overwrite.")
 
     # Create export directory if it doesn't exist

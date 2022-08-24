@@ -314,6 +314,9 @@ $ rse export --type jekyll-web docs/
 
 Make sure the directory does not exist the first time you export! For times after
 that, only the inner `_software` collection will be updated with your current software database.
+If you'd like a complete tutorial for deploying a static web interface (that automatically updates itself
+from your sheet) see the [rse-jekyll-web](https://github.com/rseng/rse-jekyll-web) repository,
+where the README provides instructions with to deploy a web interface akin to [rseng/web](https://github.com/rseng/web).
 
 <a id="import">
 ## Import
@@ -367,7 +370,7 @@ All other fields will be treated as custom data fields to add to the data. Once 
 sure to generate a public link to export csv. You can do that via:
 
 ```
-Share -> Publish to Web -> Form Responses 1 (or the sheet name in first dropdown) -> Comma-separated value (csv) (second dropdown)
+File -> Share -> Publish to Web -> Form Responses 1 (or the sheet name in first dropdown) -> Comma-separated value (csv) (second dropdown)
 ```
 
 [Here is an example](https://docs.google.com/spreadsheets/d/e/2PACX-1vTsPmEWUg8Tr1ZoYTcQ0kTdsCrVskQveSuwfdEHaktHtQG693O4DHQrZotoFd5dXCLAciykAYNf-RSz/pub?gid=0&single=true&output=csv) from that same sheet.

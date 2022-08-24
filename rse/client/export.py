@@ -8,11 +8,11 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from multiprocessing import Process
+import logging
 import os
+from multiprocessing import Process
 
 from rse.main import Encyclopedia
-import logging
 from rse.utils.file import write_file
 
 bot = logging.getLogger("rse.client")
@@ -40,8 +40,8 @@ def main(args, extra):
 
     # Static web export from flask to a directory
     elif args.export_type == "static-web":
-        from rse.app.server import start
         from rse.app.export import export_web_static
+        from rse.app.server import start
 
         # Start the webserver on a separate process
         p = Process(
@@ -56,6 +56,7 @@ def main(args, extra):
             base_url="http://%s:%s" % (args.host, args.port),
             force=args.force,
             client=client,
+            p=p,
         )
 
         # Ensure that it stops!

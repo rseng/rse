@@ -8,30 +8,31 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
+import logging
+import os
+import re
+import shutil
+from glob import glob
+
 from rse.exceptions import (
     DirectoryNotFoundError,
     MultipleReposExistError,
-    RepoNotFoundError,
     NoReposError,
-)
-from rse.utils.file import (
-    write_json,
-    write_file,
-    mkdir_p,
-    read_json,
-    read_file,
-    recursive_find,
-    get_latest_modified,
+    RepoNotFoundError,
 )
 from rse.main.database.base import Database
 from rse.main.parsers import get_parser
 from rse.main.parsers.base import ParserBase
+from rse.utils.file import (
+    get_latest_modified,
+    mkdir_p,
+    read_file,
+    read_json,
+    recursive_find,
+    write_file,
+    write_json,
+)
 from rse.utils.strings import update_nonempty
-from glob import glob
-import logging
-import shutil
-import os
-import re
 
 bot = logging.getLogger("rse.main.database.filesystem")
 

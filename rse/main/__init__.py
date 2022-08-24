@@ -8,25 +8,24 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.main.config import Config
-from rse.defaults import RSE_DATABASE, RSE_PARSERS, RSE_CONFIG_FILE
-
-from rse.exceptions import RepoNotFoundError, RepoMetadataExistError
-from rse.main.database import init_db
-from rse.utils.prompt import confirm, choice_prompt
-from rse.utils.file import read_file
-from rse.utils.command import get_github_username
-from rse.utils.urls import repository_regex
-from rse.main.parsers import get_parser
-from rse.main.criteria import get_criteria
-import rse.main.export
-from rse.main.taxonomy import get_taxonomy
-from rse.logger.message import bot as message
-
 import json
 import logging
 import os
 import re
+
+import rse.main.export
+from rse.defaults import RSE_CONFIG_FILE, RSE_DATABASE, RSE_PARSERS
+from rse.exceptions import RepoMetadataExistError, RepoNotFoundError
+from rse.logger.message import bot as message
+from rse.main.config import Config
+from rse.main.criteria import get_criteria
+from rse.main.database import init_db
+from rse.main.parsers import get_parser
+from rse.main.taxonomy import get_taxonomy
+from rse.utils.command import get_github_username
+from rse.utils.file import read_file
+from rse.utils.prompt import choice_prompt, confirm
+from rse.utils.urls import repository_regex
 
 bot = logging.getLogger("rse.main")
 parser_regex = "github"

@@ -8,9 +8,11 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.main.parsers import GitHubParser
 import logging
+
 import requests
+
+from rse.main.parsers import GitHubParser
 
 from .base import ScraperBase
 

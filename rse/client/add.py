@@ -8,8 +8,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.main import Encyclopedia
 import sys
+
+from rse.main import Encyclopedia
 
 
 def main(args, extra):

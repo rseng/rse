@@ -8,12 +8,13 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-import os
 import locale
-import subprocess
+import os
 import shlex
 import shutil
+import subprocess
 import tempfile
+
 from .file import read_file
 
 

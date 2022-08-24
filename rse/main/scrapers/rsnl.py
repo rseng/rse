@@ -8,11 +8,13 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
-from rse.utils.urls import get_user_agent, check_response
-from rse.main.parsers import get_parser
 import logging
-import requests
 import time
+
+import requests
+
+from rse.main.parsers import get_parser
+from rse.utils.urls import check_response, get_user_agent
 
 from .base import ScraperBase
 

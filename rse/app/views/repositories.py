@@ -9,9 +9,9 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """
 
 from flask import render_template, request
-from rse.app.server import app
-from rse.defaults import RSE_URL_PREFIX, RSE_ISSUE_ENDPOINT
 
+from rse.app.server import app
+from rse.defaults import RSE_ISSUE_ENDPOINT, RSE_URL_PREFIX
 
 ## Repository Views
 
