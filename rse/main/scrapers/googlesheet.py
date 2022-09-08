@@ -96,6 +96,11 @@ class GoogleSheetImporter(ScraperBase):
             try:
                 repo = get_parser(uid)
                 data = repo.get_metadata()
+
+                # Empty or malformed repository
+                if not data:
+                    bot.warning(f"Skipping malformed entry {uid}")
+                    continue
                 result = update_nonempty(result, data)
 
             # Or as custom entry
