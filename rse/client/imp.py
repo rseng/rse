@@ -13,12 +13,34 @@ import sys
 from rse.main.scrapers import get_importer
 
 
+def parse_extra(extra):
+    """
+    Allow for basic parsing of extra args, in form <arg>=<value> only.
+    """
+    args = []
+    kwargs = {}
+    for arg in extra:
+
+        # This is a key value pair (extra)
+        if arg.startswith("--") and "=" in arg:
+            key, val = arg.strip().split("=")
+            kwargs[key.strip()] = val.strip()
+
+        # This is an entity to import
+        elif not arg.startswith("--"):
+            args.append(arg)
+    return args, kwargs
+
+
 def main(args, extra):
 
     try:
         importer = get_importer(args.import_type)
     except:
         sys.exit(f"{args.import_type} is not a known importer.")
+
+    # Ensure support for --delim and --newline
+    extra, kwargs = parse_extra(extra)
 
     results = importer.scrape(extra)
     print("Found %s results" % len(results))

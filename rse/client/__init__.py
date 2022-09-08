@@ -169,7 +169,7 @@ def get_parser():
         dest="import_type",
         help="Type to import (defaults to google-sheet)",
         default="google-sheet",
-        choices=["google-sheet"],
+        choices=["google-sheet", "csv"],
     )
 
     imp.add_argument(
