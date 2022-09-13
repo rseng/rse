@@ -354,19 +354,44 @@ As a set of examples, here are how titles might be translated into uids and path
 
 If you find a title that doesn't parse well or would like to request a new kind of import, please [open an issue](https://github.com/rseng/rse). Each importer is described in more detail below.
 
-<a id="import-google-spreadsheet">
-### Google Sheet
+<a id="import-csv">
+### CSV
 
-It might be the case that you want to have software input from a form, and then input via a Google sheet.
-We provide an [example template sheet](https://docs.google.com/spreadsheets/d/1ZW2kOsBOfSpRSH_9Efvz-ytn7dQ2m1DmYDBdIVNGY4c/edit?usp=sharing) that you could provide to `rse import` with the `google-sheet` and path to it's exported csv. For your
-spreadsheet, the following fields are required:
+A csv import takes a basic csv (or other deliminated) file and imports it. If you don't want to use the Google Sheets
+importer, or want to inspect your csv first, this could be an option. The following fields (first row) are required:
 
  - Title: (required) A human-friendly title to describe the software. If the Url doesn't have a version control address, this will be parsed for a unique identifier.
  - Url: (required) A link to GitHub, GitLab, or another online resource (this will be parsed looking for a unique identifier)
  - Description: (required) The description of the software project
  - Tags: (optional) A list of tags, comma separated, to parse into the metadata.
 
-All other fields will be treated as custom data fields to add to the data. Once you have your data sheet, you'll want to make
+Here is an example import
+
+```bash
+$ mkdir bioacousics
+$ cd bioacousics
+$ rse init .
+INFO:rse.main.config:Generating configuration file rse.ini
+```
+We can then run the import:
+
+```bash
+$ rse import --type csv software-sheet.csv
+```
+
+You can also tweak the newline parameter, and delimiter (default `,`).
+
+```bash
+$ rse import --type csv --delim="," software-sheet.csv
+```
+
+
+<a id="import-google-spreadsheet">
+### Google Sheet
+
+It might be the case that you want to have software input from a form, and then input via a Google sheet.
+We provide an [example template sheet](https://docs.google.com/spreadsheets/d/1ZW2kOsBOfSpRSH_9Efvz-ytn7dQ2m1DmYDBdIVNGY4c/edit?usp=sharing) that you could provide to `rse import` with the `google-sheet` and path to it's exported csv. The fields (first column) required
+are the same as for the CSV import detailed above. Once you have your data sheet, you'll want to make
 sure to generate a public link to export csv. You can do that via:
 
 ```

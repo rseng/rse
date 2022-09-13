@@ -8,14 +8,35 @@ with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 """
 
+import os
+
 import pytest
 
 from rse.main.scrapers import get_importer
+
+here = os.path.dirname(os.path.abspath(__file__))
+
+data = os.path.join(here, "data")
 
 
 def test_get_unknown_import():
     with pytest.raises(SystemExit):
         get_importer("noodles")
+
+
+def test_csv_import(tmp_path):
+    """
+    Test csv import
+    """
+    sheet = os.path.join(data, "software-sheet.csv")
+    importer = get_importer("csv")
+    results = importer.scrape(sheet)
+    assert len(results) == 9
+
+    # Assert we have required fields
+    for result in results:
+        for key in ["title", "url", "description"]:
+            assert key in result and result[key]
 
 
 def test_google_sheet_import(tmp_path):

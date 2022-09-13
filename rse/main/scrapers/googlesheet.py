@@ -15,31 +15,18 @@ from io import StringIO
 
 import requests
 
-from rse.main.parsers import CustomParser, get_parser
-from rse.utils.strings import update_nonempty
 from rse.utils.urls import get_user_agent
 
-from .base import ScraperBase
+from .csv import CSVImporter
 
 bot = logging.getLogger("rse.main.import.google-sheet")
 
 
-def read_rows(filepath, newline="", delim=","):
-    """
-    read in the data rows of a csv file.
-    """
-    # Read in the entire membership counts
-    with open(filepath, newline=newline) as infile:
-        reader = csv.reader(infile, delimiter=delim)
-        data = [row for row in reader]
-    return data
-
-
-class GoogleSheetImporter(ScraperBase):
+class GoogleSheetImporter(CSVImporter):
 
     name = "googlesheet"
 
-    def scrape(self, args):
+    def scrape(self, args, **kwargs):
         """
         The main function to perform the scrape to import and return results.
         """
@@ -59,64 +46,5 @@ class GoogleSheetImporter(ScraperBase):
             rows = [x for x in reader if x]
             if not rows:
                 sys.exit(f"Sheet {url} does not have any rows.")
-
-            header = [x.lower() for x in rows.pop(0)]
-            for required in ["title", "url", "description"]:
-                if required not in header:
-                    sys.exit(f"Sheet {url} is missing required field {required}.")
-
-            for row in rows:
-                repo = {value: row[i] for i, value in enumerate(header) if value}
-                complete = True
-                for required in ["title", "url", "description"]:
-                    if not repo[required]:
-                        complete = False
-                if not complete:
-                    continue
-
-                # If we have topics, ensure to parse
-                if "tags" in repo:
-                    repo["tags"] = [x.strip() for x in repo["tags"].split(",")]
-                bot.info("Found software record: %s" % repo["url"])
-                self.results.append(repo)
-        return self.results
-
-    def create(self, database=None, config_file=None, update=False):
-        """
-        After a scrape (whether we obtain latest or a search query) we
-        run create to create software repositories based on results.
-        """
-        from rse.main import Encyclopedia
-
-        client = Encyclopedia(config_file=config_file, database=database)
-        for result in self.results:
-            uid = result["url"].split("//")[-1]
-
-            # If a repository is added that isn't represented
-            try:
-                repo = get_parser(uid)
-                data = repo.get_metadata()
-
-                # Empty or malformed repository
-                if not data:
-                    bot.warning(f"Skipping malformed entry {uid}")
-                    continue
-                result = update_nonempty(result, data)
-
-            # Or as custom entry
-            except NotImplementedError:
-                # Base UID based on title
-                repo = CustomParser(result["title"])
-                repo.set_metadata(
-                    title=result["title"],
-                    url=result["url"],
-                    description=result["description"],
-                )
-
-            # Add results that don't exist
-            exists = client.exists(repo.uid)
-            if not exists:
-                client.add(repo.uid, data=result)
-            elif exists and update:
-                # rewrite defaults to false
-                client.update(repo.uid, data=result)
+            self.results += self.parse_rows(rows)
+            return self.results

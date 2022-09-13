@@ -14,6 +14,7 @@ import sys
 from .ascl import AsclScraper
 from .biogrids import BioGridsScraper
 from .biotools import BioToolsScraper
+from .csv import CSVImporter
 from .debian import DebianMedScraper
 from .googlesheet import GoogleSheetImporter
 from .hal import HalScraper
@@ -43,6 +44,8 @@ def get_importer(name):
     An importer is technically a kind of scraper.
     """
     importer = None
+    if name.lower() == "csv":
+        importer = CSVImporter()
     if name.lower() == "google-sheet":
         importer = GoogleSheetImporter()
     if not importer:
