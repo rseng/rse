@@ -288,7 +288,7 @@ parser.uid
 ```
 
 Once the identifier is loaded, you can parse updated metadata for it.
-Note that this requires a `RSE_GITHUB_TOKEN` to be set in the environment.
+Note that this requires a `RSE_GITLAB_TOKEN` to be set in the environment.
 You can then get the repository-level metadata about the software repository:
 
 ```python
