@@ -107,25 +107,22 @@ class CSVImporter(ScraperBase):
             uid = result["url"].split("//")[-1]
 
             # If a repository is added that isn't represented
-            try:
-                repo = get_parser(uid)
-                data = repo.get_metadata()
+            repo = get_parser(uid)
+            data = repo.get_metadata() or {}
 
-                # Empty or malformed repository
-                if not data:
-                    bot.warning(f"Skipping malformed entry {uid}")
-                    continue
-                result = update_nonempty(result, data)
-
-            # Or as custom entry
-            except NotImplementedError:
-                # Base UID based on title
+            # Empty or malformed repository
+            if not data and repo.name == "custom":
                 repo = CustomParser(result["title"])
                 repo.set_metadata(
                     title=result["title"],
                     url=result["url"],
                     description=result["description"],
                 )
+
+            elif not data:
+                bot.warning(f"Skipping malformed entry {uid}")
+                continue
+            result = update_nonempty(result, data)
 
             # Add results that don't exist
             exists = client.exists(repo.uid)
