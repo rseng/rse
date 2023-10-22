@@ -1,4 +1,5 @@
-FROM bitnami/minideb:stretch
+FROM bitnami/minideb:bookworm
+
 # docker build -t quay.io/vanessa/rse .
 LABEL MAINTAINER @vsoch
 ENV PATH /opt/conda/bin:${PATH}

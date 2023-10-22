@@ -12,7 +12,7 @@ jobs:
   formatting:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Setup black environment
         run: conda create --quiet --name black pyflakes
@@ -21,7 +21,7 @@ jobs:
         run: |
           export PATH="/usr/share/miniconda/bin:$PATH"
           source activate black
-          pip install black
+          pip install black==23.3.0
           black --check rse
 
       - name: Check imports with pyflakes
@@ -38,7 +38,7 @@ jobs:
     env:
       RSE_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Setup testing environment
         run: conda create --quiet --name testing pytest
 
@@ -56,7 +56,7 @@ jobs:
     env:
       CONTAINER: quay.io/vanessa/rse
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Build Docker Image
         run: docker build -t "${CONTAINER}" .
       - name: Tag and Preview Container

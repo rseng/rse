@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2020-2022 Vanessa Sochat.
+Copyright (C) 2020-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -14,7 +14,6 @@ from rse.main.scrapers import get_named_scraper
 
 
 def main(args, extra):
-
     try:
         scraper = get_named_scraper(args.scraper_name[0])
     except:

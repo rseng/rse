@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2022 Vanessa Sochat.
+Copyright (C) 2022-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -18,7 +18,6 @@ from .base import ParserBase
 
 
 class CustomParser(ParserBase):
-
     name = rse.defaults.RSE_CUSTOM_DATABASE_DIR
     matchstring = "custom"
 

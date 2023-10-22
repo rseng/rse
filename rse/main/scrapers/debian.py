@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2022 Vanessa Sochat.
+Copyright (C) 2020-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -20,7 +20,6 @@ bot = logging.getLogger("rse.main.scrapers.debian-med")
 
 
 class DebianMedScraper(ScraperBase):
-
     name = "debian-med"
     matchstring = "(debian|debianmed|debian-med)"
 
@@ -42,7 +41,6 @@ class DebianMedScraper(ScraperBase):
 
         contenders = soup.find_all("a", href=True)
         for contender in contenders:
-
             # Each link to a subpage has a name, id, and href that are the same
             name = contender.attrs.get("name")
             identifier = contender.attrs.get("id")

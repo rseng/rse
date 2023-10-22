@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2022 Vanessa Sochat.
+Copyright (C) 2022-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -21,7 +21,6 @@ bot = logging.getLogger("rse.main.scrapers.ascl")
 
 
 class AsclScraper(ScraperBase):
-
     name = "ascl"
     matchstring = "ascl"
 
@@ -64,7 +63,6 @@ class AsclScraper(ScraperBase):
 
         contenders = soup.find_all("div", {"class": "item"})
         for contender in contenders:
-
             # Get metadata from child
             for child in contender.children:
                 if not isinstance(child, bs4.element.Tag):
@@ -88,7 +86,6 @@ class AsclScraper(ScraperBase):
                     result["description"] = child.text
 
                 elif "title" in child.attrs.get("class", []) and child.contents:
-
                     # This has a link to the detail page
                     title = child.find_next("a")
                     if "href" not in title.attrs or not title.contents:

@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2020-2022 Vanessa Sochat.
+Copyright (C) 2020-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -157,7 +157,6 @@ def export_web_static(export_dir, base_url, client, force=False, p=None):
         )
 
     for url, outfile in urls.items():
-
         # Skip if we've already created it
         if os.path.exists(outfile):
             continue

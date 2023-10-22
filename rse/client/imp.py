@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2022 Vanessa Sochat.
+Copyright (C) 2020-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -20,7 +20,6 @@ def parse_extra(extra):
     args = []
     kwargs = {}
     for arg in extra:
-
         # This is a key value pair (extra)
         if arg.startswith("--") and "=" in arg:
             key, val = arg.strip().split("=")
@@ -33,7 +32,6 @@ def parse_extra(extra):
 
 
 def main(args, extra):
-
     try:
         importer = get_importer(args.import_type)
     except:

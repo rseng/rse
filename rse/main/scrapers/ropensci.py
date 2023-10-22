@@ -20,7 +20,6 @@ bot = logging.getLogger("rse.main.scrapers.ropensci")
 
 
 class ROpenSciScraper(ScraperBase):
-
     name = "ropensci"
     matchstring = "ropensci"
 
@@ -80,7 +79,6 @@ class ROpenSciScraper(ScraperBase):
         repos = parser.get_org_repos("ropensci", paginate=paginate, delay=delay)
 
         for entry in repos:
-
             # We determine belonging based on the github url
             if entry["html_url"] not in names:
                 bot.info("Skipping repository: %s" % entry["html_url"])
@@ -106,7 +104,6 @@ class ROpenSciScraper(ScraperBase):
         # E.g., there are repos in other orgs that won't be found above
         if paginate and names:
             for name in names:
-
                 parser = GitHubParser(uid=name)
                 # Topics will be added here!
                 entry = parser.get_metadata()

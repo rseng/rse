@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2022 Vanessa Sochat.
+Copyright (C) 2022-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -24,7 +24,6 @@ bot = logging.getLogger("rse.main.scrapers.molssi")
 
 
 class MolssiScraper(ScraperBase):
-
     name = "molssi"
     matchstring = "molssi"
 
@@ -113,7 +112,6 @@ class MolssiScraper(ScraperBase):
                     if "row" in bolded.parent.parent.attrs.get("class"):
                         nexts = list(bolded.parent.parent.parent.next_elements)
                         for next_element in nexts:
-
                             # The citation is the first link under this bolded section
                             if isinstance(
                                 next_element, bs4.element.Tag

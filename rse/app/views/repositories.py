@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2020-2022 Vanessa Sochat.
+Copyright (C) 2020-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -18,7 +18,6 @@ from rse.defaults import RSE_ISSUE_ENDPOINT, RSE_URL_PREFIX
 
 @app.route("%srepository/<path:uid>" % RSE_URL_PREFIX)
 def repository_view(uid):
-
     # Obtain the repository and load the data.
     repo = app.client.get(uid)
     repo.parser.load(repo.data)
@@ -55,7 +54,6 @@ def annotate_repos(message=""):
 
 @app.route("%sannotate-criteria" % RSE_URL_PREFIX, methods=["POST", "GET"])
 def annotate_criteria():
-
     # If it's a post, update the annotation
     username = None
     if request.method == "POST":
@@ -96,7 +94,6 @@ def annotate_criteria():
 
 @app.route("%srepository/<path:uid>/annotate-criteria" % RSE_URL_PREFIX)
 def annotate_static_criteria(uid):
-
     # Get criteria / annotation set for specific repository
     username = request.args.get("username")
     repo = app.client.get(uid)
@@ -115,7 +112,6 @@ def annotate_static_criteria(uid):
 
 @app.route("%srepository/<path:uid>/annotate-taxonomy" % RSE_URL_PREFIX)
 def annotate_static_taxonomy(uid):
-
     # Get criteria / annotation set for specific repository
     username = request.args.get("username")
     repo = app.client.get(uid)
@@ -137,7 +133,6 @@ def annotate_static_taxonomy(uid):
 
 @app.route("%sannotate-taxonomy" % RSE_URL_PREFIX, methods=["GET", "POST"])
 def annotate_taxonomy():
-
     # If we don't have a color lookup, make one
     if not hasattr(app, "taxonomy"):
         app.taxonomy = generate_taxonomy(app)
@@ -181,7 +176,6 @@ def annotate_taxonomy():
 
 
 def generate_taxonomy(app):
-
     taxonomy = app.client.list_taxonomy()
 
     # Update the color list with existing colors (consistency)
@@ -209,7 +203,6 @@ def generate_taxonomy(app):
 
 
 def update_criteria():
-
     updates = {}
     repo_uid = request.form.get("repo_uid")
     username = request.form.get("username")
@@ -231,7 +224,6 @@ def update_criteria():
 
 
 def update_taxonomy():
-
     uids = []
     repo_uid = request.form.get("repo_uid")
     username = request.form.get("username")
