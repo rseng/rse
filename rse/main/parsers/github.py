@@ -89,7 +89,9 @@ class GitHubParser(ParserBase):
             if data and paginate:
                 url = original_url + "&page=%s" % page
 
-            repos = repos + data
+            # If a request goes wrong and we don't get data, skip
+            if data:
+                repos = repos + data
             page += 1
             # Sleep for a random amount of time to give a rest!
             sleep(delay or random.choice(range(1, 10)) * 0.1)
