@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2020-2022 Vanessa Sochat.
+Copyright (C) 2020-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -21,7 +21,6 @@ bot = logging.getLogger("rse.main.scrapers.joss")
 
 
 class JossScraper(ScraperBase):
-
     name = "joss"
     matchstring = "(joss|journal of open source software)"
 
@@ -57,7 +56,6 @@ class JossScraper(ScraperBase):
             soup = self.soupify(url)
             url = None
             for link in soup.find_all("link", href=True):
-
                 # Sleep for a random amount of time to give a rest!
                 sleep(delay or random.choice(range(1, 10)) * 0.1)
                 paper_url = link.attrs.get("href", "")

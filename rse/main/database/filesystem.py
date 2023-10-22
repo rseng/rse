@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2020-2022 Vanessa Sochat.
+Copyright (C) 2020-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -164,7 +164,6 @@ class FileSystemDatabase(Database):
         taxonomy_regex = "(%s)" "|".join(taxonomy or [])
         criteria_regex = "(%s)" "|".join(criteria or [])
         for repo in self.list_repos():
-
             if query:
                 if re.search(query, repo[0], re.IGNORECASE):
                     if query not in results:
@@ -336,7 +335,6 @@ class SoftwareRepository:
         """
         if should_exist:
             if not os.path.exists(self.filename):
-
                 # Might be provided prefix
                 contenders = glob("%s*" % os.path.join(self.data_base, self.parser.uid))
                 if len(contenders) == 1:

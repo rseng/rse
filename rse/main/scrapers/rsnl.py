@@ -20,9 +20,9 @@ from .base import ScraperBase
 
 bot = logging.getLogger("rse.main.scrapers.rsnl")
 
+
 # Research Software Netherlands
 class RSNLScraper(ScraperBase):
-
     name = "rsnl"
     matchstring = "(researchsoftwarenl|rsnl)"
 
@@ -59,7 +59,6 @@ class RSNLScraper(ScraperBase):
         data = check_response(response) or []
 
         for entry in data:
-
             # I only see GitHub urls
             repo_url = entry.get("repositoryURLs", {}).get("github")
             repo_url = repo_url[0] if repo_url else None

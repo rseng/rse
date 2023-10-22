@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2020-2022 Vanessa Sochat.
+Copyright (C) 2020-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -18,7 +18,6 @@ bot = logging.getLogger("rse.client")
 
 
 def main(args, extra):
-
     # Create a research software encyclopedia
     enc = Encyclopedia(config_file=args.config_file, database=args.database)
 

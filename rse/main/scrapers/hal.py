@@ -26,7 +26,6 @@ repository_regex = repository_regex.strip("$")
 
 
 class HalScraper(ScraperBase):
-
     name = "hal"
     matchstring = "hal"
 

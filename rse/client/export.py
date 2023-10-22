@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2020-2022 Vanessa Sochat.
+Copyright (C) 2020-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -19,7 +19,6 @@ bot = logging.getLogger("rse.client")
 
 
 def main(args, extra):
-
     client = Encyclopedia(config_file=args.config_file, database=args.database)
 
     # Case 1: empty list indicates listing all
@@ -28,7 +27,6 @@ def main(args, extra):
 
     # Export a list of repos
     if args.export_type == "repos-txt":
-
         # We just want the unique id, the first result
         repos = [x[0] for x in client.list()]
         write_file("\n".join(repos), args.path)

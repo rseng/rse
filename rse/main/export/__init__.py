@@ -1,5 +1,5 @@
 __author__ = "Vanessa Sochat"
-__copyright__ = "Copyright 2021-2022, Vanessa Sochat"
+__copyright__ = "Copyright 2021-2023, Vanessa Sochat"
 __license__ = "MPL 2.0"
 
 import json
@@ -51,7 +51,6 @@ class JekyllExporter(Exporter):
         # Iterate through repos to generate data
         print("Generating jekyll web export")
         for repo in repos:
-
             # url will be over-written by jekyll templates, etc.
             if "url" in repo and repo["url"]:
                 repo["repo_url"] = repo["url"]

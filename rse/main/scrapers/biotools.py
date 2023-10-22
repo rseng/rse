@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2020-2022 Vanessa Sochat.
+Copyright (C) 2020-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -24,7 +24,6 @@ bot = logging.getLogger("rse.main.scrapers.biotools")
 
 
 class BioToolsScraper(ScraperBase):
-
     name = "biotools"
     matchstring = "(biotool|bio[.]tool)"
 
@@ -54,7 +53,6 @@ class BioToolsScraper(ScraperBase):
         # Handle pagination
         original_url = url
         while url is not None:
-
             response = requests.get(url, headers={"User-Agent": get_user_agent()})
             data = check_response(response)
 
@@ -66,7 +64,6 @@ class BioToolsScraper(ScraperBase):
                 )
 
             for entry in data.get("list", []):
-
                 # Look for GitHub / GitLab URL
                 repo = {}
                 for link in entry.get("link", []):

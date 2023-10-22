@@ -14,6 +14,7 @@ and **Merged pull requests**. Critical items to know are:
 The versions coincide with releases on pip.
 
 ## [0.0.x](https://github.com/rseng/rse/tree/master) (0.0.x)
+ - allow an erroneous response for GitHub org get repos (0.0.48)
  - allow custom import for csv and google-sheet (0.0.47)
  - support for csv import (0.0.46)
  - ensure Google scraper skips malformed rows, etc (0.0.45)

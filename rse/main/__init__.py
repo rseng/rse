@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2020-2022 Vanessa Sochat.
+Copyright (C) 2020-2023 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -621,10 +621,8 @@ class Encyclopedia:
         for repo, criteria in self.yield_criteria_annotation_repos(
             username, unseen_only, repo
         ):
-
             # Only print repository if not seen yet
             if not last or repo.uid != last.uid:
-
                 # If we have a last repo, we need to save progress
                 if last is not None and save is True:
                     self.save_criteria(last)
@@ -670,7 +668,6 @@ class Encyclopedia:
         prefix = "0:%s or s to skip" % (len(items) - 1)
 
         for repo in self.yield_taxonomy_annotation_repos(username, unseen_only, repo):
-
             message.info(f"\n{repo.url} [{repo.description}]:")
             print("How would you categorize this software? [enter one or more numbers]")
             for i, t in enumerate(items):
